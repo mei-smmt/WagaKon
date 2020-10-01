@@ -1,13 +1,13 @@
 <div class="row">
-  <%= form_with(model: @user, local: true) do |f| %>
-    <%= render 'layouts/error_messages', model: f.object %>
-      
-    <aside class="col-sm-4">
-      <%= f.label :image, "画像" %><br>
-      <%= f.file_field :image, class: "image" %>      
-    </aside>
+  <div class="col-sm-6 offset-sm-3">
+    <%= form_with(model: @user, local: true) do |f| %>
+      <%= render 'layouts/error_messages', model: f.object %>
 
-    <div class="col-sm-8">
+      <div class="form-group">
+        <%= f.label :image, "画像" %><br>
+        <%= f.file_field :image, class: "image" %>      
+      </div>
+
       <div class="form-group">
         <%= f.label :name, '名前' %>
         <%= f.text_field :name, class: 'form-control' %>
