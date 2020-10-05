@@ -2,7 +2,8 @@ class Article < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   belongs_to :user
-  has_many :materials, :steps
+  has_many :materials
+  has_many :steps
   
   # タイトル、画像、説明文必須
   validates :title, presence: true, length: { maximum: 20 }
