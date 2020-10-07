@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
   def create
     @article = current_user.articles.build(article_params)
     if @article.save
-      redirect_to new_material_url
+      redirect_to "/#{@article.id}/materials/new"
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
