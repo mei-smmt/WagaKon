@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   get "/:id/materials/new", to: "materials#new"
   resources :materials, only: [:create, :edit, :update, :destroy]
   
-  resources :steps, only: [:new, :create, :edit, :update, :destroy]
+  get "/:id/steps/new", to: "steps#new"
+  resources :steps, only: [:create, :edit, :update, :destroy]
 end
