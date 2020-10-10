@@ -9,17 +9,13 @@ class MaterialsController < ApplicationController
   
   def create
     @article = Article.find(params[:article_id])
+   
     @materials = []
-    
     materials_params["materials"].each do |material|
       @materials << @article.materials.build(material)
     end
     
-    is_success = true
-    @materials.each do |material|
-      is_success = false unless material.save
-    end
-    if is_success == true
+    if Material.bulk_create(@materials)
       redirect_to root_url
     else
       flash.now[:danger] = '内容に誤りがあります'
