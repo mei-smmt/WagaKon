@@ -1,5 +1,6 @@
 class MaterialsController < ApplicationController
-  
+  before_action :require_user_logged_in
+
   def new
     @article = Article.find(params[:id])
     @materials = (1..2).map do
@@ -16,7 +17,7 @@ class MaterialsController < ApplicationController
     end
     
     if Material.bulk_create(@materials)
-      redirect_to root_url
+      redirect_to "/#{@article.id}/steps/new"
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
