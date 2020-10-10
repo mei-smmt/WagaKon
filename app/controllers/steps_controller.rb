@@ -1,4 +1,5 @@
 class StepsController < ApplicationController
+  before_action :require_user_logged_in
   
   def new
     @article = Article.find(params[:id])
@@ -8,7 +9,6 @@ class StepsController < ApplicationController
   end
   
   def create
-    # binding.pry
     @article = Article.find(params[:article_id])
    
     @steps = []

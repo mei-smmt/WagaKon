@@ -1,5 +1,6 @@
 class MaterialsController < ApplicationController
-  
+  before_action :require_user_logged_in
+
   def new
     @article = Article.find(params[:id])
     @materials = (1..2).map do
