@@ -6,7 +6,7 @@
           <%= form.fields_for 'steps[]', step do |f| %>
           
             <h4>STEP<%= index %></h4>
-            <%= hidden_field_tag :number, index %>
+            <%= f.hidden_field :number, :value => index %>
           
             <div class="form-group col-sm-6 mb-2">
               <%= f.label :image, "画像" %><br>
