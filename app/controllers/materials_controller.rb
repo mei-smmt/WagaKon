@@ -16,7 +16,7 @@ class MaterialsController < ApplicationController
     end
     
     if Material.bulk_create(@materials)
-      redirect_to root_url
+      redirect_to "/#{@article.id}/steps/new"
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
