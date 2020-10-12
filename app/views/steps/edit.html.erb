@@ -1,2 +1,29 @@
-<h1>Steps#edit</h1>
-<p>Find me in app/views/steps/edit.html.erb</p>
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+    <%= form_with(url: "update", method: :patch, local: true) do |form| %>
+
+      <% @steps.each.with_index(1) do |step, index|%>
+        <%= form.fields_for 'steps[]', step do |f| %>
+        
+          <h4>STEP<%= index %></h4>
+          <%= f.hidden_field :number, :value => index %>
+        
+          <div class="form-group col-sm-6 mb-2">
+            <%= f.label :image, "画像" %><br>
+            <%= f.file_field :image, class: "image" %>      
+          </div>
+        
+          <div class="form-group col-sm-6 mb-2">
+            <%= f.label :content, "説明" %>
+            <%= f.text_area :content, class: "form-control" %>
+          </div>
+          
+        <% end %>
+      <% end %>
+      
+      <%= hidden_field_tag :article_id, @article.id %>
+
+      <%= form.submit '保存して次へ', class: 'btn btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>
