@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :materials, only: [:create]
   
   get "/:id/steps/new", to: "steps#new"
-  get "/:id/steps/edit", to: "stepls#edit"
+  get "/:id/steps/edit", to: "steps#edit"
   patch "/:id/steps/update", to: "steps#update"
   resources :steps, only: [:create]
 end
