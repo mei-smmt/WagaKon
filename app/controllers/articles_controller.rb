@@ -34,6 +34,14 @@ class ArticlesController < ApplicationController
       render :edit
     end
   end
+  
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    flash[:success] = '正常に削除されました'
+    redirect_to root_url
+  end
     
   private
 
