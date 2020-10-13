@@ -11,4 +11,20 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :articles
+  has_many :bookmarks
+  has_many :favorite_articles, through: :bookmarks, source: :article
+  
+  def bookmark(article)
+    self.bookmarks.find_or_create_by(article_id: article.id)
+  end
+
+  def unbookmark(article)
+    bookmark = self.bookmarks.find_by(article_id: article.id)
+    bookmark.destroy if bookmark
+  end
+
+  def favorite?(article)
+    self.favorite_articles.include?(article)
+  end
+  
 end
