@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
-  before_action :require_user_logged_in, only: [:new, :create, :edit]
+  before_action :require_user_logged_in, only: [:new, :create]
+  before_action :user_author_match, only: [:edit, :update, :destroy]
 
   def show
     @article = Article.find(params[:id])
@@ -22,11 +23,9 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
   end
   
   def update
-    @article = Article.find(params[:id])
     if @article.update(article_params)
       redirect_to edit_article_materials_path(@article)
     else
@@ -36,9 +35,7 @@ class ArticlesController < ApplicationController
   end
   
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
-
     flash[:success] = '正常に削除されました'
     redirect_to root_url
   end
@@ -49,4 +46,12 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :image, :explanation)
   end
   
+  def user_author_match
+    @article = Article.find(params[:id])
+    @user = @article.user
+    unless @user == current_user
+      redirect_to root_url
+    end
+  end  
+
 end
