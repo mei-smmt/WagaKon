@@ -22,8 +22,27 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    @article = Article.find(params[:id])
   end
   
+  def update
+    @article = Article.find(params[:id])
+    if @article.update(article_params)
+      redirect_to "/#{@article.id}/materials/edit"
+    else
+      flash.now[:danger] = '内容に誤りがあります'
+      render :edit
+    end
+  end
+  
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    flash[:success] = '正常に削除されました'
+    redirect_to root_url
+  end
+    
   private
 
   def article_params

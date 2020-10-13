@@ -25,6 +25,24 @@ class StepsController < ApplicationController
   end
 
   def edit
+    @article = Article.find(params[:id])
+    @steps = @article.steps
+  end
+  
+  def update
+    @article = Article.find(params[:article_id])
+   
+    @steps = @article.steps
+    @steps.zip(steps_params["steps"].values) do |original_step, step|
+      original_step.assign_attributes(step)
+    end
+    
+    if Step.bulk_create(@steps)
+      redirect_to root_url
+    else
+      flash.now[:danger] = '内容に誤りがあります'
+      render :edit
+    end
   end
   
   private
