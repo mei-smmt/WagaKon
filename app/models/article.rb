@@ -9,5 +9,5 @@ class Article < ApplicationRecord
   belongs_to :user
   has_many :materials, dependent: :destroy
   has_many :steps, dependent: :destroy
-  has_many :bookmarks
+  has_many :bookmarks, dependent: :destroy
 end
