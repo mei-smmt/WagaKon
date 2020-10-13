@@ -2,7 +2,7 @@ class StepsController < ApplicationController
   before_action :require_user_logged_in
   
   def new
-    @article = Article.find(params[:id])
+    @article = Article.find(params[:article_id])
     @steps = (1..2).map do
       @article.steps.build
     end
@@ -25,7 +25,7 @@ class StepsController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
+    @article = Article.find(params[:article_id])
     @steps = @article.steps
   end
   

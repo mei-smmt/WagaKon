@@ -2,7 +2,7 @@ class MaterialsController < ApplicationController
   before_action :require_user_logged_in
 
   def new
-    @article = Article.find(params[:id])
+    @article = Article.find(params[:article_id])
     @materials = (1..2).map do
       @article.materials.build
     end
@@ -19,7 +19,7 @@ class MaterialsController < ApplicationController
     end
     
     if Material.bulk_create(@materials)
-      redirect_to "/#{@article.id}/steps/new"
+      redirect_to new_article_step_path(@article)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
@@ -27,7 +27,7 @@ class MaterialsController < ApplicationController
   end
   
   def edit
-    @article = Article.find(params[:id])
+    @article = Article.find(params[:article_id])
     @materials = @article.materials
   end
   
@@ -43,7 +43,7 @@ class MaterialsController < ApplicationController
     end
     
     if Material.bulk_create(@materials)
-      redirect_to "/#{@article.id}/steps/edit"
+      redirect_to edit_article_steps_path(@article)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :edit
