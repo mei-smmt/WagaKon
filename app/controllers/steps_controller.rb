@@ -1,16 +1,14 @@
 class StepsController < ApplicationController
   before_action :require_user_logged_in
+  before_action :user_author_match
   
   def new
-    @article = Article.find(params[:article_id])
     @steps = (1..2).map do
       @article.steps.build
     end
   end
   
   def create
-    @article = Article.find(params[:article_id])
-   
     @steps = []
     steps_params["steps"].each do |step|
       @steps << @article.steps.build(step)
@@ -25,13 +23,10 @@ class StepsController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:article_id])
     @steps = @article.steps
   end
   
   def update
-    @article = Article.find(params[:article_id])
-   
     @steps = @article.steps
     @steps.zip(steps_params["steps"].values) do |original_step, step|
       original_step.assign_attributes(step)
@@ -50,5 +45,13 @@ class StepsController < ApplicationController
   def steps_params
     params.permit(steps: [:number, :image, :content])
   end
+
+  def user_author_match
+    @article = Article.find(params[:article_id])
+    @user = @article.user
+    unless @user == current_user
+      redirect_to root_url
+    end
+  end  
 
 end
