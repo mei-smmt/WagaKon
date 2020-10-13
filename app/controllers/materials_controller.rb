@@ -1,8 +1,8 @@
 class MaterialsController < ApplicationController
   before_action :require_user_logged_in
+  before_action :user_author_match
 
   def new
-    @article = Article.find(params[:article_id])
     @materials = (1..2).map do
       @article.materials.build
     end
@@ -11,8 +11,6 @@ class MaterialsController < ApplicationController
   def create
     # materials_params
     # {"materials"=>{"name"=>"rf", "quantity"=>"4"}, {"name"=>"gb", "quantity"=>"5"}}
-    @article = Article.find(params[:article_id])
-   
     @materials = []
     materials_params["materials"].each do |material|
       @materials << @article.materials.build(material)
@@ -27,7 +25,6 @@ class MaterialsController < ApplicationController
   end
   
   def edit
-    @article = Article.find(params[:article_id])
     @materials = @article.materials
   end
   
@@ -35,8 +32,6 @@ class MaterialsController < ApplicationController
     # {"materials"=>{"23"=>{"name"=>"こんにちは", "quantity"=>" ２"}, "24"=>{"name"=>"アイウエオ", "quantity"=>"21"}}}
     # materials_params["materials"].values  => [{"name"=>"こんにちは", "quantity"=>" ２"}, {"name"=>"アイウエオ", "quantity"=>"21"}]
     # materials_params["materials"].keys => ["23", "24"]
-    @article = Article.find(params[:article_id])
-   
     @materials = @article.materials
     @materials.zip(materials_params["materials"].values) do |original_material, material|
       original_material.assign_attributes(material)
@@ -55,5 +50,14 @@ class MaterialsController < ApplicationController
   def materials_params
     params.permit(materials: [:name, :quantity])
   end
+  
+  def user_author_match
+    @article = Article.find(params[:article_id])
+    @user = @article.user
+    unless @user == current_user
+      redirect_to root_url
+    end
+  end  
+
 end
   
