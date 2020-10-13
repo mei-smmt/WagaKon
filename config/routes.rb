@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get :favorite_articles
     end
   end
+  
+  resources :bookmarks, only: [:create, :destroy]
 
   resources :articles, only: [:show, :new, :create, :edit, :update, :destroy] do
     resources :materials, :steps, only: [:new, :create] do
