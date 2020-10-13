@@ -7,16 +7,13 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   resources :users, only: [:show, :create, :edit, :update]
-  
-  resources :articles, only: [:show, :new, :create, :edit, :update, :destroy]
 
-  get "/:id/materials/new", to: "materials#new"
-  get "/:id/materials/edit", to: "materials#edit"
-  patch "/:id/materials/update", to: "materials#update"
-  resources :materials, only: [:create]
-  
-  get "/:id/steps/new", to: "steps#new"
-  get "/:id/steps/edit", to: "steps#edit"
-  patch "/:id/steps/update", to: "steps#update"
-  resources :steps, only: [:create]
+  resources :articles, only: [:show, :new, :create, :edit, :update, :destroy] do
+    resources :materials, :steps, only: [:new, :create] do
+      collection do
+        get :edit
+        patch :update
+      end
+    end
+  end
 end
