@@ -15,7 +15,7 @@ class StepsController < ApplicationController
     end
     
     if Step.bulk_save(@steps)
-      redirect_to root_url
+      redirect_to article_url(@article)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
@@ -33,7 +33,7 @@ class StepsController < ApplicationController
     end
     
     if Step.bulk_save(@steps)
-      redirect_to root_url
+      redirect_to article_url(@article)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :edit
