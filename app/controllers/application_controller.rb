@@ -9,4 +9,13 @@ class ApplicationController < ActionController::Base
       redirect_to login_url
     end
   end
+  
+  def user_author_match(pa)
+    @article = Article.find(pa)
+    @user = @article.user
+    unless @user == current_user
+      redirect_to root_url
+    end
+  end  
+
 end
