@@ -14,7 +14,7 @@ class StepsController < ApplicationController
       @steps << @article.steps.build(step)
     end
     
-    if Step.bulk_create(@steps)
+    if Step.bulk_save(@steps)
       redirect_to root_url
     else
       flash.now[:danger] = '内容に誤りがあります'
@@ -32,7 +32,7 @@ class StepsController < ApplicationController
       original_step.assign_attributes(step)
     end
     
-    if Step.bulk_create(@steps)
+    if Step.bulk_save(@steps)
       redirect_to root_url
     else
       flash.now[:danger] = '内容に誤りがあります'
