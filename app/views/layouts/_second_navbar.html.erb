@@ -1,8 +1,14 @@
 <div class="row mb-4">
   <!--記事投稿ボタン-->
-  <div class="col-sm-2 offset-sm-10">
+  <div class="col-sm-4 offset-sm-8">
     <div>
+      <% if logged_in? %> 
+        <%= link_to "ブックマークした記事", favorite_articles_user_path(current_user), class: 'btn btn-warning btn-sm' %>
         <%= link_to "記事を投稿する", new_article_path, class: 'btn btn-warning btn-sm' %>
+      <% else %>
+        <%= link_to "ブックマークした記事", login_path, class: 'btn btn-warning btn-sm' %>
+        <%= link_to "記事を投稿する", login_path, class: 'btn btn-warning btn-sm' %>
+      <% end %>
     </div>
   </div>
 </div>

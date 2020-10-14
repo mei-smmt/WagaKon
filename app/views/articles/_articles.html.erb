@@ -6,6 +6,7 @@
           <div class="card-body">
             <h4 class="card-title"><%= article.title %></h4>
             <%= image_tag article.image.url %>
+            <p class="text-right">ブックマーク：<%= article.bookmarks.count %></p>
           </div>
         </a>
       </div>
