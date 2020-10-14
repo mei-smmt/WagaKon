@@ -1,6 +1,6 @@
 class StepsController < ApplicationController
   before_action :require_user_logged_in
-  before_action :user_author_match
+  before_action -> {user_author_match(params[:article_id])}
   
   def new
     @steps = (1..2).map do
@@ -45,13 +45,4 @@ class StepsController < ApplicationController
   def steps_params
     params.permit(steps: [:number, :image, :content])
   end
-
-  def user_author_match
-    @article = Article.find(params[:article_id])
-    @user = @article.user
-    unless @user == current_user
-      redirect_to root_url
-    end
-  end  
-
 end
