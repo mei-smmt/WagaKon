@@ -8,7 +8,7 @@ class Step < ApplicationRecord
   validates :content, presence: true, length: { maximum: 400 }
   
   # 材料の一括保存処理
-  def self.bulk_create(steps)
+  def self.bulk_save(steps)
     all_valid = true
     Step.transaction do
       steps.each do |step|

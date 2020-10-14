@@ -16,7 +16,7 @@ class MaterialsController < ApplicationController
       @materials << @article.materials.build(material)
     end
     
-    if Material.bulk_create(@materials)
+    if Material.bulk_save(@materials)
       redirect_to new_article_step_path(@article)
     else
       flash.now[:danger] = '内容に誤りがあります'
@@ -37,7 +37,7 @@ class MaterialsController < ApplicationController
       original_material.assign_attributes(material)
     end
     
-    if Material.bulk_create(@materials)
+    if Material.bulk_save(@materials)
       redirect_to edit_article_steps_path(@article)
     else
       flash.now[:danger] = '内容に誤りがあります'
