@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :require_user_logged_in, only: [:new, :create]
-  before_action :user_author_match, only: [:edit, :update, :destroy]
+  before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :destroy]
 
   def show
     @article = Article.find(params[:id])
@@ -45,13 +45,4 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :image, :explanation)
   end
-  
-  def user_author_match
-    @article = Article.find(params[:id])
-    @user = @article.user
-    unless @user == current_user
-      redirect_to root_url
-    end
-  end  
-
 end

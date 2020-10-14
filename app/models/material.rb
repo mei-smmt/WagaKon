@@ -6,7 +6,7 @@ class Material < ApplicationRecord
   validates :quantity, presence: true
   
   # 材料の一括保存処理
-  def self.bulk_create(materials)
+  def self.bulk_save(materials)
     all_valid = true
     Material.transaction do
       materials.each do |material|
@@ -19,5 +19,4 @@ class Material < ApplicationRecord
     end
     all_valid
   end
-
 end
