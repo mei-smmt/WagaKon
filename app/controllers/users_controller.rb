@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:edit, :update]
+  before_action :require_user_logged_in, only: [:edit, :update, :favorite_articles]
   before_action :correct_user, only: [:edit, :update]
   
   def show
@@ -34,6 +34,11 @@ class UsersController < ApplicationController
       flash.now[:danger] = '内容に誤りがあります'
       render :edit
     end
+  end
+  
+  def favorite_articles
+    @user = User.find(params[:id])
+    @favorite_articles = @user.favorite_articles
   end
   
   private
