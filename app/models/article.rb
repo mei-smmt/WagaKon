@@ -10,4 +10,12 @@ class Article < ApplicationRecord
   has_many :materials, dependent: :destroy
   has_many :steps, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
+  
+  def self.search(search)   
+    if search  
+      where(['title LIKE ?', "%#{search}%"])   
+    else  
+      all  
+    end  
+  end  
 end
