@@ -41,7 +41,8 @@ class ArticlesController < ApplicationController
   end
   
   def search
-    @articles = Article.all.search(params[:search])   
+    redirect_to root_url if params[:search] == ""
+    @articles = Article.search(params[:search])   
   end
     
   private
