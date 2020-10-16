@@ -39,6 +39,11 @@ class ArticlesController < ApplicationController
     flash[:success] = '正常に削除されました'
     redirect_to root_url
   end
+  
+  def search
+    redirect_to root_url if params[:search] == ""
+    @articles = Article.search(params[:search])   
+  end
     
   private
 

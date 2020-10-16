@@ -10,4 +10,15 @@ class Article < ApplicationRecord
   has_many :materials, dependent: :destroy
   has_many :steps, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
+  
+  def self.search(search)   
+    keywords = search.split(/[[:blank:]]+/)
+    articles = []
+    
+    keywords.each do |keyword|
+      next if keyword == "" 
+        articles += Article.all.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])   
+      end 
+    articles.uniq
+  end  
 end

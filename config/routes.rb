@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   resources :bookmarks, only: [:create, :destroy]
 
   resources :articles, only: [:show, :new, :create, :edit, :update, :destroy] do
+    collection do
+      get :search
+    end
     resources :materials, :steps, only: [:new, :create] do
       collection do
         get :edit
