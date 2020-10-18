@@ -11,6 +11,10 @@ class ArticlesController < ApplicationController
       @article = current_user.articles.build
     end
   end
+  
+  def preview
+    @article = Article.find(params[:id])
+  end
 
   def create
     @article = current_user.articles.build(article_params)
