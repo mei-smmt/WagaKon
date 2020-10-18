@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
     member do
       get :preview
+      patch :publish
+      patch :stop_publish 
     end
     resources :materials, :steps, only: [:new, :create] do
       collection do
