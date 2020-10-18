@@ -7,7 +7,7 @@ class Article < ApplicationRecord
   validates :explanation, presence: true, length: { maximum: 400 }
   
   # statusカラム設定
-  enum status: { private: 0, public: 1 }
+  enum status: { draft: 0, publication: 1 }
 
   belongs_to :user
   has_many :materials, dependent: :destroy
