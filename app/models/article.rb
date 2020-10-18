@@ -5,6 +5,9 @@ class Article < ApplicationRecord
   validates :title, presence: true, length: { maximum: 20 }
   validates :image, presence: true
   validates :explanation, presence: true, length: { maximum: 400 }
+  
+  # statusカラム設定
+  enum status: { private: 0, public: 1 }
 
   belongs_to :user
   has_many :materials, dependent: :destroy
