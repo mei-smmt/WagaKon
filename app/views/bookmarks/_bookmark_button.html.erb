@@ -2,7 +2,7 @@
   <% if current_user.favorite?(article) %>
     <%= form_with(model: current_user.bookmarks.find_by(article_id: article.id), local: true, method: :delete) do |f| %>
       <%= hidden_field_tag :article_id, article.id %>
-      <%= f.submit 'ブックマークをはずす', class: 'btn btn-sm btn-danger' %>
+      <%= f.submit 'ブックマークをはずす', class: 'btn btn-sm btn-outline-primary' %>
     <% end %>
   <% else %>
     <%= form_with(model: current_user.bookmarks.build, local: true) do |f| %>
