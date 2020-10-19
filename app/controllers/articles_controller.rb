@@ -4,7 +4,9 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
-    # draftバリデーション
+    if @article.status == "draft"
+      redirect_to preview_article_url(@article)
+    end
   end
 
   def new
@@ -51,6 +53,7 @@ class ArticlesController < ApplicationController
   
   def stop_publish
     @article.drafting
+    redirect_to draft_articles_user_url(@user)
   end
     
   def search
