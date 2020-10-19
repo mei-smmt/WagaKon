@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :create, :edit, :update] do
     member do
       get :favorite_articles
+      get :draft_articles
     end
   end
   
@@ -17,6 +18,11 @@ Rails.application.routes.draw do
   resources :articles, only: [:show, :new, :create, :edit, :update, :destroy] do
     collection do
       get :search
+    end
+    member do
+      get :preview
+      patch :publish
+      patch :stop_publish 
     end
     resources :materials, :steps, only: [:new, :create] do
       collection do

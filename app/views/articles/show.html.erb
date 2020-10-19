@@ -1,58 +1,18 @@
 <%= render 'layouts/second_navbar' %>
 
-<!--ブックマークボタン-->
-<div class="mb-3">
-  <%= render 'bookmarks/bookmark_button', article: @article %>
-</div>
-
-<div class="container mb-4">
-  <h3><%= @article.title %></h3>
-  <div class="row">
-    <div class="col-sm-5">
-      <div class="card">
-        <div class="card-body">
-          <%= image_tag @article.image.url %>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-7">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">説明</h5>
-          <h6 class="card-text"><%= @article.explanation %></h6>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">材料</h5>
-          <% @article.materials.each do |material| %> 
-            <div class="d-flex justify-content-between">
-              <span><%= material.name %></span><span><%= material.quantity %></span>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!--編集、削除ボタン-->
-<div class="mb-5">
+<div class="mb-2">
+  <!--編集、削除ボタン-->
   <% if current_user == @article.user %>
-    <%= link_to "編集する", edit_article_path(@article), class: 'btn btn-info btn-sm' %>
-    <%= link_to "記事を削除", @article, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger btn-sm' %>
+    <%= render 'articles/stop_publish_button', article: @article %>
+    <%= render 'articles/edit_delete_button', article: @article %>
   <% end %>
 </div>
 
-<div class="container">
-  <h5>作り方</h5>
-  <div class="row">
-    <% @article.steps.each do |step| %>
-      <div class="col-sm-3">
-        <h4>STEP<%= step.number %></h4>
-        <%= image_tag step.image.url %>
-        <h6><%= step.content %></h6>
-      </div>
-    <% end %>
-  </div>
+<div class="mb-2">
+  <!--ブックマークボタン-->
+  <%= render 'bookmarks/bookmark_button', article: @article %>
 </div>
+
+<!--記事詳細view-->
+<%= render 'articles/article', article: @article %>
+

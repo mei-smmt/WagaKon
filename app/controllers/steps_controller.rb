@@ -15,7 +15,7 @@ class StepsController < ApplicationController
     end
     
     if Step.bulk_save(@steps)
-      redirect_to article_url(@article)
+      redirect_to preview_article_url(@article)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new

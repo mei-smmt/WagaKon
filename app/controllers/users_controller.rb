@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:edit, :update, :favorite_articles]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :require_user_logged_in, only: [:edit, :update, :favorite_articles, :draft_articles]
+  before_action :correct_user, only: [:edit, :update, :favorite_articles, :draft_articles]
   
   def show
     @user = User.find(params[:id])
-    @articles = @user.articles
+    @articles = @user.articles.published
   end
 
   def new
@@ -37,8 +37,11 @@ class UsersController < ApplicationController
   end
   
   def favorite_articles
-    @user = User.find(params[:id])
     @favorite_articles = @user.favorite_articles
+  end
+  
+  def draft_articles
+    @draft_articles = @user.articles.draft
   end
   
   private
