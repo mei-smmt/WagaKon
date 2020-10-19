@@ -31,7 +31,7 @@ class Article < ApplicationRecord
     
     keywords.each do |keyword|
       next if keyword == "" 
-        articles += Article.all.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])   
+        articles += Article.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])   
       end 
     articles.uniq
   end  
