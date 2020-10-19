@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :create, :edit, :update] do
     member do
       get :favorite_articles
+      get :draft_articles
     end
   end
   
