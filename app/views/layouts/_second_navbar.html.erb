@@ -1,22 +1,23 @@
+<!--検索フォーム-->
 <div class="row mb-4">
-  <aside class="col-sm-8">
+  <div class="col-sm-8">
     <div class="form-inline">
       <%= form_with(url: search_articles_path, method: :get, local: true) do |f| %>
         <%= f.text_field :search, class: 'form-control' %>
-        <%= f.submit 'DIYを検索', class: 'input-group-btn' %>
+        <%= f.submit 'DIYを検索', class: 'btn input-group-btn btn-outline-dark' %>
       <% end %>
     </div>
-  </aside>
+  </div>
   
   <!--記事投稿ボタン-->
   <div class="col-sm-4">
     <div>
       <% if logged_in? %> 
-        <%= link_to "ブックマークした記事", favorite_articles_user_path(current_user), class: 'btn btn-warning btn-sm' %>
-        <%= link_to "記事を投稿する", new_article_path, class: 'btn btn-warning btn-sm' %>
+        <%= link_to "ブックマークした記事", favorite_articles_user_path(current_user), class: 'btn btn-warning' %>
+        <%= link_to "記事を投稿する", new_article_path, class: 'btn btn-warning' %>
       <% else %>
-        <%= link_to "ブックマークした記事", login_path, class: 'btn btn-warning btn-sm' %>
-        <%= link_to "記事を投稿する", login_path, class: 'btn btn-warning btn-sm' %>
+        <%= link_to "ブックマークした記事", login_path, class: 'btn btn-warning' %>
+        <%= link_to "記事を投稿する", login_path, class: 'btn btn-warning' %>
       <% end %>
     </div>
   </div>
