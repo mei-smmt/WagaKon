@@ -1,5 +1,5 @@
 class ToppagesController < ApplicationController
   def index
-    @articles = Article.all
+    @articles = Article.published
   end
 end
