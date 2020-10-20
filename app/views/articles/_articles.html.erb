@@ -3,10 +3,10 @@
     <% articles.each do |article| %>
       <div class="col-sm-4">
         <a href="/articles/<%= article.id %>", class="card" %>
+          <%= image_tag article.image.url %>
           <div class="card-body">
-            <h4 class="card-title"><%= article.title %></h4>
-            <%= image_tag article.image.url %>
-            <p class="text-right">ブックマーク：<%= article.bookmarks.count %></p>
+            <h5 class="card-title text-secondary"><%= article.title %></h5>
+            <p class="text-secondary text-right">ブックマーク：<%= article.bookmarks.count %></p>
           </div>
         </a>
       </div>
