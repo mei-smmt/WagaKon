@@ -3,15 +3,18 @@ class StepsController < ApplicationController
   before_action -> {user_author_match(params[:article_id])}
   
   def new
-    @steps = (1..2).map do
+    @steps = (1..10).map do
       @article.steps.build
     end
   end
   
   def create
     @steps = []
-    steps_params["steps"].each do |step|
-      @steps << @article.steps.build(step)
+    steps = steps_params["steps"]
+    steps.each do |step|
+      if step[:content].present? || step.has_key?(:image) 
+        @steps << @article.steps.build(step)
+      end
     end
     
     if Step.bulk_save(@steps)
