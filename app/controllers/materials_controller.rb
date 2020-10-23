@@ -3,15 +3,18 @@ class MaterialsController < ApplicationController
   before_action -> {user_author_match(params[:article_id])}
 
   def new
-    @materials = (1..2).map do
+    @materials = (1..10).map do
       @article.materials.build
     end
   end
   
   def create
     @materials = []
-    materials_params["materials"].each do |material|
-      @materials << @article.materials.build(material)
+    materials = materials_params["materials"]
+    materials.each do |material|
+      if material[:name].present? || material[:quantity].present?
+        @materials << @article.materials.build(material)
+      end
     end
     
     if Material.bulk_save(@materials)
