@@ -12,13 +12,9 @@ class MaterialsController < ApplicationController
     @materials = []
     materials = materials_params["materials"]
     materials.each do |material|
-      if material[:name].empty? && material[:quantity].empty?
-        materials.delete(material)
+      if material[:name].present? || material[:quantity].present?
+        @materials << @article.materials.build(material)
       end
-    end
-    
-    materials.each do |material|
-      @materials << @article.materials.build(material)
     end
     
     if Material.bulk_save(@materials)
