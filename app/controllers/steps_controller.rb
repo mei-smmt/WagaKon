@@ -27,14 +27,33 @@ class StepsController < ApplicationController
 
   def edit
     @steps = @article.steps
+    start = @steps.last.id + 1
+    finish = start + 9 - @steps.size
+    (start..finish).each do |i|
+      @steps.build(id: i)
+    end
   end
   
   def update
     @steps = @article.steps
-    @steps.zip(steps_params["steps"].values) do |original_step, step|
-      original_step.assign_attributes(step)
+    new_steps = []
+    steps = steps_params["steps"].values
+    steps.each do |step|
+      if step[:content].present? || step.has_key?(:image)
+        new_steps << step
+      end
     end
     
+    new_steps.zip(@steps) do |new_step, step|
+      if step.present? && new_step.present?
+        step.assign_attributes(new_step)
+      elsif new_step.present?
+        @steps << @article.steps.build(new_step)
+      else
+        step.destroy
+      end
+    end
+
     if Step.bulk_save(@steps)
       redirect_to article_url(@article)
     else
