@@ -10,9 +10,9 @@ class StepsController < ApplicationController
   
   def create
     @steps = []
-    steps = steps_params["steps"]
+    steps = steps_params
     steps.each do |step|
-      if step[:content].present? || step.has_key?(:image) 
+      if step[:content].present?
         @steps << @article.steps.build(step)
       end
     end
@@ -27,7 +27,7 @@ class StepsController < ApplicationController
 
   def edit
     @steps = @article.steps
-    start = @steps.last.id + 1
+    start = 1 + (@steps.present? ? @steps.last.id : 0)
     finish = start + 9 - @steps.size
     (start..finish).each do |i|
       @steps.build(id: i)
@@ -35,22 +35,12 @@ class StepsController < ApplicationController
   end
   
   def update
-    @steps = @article.steps
-    new_steps = []
-    steps = steps_params["steps"].values
+    @article.steps.destroy_all
+    @steps = []
+    steps = steps_params.is_a?(Array) ? steps_params : steps_params.values
     steps.each do |step|
-      if step[:content].present? || step.has_key?(:image)
-        new_steps << step
-      end
-    end
-    
-    new_steps.zip(@steps) do |new_step, step|
-      if step.present? && new_step.present?
-        step.assign_attributes(new_step)
-      elsif new_step.present?
-        @steps << @article.steps.build(new_step)
-      else
-        step.destroy
+      if step[:content].present?
+        @steps << @article.steps.build(step)
       end
     end
 
@@ -65,6 +55,6 @@ class StepsController < ApplicationController
   private
   
   def steps_params
-    params.permit(steps: [:number, :image, :content])
+    params.permit(steps: [:number, :content])["steps"]
   end
 end

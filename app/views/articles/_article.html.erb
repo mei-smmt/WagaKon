@@ -6,7 +6,6 @@
     <% article.steps.each do |step| %>
       <div class="col-sm-3">
         <h4>STEP<%= step.number %></h4>
-        <%= image_tag step.image.url if step.image? %>
         <h6><%= step.content %></h6>
       </div>
     <% end %>
