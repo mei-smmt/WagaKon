@@ -8,16 +8,6 @@
               <%= render 'layouts/error_messages', model: f.object %>
               <h4>STEP<%= index %></h4>
               <%= f.hidden_field :number, :value => index %>
-            
-              <div class="form-group mb-2">
-                <div class="mb-3">
-                  <%= f.label :image, "画像（変更前）" %><br>
-                  <%= image_tag step.image.url if step.image? %>
-                </div>
-                <%= f.label :image, "新しい画像" %><br>
-                <%= f.file_field :image, class: "image" %>      
-              </div>
-            
               <div class="form-group mb-2">
                 <%= f.label :content, "説明" %>
                 <%= f.text_area :content, class: "form-control" %>
