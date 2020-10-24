@@ -1,22 +1,22 @@
 <%= render 'articles/article_upper', article: @article %>
 
-    <%= form_with(url: article_steps_path, method: method, local: true) do |form| %>
-      <div class="form-row">
-        <% @steps.each.with_index(1) do |step, index|%>
-          <%= form.fields_for 'steps[]', step do |f| %>
-            <div class="col-md-3">
-              <%= render 'layouts/error_messages', model: f.object %>
-              <h4>STEP<%= index %></h4>
-              <%= f.hidden_field :number, :value => index %>
-              <div class="form-group mb-2">
-                <%= f.label :content, "説明" %>
-                <%= f.text_area :content, class: "form-control" %>
-              </div>
-            </div>  
-          <% end %>
-        <% end %>
-　　　</div>　  
-      <div class="col-md-6 offset-sm-3">
-        <%= form.submit button_message, class: 'btn btn-primary btn-block' %>
-      </div>
+<%= form_with(url: article_steps_path, method: method, local: true) do |form| %>
+  <div class="form-row">
+    <% @steps.each.with_index(1) do |step, index|%>
+      <%= form.fields_for 'steps[]', step do |f| %>
+        <div class="col-md-3">
+          <%= render 'layouts/error_messages', model: f.object %>
+          <h4>STEP<%= index %></h4>
+          <%= f.hidden_field :number, :value => index %>
+          <div class="form-group mb-2">
+            <%= f.label :content, "説明" %>
+            <%= f.text_area :content, class: "form-control" %>
+          </div>
+        </div>  
+      <% end %>
     <% end %>
+　</div>　  
+  <div class="col-md-6 offset-sm-3">
+    <%= form.submit button_message, class: 'btn btn-primary btn-block' %>
+  </div>
+<% end %>

@@ -2,7 +2,7 @@
   <div class="row">
     <% articles.each do |article| %>
       <div class="col-sm-4">
-        <a href="/articles/<%= article.id %>", class="card" %>
+        <a href="/articles/<%= article.id %>", class="card">
           <%= image_tag article.image.url %>
           <div class="card-body">
             <h5 class="card-title text-secondary"><%= article.title %></h5>
