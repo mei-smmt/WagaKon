@@ -27,14 +27,23 @@ class MaterialsController < ApplicationController
   
   def edit
     @materials = @article.materials
+    start = @materials.last.id + 1
+    finish = start + 9 - @materials.size
+    (start..finish).each do |i|
+      @materials.build(id: i)
+    end
   end
   
   def update
-    @materials = @article.materials
-    @materials.zip(materials_params["materials"].values) do |original_material, material|
-      original_material.assign_attributes(material)
+    @article.materials.destroy_all
+    @materials = []
+    materials = materials_params["materials"].values
+    materials.each do |material|
+      if material[:name].present? || material[:quantity].present?
+        @materials << @article.materials.build(material)
+      end
     end
-    
+
     if Material.bulk_save(@materials)
       redirect_to edit_article_steps_path(@article)
     else
