@@ -10,7 +10,7 @@ class MaterialsController < ApplicationController
   
   def create
     @materials = []
-    materials = materials_params["materials"]
+    materials = materials_params
     materials.each do |material|
       if material[:name].present? || material[:quantity].present?
         @materials << @article.materials.build(material)
@@ -27,7 +27,7 @@ class MaterialsController < ApplicationController
   
   def edit
     @materials = @article.materials
-    start = @materials.last.id + 1
+    start = 1 + (@materials.present? ? @materials.last.id : 0)
     finish = start + 9 - @materials.size
     (start..finish).each do |i|
       @materials.build(id: i)
@@ -37,7 +37,7 @@ class MaterialsController < ApplicationController
   def update
     @article.materials.destroy_all
     @materials = []
-    materials = materials_params["materials"].values
+    materials = materials_params.is_a?(Array) ? materials_params : materials_params.values
     materials.each do |material|
       if material[:name].present? || material[:quantity].present?
         @materials << @article.materials.build(material)
@@ -55,7 +55,7 @@ class MaterialsController < ApplicationController
     private
     
   def materials_params
-    params.permit(materials: [:name, :quantity])
+    params.permit(materials: [:name, :quantity])["materials"]
   end
 end
   
