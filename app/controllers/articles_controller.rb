@@ -58,7 +58,7 @@ class ArticlesController < ApplicationController
     
   def search
     redirect_to root_url if params[:search] == ""
-    @articles = Article.published.search(params[:search])   
+    @articles = Article.published.search(params[:search])
   end
     
   private
