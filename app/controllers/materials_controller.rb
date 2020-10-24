@@ -52,7 +52,7 @@ class MaterialsController < ApplicationController
     end
   end
 
-    private
+  private
     
   def materials_params
     params.permit(materials: [:name, :quantity])["materials"]
