@@ -2,7 +2,7 @@
 
 <div class="row">
   <aside class="col-md-4">
-      <%= image_tag @user.image.url if @user.image? %>
+      <%= image_tag @user.image.url if @user.image?, alt: @user.name %>
   </aside>
   <div class="col-md-8 mb-3">
     <h5>名前</h5>

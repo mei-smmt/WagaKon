@@ -1,7 +1,7 @@
 <h3><%= article.title %></h3>
 <div class="row">
   <div class="col-md-5">
-    <%= image_tag article.image.url %>
+    <%= image_tag article.image.url, alt: article.title %>
   </div>
   <div class="col-md-7">
     <div class="card mb-4">
