@@ -6,7 +6,7 @@
     <div class="form-group col-md-4 offset-md-1">
       <div class="mb-3">
         <%= f.label :image, "プロフィール画像(変更前)" %><br>
-        <%= image_tag @user.image.url, alt: @user.name if @user.image? %>
+        <%= cl_image_tag(@user.image.to_s, alt: @user.name) if @user.image? %>
       </div>
       <%= f.label :image, "新しいプロフィール画像" %><br>
       <%= f.file_field :image, class: "image" %>      
