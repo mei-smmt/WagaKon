@@ -20,6 +20,7 @@ doc/
 .DS_Store
 .idea
 .secret
+cloudinary.yml
 
 # Ignore uploaded files in development
 /public/uploads/
