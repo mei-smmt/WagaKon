@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :profile, length: { maximum: 500}
   
   has_secure_password
+  validates :password, presence: true, length: { minimum: 4}
   
   has_many :articles
   has_many :bookmarks
