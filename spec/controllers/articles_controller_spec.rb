@@ -65,4 +65,47 @@ RSpec.describe ArticlesController, type: :controller do
       end
     end
   end
+  
+  describe 'Post #create' do
+    before do
+      @user = create(:user)
+      session[:user_id] = @user.id
+    end
+    context '有効なパラメータの場合' do
+      before do
+        @article = attributes_for(:article)
+      end
+      it '302レスポンスが返る' do
+        post :create, params:{article: @article}
+        expect(response.status).to eq 302
+      end
+      it 'データベースにユーザーの新しい記事が登録される' do
+        expect{
+          post :create, params:{article: @article}
+        }.to change(@user.articles, :count).by(1)
+      end
+      it '材料入力画面にリダイレクトする' do
+        post :create, params:{article: @article}
+        expect(response).to redirect_to new_article_material_path(@user.articles.last)
+      end
+    end
+    context '無効なパラメータの場合' do
+      before do
+        @invalid_article = attributes_for(:article, title: nil)
+      end
+      it '200レスポンスが返る' do
+        post :create, params:{article: @invalid_article}
+        expect(response.status).to eq 200
+      end
+      it 'データベースに新しい記事が登録されない' do
+        expect{
+          post :create, params:{article: @invalid_article}
+        }.not_to change(@user.articles, :count)
+      end
+      it ':newテンプレートを再表示する' do
+        post :create, params:{article: @invalid_article}
+        expect(response).to render_template :new
+      end
+    end
+  end
 end
