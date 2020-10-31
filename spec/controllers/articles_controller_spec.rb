@@ -34,4 +34,35 @@ RSpec.describe ArticlesController, type: :controller do
       end
     end
   end
+  
+  describe "#new" do
+    context "ログイン済み" do
+      before do
+        @user = create(:user)
+        session[:user_id] = @user.id
+        get :new
+      end
+      it "200レスポンスが返る" do
+        expect(response.status).to eq(200)
+      end
+      it "@articleに新しい記事を割り当てる" do
+        expect(assigns(:article)).to be_a_new(Article)
+      end
+      it ':newテンプレートを表示する' do
+        expect(response).to render_template :new
+      end
+    end
+    context "ログインなし" do
+      before do
+        session[:user_id] = nil
+        get :new
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it '#loginにリダイレクトする' do
+        expect(response).to redirect_to login_path
+      end
+    end
+  end
 end
