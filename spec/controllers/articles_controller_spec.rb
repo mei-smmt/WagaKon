@@ -197,4 +197,47 @@ RSpec.describe ArticlesController, type: :controller do
       end
     end
   end
+  
+  describe "Delete #destroy" do
+    context '記事作者とログインユーザーが一致' do
+      before do
+        @user = create(:user)
+        @article = create(:article, user_id: @user.id)
+        session[:user_id] = @user.id
+      end
+      it '302レスポンスが返る' do
+        delete :destroy, params: {id: @article.id}
+        expect(response.status).to eq 302
+      end
+      it 'データベースからユーザーの記事が削除される' do
+        expect{
+          delete :destroy, params: {id: @article.id}
+        }.to change(@user.articles, :count).by(-1)
+      end
+      it 'rootにリダイレクトする' do
+        delete :destroy, params: {id: @article.id}
+        expect(response).to redirect_to root_path
+      end
+    end
+    context '記事作者とログインユーザーが一致しない' do
+      before do
+        @user, @login_user = create_list(:user, 2)
+        @article = create(:article, user_id: @user.id)
+        session[:user_id] = @login_user.id
+      end
+      it "302レスポンスが返る" do
+        delete :destroy, params: {id: @article.id}
+        expect(response.status).to eq(302)
+      end
+      it 'データベースからユーザーの記事は削除されない' do
+        expect{
+          delete :destroy, params: {id: @article.id}
+        }.not_to change(@user.articles, :count)
+      end
+      it 'rootにリダイレクトする' do
+        delete :destroy, params: {id: @article.id}
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end
