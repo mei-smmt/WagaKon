@@ -142,4 +142,59 @@ RSpec.describe ArticlesController, type: :controller do
       end
     end
   end
+  
+  describe 'Patch #update' do
+    context '記事作者とログインユーザーが一致' do
+      before do
+        @user = create(:user)
+        @article = create(:article, user_id: @user.id)
+        @original_title = @article.title
+        session[:user_id] = @user.id
+      end
+      context '有効なパラメータの場合' do
+        before do
+          patch :update, params:{id: @article.id, article: attributes_for(:article, title: "new_title")}
+        end
+        it '302レスポンスが返る' do
+          expect(response.status).to eq 302
+        end
+        it 'データベースの記事が更新される' do
+          @article.reload
+          expect(@article.title).to eq 'new_title'
+        end
+        it '材料編集画面にリダイレクトする' do
+          expect(response).to redirect_to edit_article_materials_path(@article)
+        end
+      end
+      context '無効なパラメータの場合' do
+        before do
+          patch :update, params:{id: @article.id, article: attributes_for(:article, title: nil)}
+        end
+        it '200レスポンスが返る' do
+          expect(response.status).to eq 200
+        end
+        it 'データベースのユーザーは更新されない' do
+          @article.reload
+          expect(@article.title).to eq @original_title
+        end
+        it ':editテンプレートを再表示する' do
+          expect(response).to render_template :edit
+        end
+      end
+    end
+    context '記事作者とログインユーザーが一致しない' do
+      before do
+        @user, @login_user = create_list(:user, 2)
+        @article = create(:article, user_id: @user.id)
+        session[:user_id] = @login_user.id
+        patch :update, params:{id: @article.id, article: attributes_for(:article, title: "new_title")}
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it 'rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end
