@@ -297,12 +297,55 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致しない' do
       before do
         @user, @login_user = create_list(:user, 2)
-        @article = create(:article, user_id: @user.id)
+        @article = create(:article, user_id: @user.id, status: "draft")
         session[:user_id] = @login_user.id
         patch :publish, params:{id: @article.id, article: attributes_for(:article, status: "published")}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
+      end
+      it 'データベースの記事は更新されない' do
+        @article.reload
+        expect(@article.status).to eq "draft"
+      end
+      it 'rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
+  
+  describe 'Patch #stop_publish' do
+    context '記事作者とログインユーザーが一致' do
+      before do
+        @user = create(:user)
+        @article = create(:article, user_id: @user.id, status: "published")
+        session[:user_id] = @user.id
+        patch :stop_publish, params:{id: @article.id, article: attributes_for(:article, status: "draft")}
+      end
+      it '302レスポンスが返る' do
+        expect(response.status).to eq 302
+      end
+      it 'データベースの記事が更新される' do
+        @article.reload
+        expect(@article.status).to eq 'draft'
+      end
+      it '下書き一覧にリダイレクトする' do
+        expect(response).to redirect_to draft_articles_user_url(@user)
+      end
+    end
+    context '記事作者とログインユーザーが一致しない' do
+      before do
+        @user, @login_user = create_list(:user, 2)
+        @article = create(:article, user_id: @user.id, status: "published")
+        session[:user_id] = @login_user.id
+        patch :stop_publish, params:{id: @article.id, article: attributes_for(:article, status: "draft")}
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it 'データベースの記事は更新されない' do
+        @article.reload
+        expect(@article.status).to eq "published"
       end
       it 'rootにリダイレクトする' do
         expect(response).to redirect_to root_path
