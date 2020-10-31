@@ -274,4 +274,39 @@ RSpec.describe ArticlesController, type: :controller do
       end
     end
   end
+  
+  describe 'Patch #publish' do
+    context '記事作者とログインユーザーが一致' do
+      before do
+        @user = create(:user)
+        @article = create(:article, user_id: @user.id, status: "draft")
+        session[:user_id] = @user.id
+        patch :publish, params:{id: @article.id, article: attributes_for(:article, status: "published")}
+      end
+      it '302レスポンスが返る' do
+        expect(response.status).to eq 302
+      end
+      it 'データベースの記事が更新される' do
+        @article.reload
+        expect(@article.status).to eq 'published'
+      end
+      it '記事詳細画面にリダイレクトする' do
+        expect(response).to redirect_to article_url(@article)
+      end
+    end
+    context '記事作者とログインユーザーが一致しない' do
+      before do
+        @user, @login_user = create_list(:user, 2)
+        @article = create(:article, user_id: @user.id)
+        session[:user_id] = @login_user.id
+        patch :publish, params:{id: @article.id, article: attributes_for(:article, status: "published")}
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it 'rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end
