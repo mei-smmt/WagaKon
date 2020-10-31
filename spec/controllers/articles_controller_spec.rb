@@ -240,4 +240,38 @@ RSpec.describe ArticlesController, type: :controller do
       end
     end
   end
+  
+  describe "#preview" do
+    context '記事作者とログインユーザーが一致' do
+      before do
+        @user = create(:user)
+        @article = create(:article, user_id: @user.id)
+        session[:user_id] = @user.id
+        get :preview, params: {id: @article.id}
+      end
+      it "200レスポンスが返る" do
+        expect(response.status).to eq(200)
+      end
+      it "@articleにリクエストされた記事を割り当てる" do
+        expect(assigns(:article)).to eq(@article)
+      end
+      it ':previewテンプレートを表示する' do
+        expect(response).to render_template :preview
+      end
+    end
+    context '記事作者とログインユーザーが一致していない' do
+      before do
+        @user, @login_user = create_list(:user, 2)
+        @article = create(:article, user_id: @user.id)
+        session[:user_id] = @login_user.id
+        get :preview, params: {id: @article.id}
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it 'rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end
