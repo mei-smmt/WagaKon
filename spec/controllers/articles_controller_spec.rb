@@ -352,4 +352,52 @@ RSpec.describe ArticlesController, type: :controller do
       end
     end
   end
+  
+  describe "#search" do
+    before do
+      @article_published = create(:article, status: "published", title: "本棚の作成", explanation: "木材を用いて本棚を作る" )
+      @article_draft = create(:article, status: "draft", title: "本棚の作成", explanation: "木材を用いて本棚を作る" )
+    end
+    context '検索ワードが入力されている場合' do
+      context '検索ワードのいずれか一つでも"title" または "explanation"に含まれている場合' do
+        before do
+          get :search, params: {search: "本棚　木材 猫"}
+        end
+        it "200レスポンスが返る" do
+          expect(response.status).to eq(200)
+        end
+        it "@articlesに同じ記事が重複して登録されない, 下書き記事は登録されない" do
+          expect(assigns(:articles)).to eq([@article_published])
+        end
+        it ':searchテンプレートを表示する' do
+          expect(response).to render_template :search
+        end
+      end
+      context '検索ワードが"title"と"explanation"どちらにも含まれていない場合' do
+        before do
+          get :search, params: {search: "test example"}
+        end
+        it "200レスポンスが返る" do
+          expect(response.status).to eq(200)
+        end
+        it "@articlesに記事が割り当てられない" do
+          expect(assigns(:articles)).to eq([])
+        end
+        it ':searchテンプレートを表示する' do
+          expect(response).to render_template :search
+        end
+      end
+    end
+    context '検索ワードが入力されていない場合' do
+      before do
+        get :search, params: {search: ""}
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it 'rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end
