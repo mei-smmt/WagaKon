@@ -16,7 +16,6 @@ class MaterialsController < ApplicationController
         @materials << @article.materials.build(material)
       end
     end
-    
     if Material.bulk_save(@materials)
       redirect_to new_article_step_path(@article)
     else
