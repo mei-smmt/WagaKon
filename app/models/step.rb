@@ -1,7 +1,7 @@
 class Step < ApplicationRecord
   mount_uploader :image, ImageUploader
   
-  belongs_to :article
+  belongs_to :recipe
   
   # 手順番号、手順説明文必須
   validates :number, presence: true

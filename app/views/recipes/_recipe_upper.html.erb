@@ -1,20 +1,20 @@
 <div class="container mb-4">
-  <h3><%= article.title %></h3>
+  <h3><%= recipe.title %></h3>
   <div class="row">
     <div class="col-sm-5">
-      <%= cl_image_tag(article.image.to_s, alt: article.title) %>
+      <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
     </div>
     <div class="col-sm-7">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">説明</h5>
-          <h6 class="card-text"><%= article.explanation %></h6>
+          <h6 class="card-text"><%= recipe.explanation %></h6>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">材料</h5>
-          <% @article.materials.each do |material| %> 
+          <% @recipe.materials.each do |material| %> 
             <div class="d-flex justify-content-between">
               <span><%= material.name %></span><span><%= material.quantity %></span>
             </div>

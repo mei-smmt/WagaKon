@@ -1,8 +1,8 @@
 <%= render 'layouts/second_navbar' %>
 
-<h5>検索結果：<%= @articles.count %>件</h5>
-<% if @articles.empty? %>
+<h5>検索結果：<%= @recipes.count %>件</h5>
+<% if @recipes.empty? %>
   <div class="alert alert-warning">キーワードに一致する記事がありません</div>
 <% else %>
-  <%= render 'articles/articles', articles: @articles %>
+  <%= render 'recipes/recipes', recipes: @recipes %>
 <% end %>

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :article do
+  factory :recipe do
     sequence(:title) { |n| "TEST_TITLE#{n}" }
     image { Rack::Test::UploadedFile.new(Rails.root.join('spec/factories/test.jpg')) }
     sequence(:explanation) { |n| "TEST_EXPLANATION#{n}" }

@@ -1,10 +1,10 @@
 class MaterialsController < ApplicationController
   before_action :require_user_logged_in
-  before_action -> {user_author_match(params[:article_id])}
+  before_action -> {user_author_match(params[:recipe_id])}
 
   def new
     @materials = (1..10).map do
-      @article.materials.build
+      @recipe.materials.build
     end
   end
   
@@ -13,11 +13,11 @@ class MaterialsController < ApplicationController
     materials = materials_params
     materials.each do |material|
       if material[:name].present? || material[:quantity].present?
-        @materials << @article.materials.build(material)
+        @materials << @recipe.materials.build(material)
       end
     end
     if Material.bulk_save(@materials)
-      redirect_to new_article_step_path(@article)
+      redirect_to new_recipe_step_path(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
@@ -25,7 +25,7 @@ class MaterialsController < ApplicationController
   end
   
   def edit
-    @materials = @article.materials
+    @materials = @recipe.materials
     start = 1 + (@materials.present? ? @materials.last.id : 0)
     finish = start + 9 - @materials.size
     (start..finish).each do |i|
@@ -34,17 +34,17 @@ class MaterialsController < ApplicationController
   end
   
   def update
-    @article.materials.destroy_all
+    @recipe.materials.destroy_all
     @materials = []
     materials = materials_params.is_a?(Array) ? materials_params : materials_params.values
     materials.each do |material|
       if material[:name].present? || material[:quantity].present?
-        @materials << @article.materials.build(material)
+        @materials << @recipe.materials.build(material)
       end
     end
 
     if Material.bulk_save(@materials)
-      redirect_to edit_article_steps_path(@article)
+      redirect_to edit_recipe_steps_path(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :edit

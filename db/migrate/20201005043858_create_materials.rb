@@ -3,7 +3,7 @@ class CreateMaterials < ActiveRecord::Migration[5.2]
     create_table :materials do |t|
       t.string :name
       t.string :quantity
-      t.references :article, foreign_key: true
+      t.references :recipe, foreign_key: true
 
       t.timestamps
     end

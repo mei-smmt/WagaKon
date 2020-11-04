@@ -1,0 +1,18 @@
+<%= render 'layouts/second_navbar' %>
+
+<div class="mb-2">
+  <!--編集、削除ボタン-->
+  <% if current_user == @recipe.user %>
+    <%= render 'recipes/stop_publish_button', recipe: @recipe %>
+    <%= render 'recipes/edit_delete_button', recipe: @recipe %>
+  <% end %>
+</div>
+
+<div class="mb-2">
+  <!--ブックマークボタン-->
+  <%= render 'bookmarks/bookmark_button', recipe: @recipe %>
+</div>
+
+<!--記事詳細view-->
+<%= render 'recipes/recipe', recipe: @recipe %>
+
