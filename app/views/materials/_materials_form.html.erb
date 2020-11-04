@@ -1,16 +1,16 @@
-<h3><%= article.title %></h3>
+<h3><%= recipe.title %></h3>
 <div class="row">
   <div class="col-md-5">
-    <%= cl_image_tag(article.image.to_s, alt: article.title) %>
+    <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
   </div>
   <div class="col-md-7">
     <div class="card mb-4">
       <div class="card-body">
         <h5 class="card-title">説明</h5>
-        <h6 class="card-text"><%= article.explanation %></h6>
+        <h6 class="card-text"><%= recipe.explanation %></h6>
       </div>
     </div>
-    <%= form_with(url: article_materials_path, method: method, local: true) do |form| %>
+    <%= form_with(url: recipe_materials_path, method: method, local: true) do |form| %>
       <% @materials.each do |material|%>
         <%= form.fields_for 'materials[]', material do |f| %>
           <%= render 'layouts/error_messages', model: f.object %>

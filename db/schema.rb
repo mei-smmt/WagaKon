@@ -14,20 +14,20 @@ ActiveRecord::Schema.define(version: 2020_11_04_105059) do
 
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "article_id"
+    t.bigint "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_bookmarks_on_article_id"
+    t.index ["recipe_id"], name: "index_bookmarks_on_recipe_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
   create_table "materials", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "quantity"
-    t.bigint "article_id"
+    t.bigint "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_materials_on_article_id"
+    t.index ["recipe_id"], name: "index_materials_on_recipe_id"
   end
 
   create_table "recipes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(version: 2020_11_04_105059) do
     t.integer "number"
     t.string "image"
     t.text "content"
-    t.bigint "article_id"
+    t.bigint "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_steps_on_article_id"
+    t.index ["recipe_id"], name: "index_steps_on_recipe_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(version: 2020_11_04_105059) do
     t.string "image"
   end
 
-  add_foreign_key "bookmarks", "recipes", column: "article_id"
+  add_foreign_key "bookmarks", "recipes", column: "recipe_id"
   add_foreign_key "bookmarks", "users"
-  add_foreign_key "materials", "recipes", column: "article_id"
+  add_foreign_key "materials", "recipes", column: "recipe_id"
   add_foreign_key "recipes", "users"
-  add_foreign_key "steps", "recipes", column: "article_id"
+  add_foreign_key "steps", "recipes", column: "recipe_id"
 end

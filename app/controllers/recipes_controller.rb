@@ -1,24 +1,24 @@
-class ArticlesController < ApplicationController
+class RecipesController < ApplicationController
   before_action :require_user_logged_in, only: [:new, :create]
   before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :destroy, :preview, :publish, :stop_publish]
 
   def show
-    @article = Article.find(params[:id])
-    if @article.status == "draft"
-      redirect_to preview_article_url(@article)
+    @recipe = Recipe.find(params[:id])
+    if @recipe.status == "draft"
+      redirect_to preview_recipe_url(@recipe)
     end
   end
 
   def new
     if logged_in?
-      @article = current_user.articles.build
+      @recipe = current_user.recipes.build
     end
   end
 
   def create
-    @article = current_user.articles.build(article_params)
-    if @article.save
-      redirect_to new_article_material_path(@article)
+    @recipe = current_user.recipes.build(recipe_params)
+    if @recipe.save
+      redirect_to new_recipe_material_path(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
@@ -29,8 +29,8 @@ class ArticlesController < ApplicationController
   end
   
   def update
-    if @article.update(article_params)
-      redirect_to edit_article_materials_path(@article)
+    if @recipe.update(recipe_params)
+      redirect_to edit_recipe_materials_path(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :edit
@@ -38,7 +38,7 @@ class ArticlesController < ApplicationController
   end
   
   def destroy
-    @article.destroy
+    @recipe.destroy
     flash[:success] = '正常に削除されました'
     redirect_to root_url
   end
@@ -47,23 +47,23 @@ class ArticlesController < ApplicationController
   end
   
   def publish
-    @article.publishing
-    redirect_to article_url(@article)
+    @recipe.publishing
+    redirect_to recipe_url(@recipe)
   end
   
   def stop_publish
-    @article.drafting
-    redirect_to draft_articles_user_url(@user)
+    @recipe.drafting
+    redirect_to draft_recipes_user_url(@user)
   end
     
   def search
     redirect_to root_url if params[:search] == ""
-    @articles = Article.published.search(params[:search])
+    @recipes = Recipe.published.search(params[:search])
   end
     
   private
 
-  def article_params
-    params.require(:article).permit(:title, :image, :explanation)
+  def recipe_params
+    params.require(:recipe).permit(:title, :image, :explanation)
   end
 end

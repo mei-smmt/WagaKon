@@ -1,5 +1,5 @@
 class Material < ApplicationRecord
-  belongs_to :article
+  belongs_to :recipe
   
   # 材料名、量必須
   validates :name, presence: true

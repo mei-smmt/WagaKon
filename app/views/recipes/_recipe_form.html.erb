@@ -1,4 +1,4 @@
-  <%= form_with(model: article, local: true) do |f| %>
+  <%= form_with(model: recipe, local: true) do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
     <div class="form-row">
       <div class="col-md-5 offset-sm-1">
@@ -9,7 +9,7 @@
         <div class="form-group">
           <div class="mb-3">
             <%= f.label :image, "画像（変更前）" %><br>
-            <%= cl_image_tag(@article.image.to_s, alt: @article.title) if @article.image? %>
+            <%= cl_image_tag(@recipe.image.to_s, alt: @recipe.title) if @recipe.image? %>
           </div>
           <%= f.label :image, "新しい画像" %><br>
           <%= f.file_field :image, class: "image" %>      

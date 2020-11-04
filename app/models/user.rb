@@ -11,21 +11,21 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 4}
   
-  has_many :articles
+  has_many :recipes
   has_many :bookmarks
-  has_many :favorite_articles, through: :bookmarks, source: :article
+  has_many :favorite_recipes, through: :bookmarks, source: :recipe
   
-  def bookmark(article)
-    self.bookmarks.find_or_create_by(article_id: article.id)
+  def bookmark(recipe)
+    self.bookmarks.find_or_create_by(recipe_id: recipe.id)
   end
 
-  def unbookmark(article)
-    bookmark = self.bookmarks.find_by(article_id: article.id)
+  def unbookmark(recipe)
+    bookmark = self.bookmarks.find_by(recipe_id: recipe.id)
     bookmark.destroy if bookmark
   end
 
-  def favorite?(article)
-    self.favorite_articles.include?(article)
+  def favorite?(recipe)
+    self.favorite_recipes.include?(recipe)
   end
   
 end

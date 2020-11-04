@@ -1,4 +1,4 @@
-class Article < ApplicationRecord
+class Recipe < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   # タイトル、画像、説明文必須
@@ -27,12 +27,12 @@ class Article < ApplicationRecord
   # 記事検索
   def self.search(search)   
     keywords = search.split(/[[:blank:]]+/)
-    articles = []
+    recipes = []
     
     keywords.each do |keyword|
       next if keyword == "" 
-        articles += Article.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])   
+        recipes += Recipe.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])   
       end 
-    articles.uniq
+    recipes.uniq
   end  
 end

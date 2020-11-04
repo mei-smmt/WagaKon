@@ -1,9 +1,9 @@
-<%= render 'articles/article_upper', article: article %>
+<%= render 'recipes/recipe_upper', recipe: recipe %>
 
 <div class="container">
   <h5>作り方</h5>
   <div class="row">
-    <% article.steps.each do |step| %>
+    <% recipe.steps.each do |step| %>
       <div class="col-sm-3">
         <h4>STEP<%= step.number %></h4>
         <h6><%= step.content %></h6>

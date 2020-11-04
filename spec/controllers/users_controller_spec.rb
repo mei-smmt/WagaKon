@@ -156,16 +156,16 @@ RSpec.describe UsersController, type: :controller do
     end
   end
   
-  describe "#favorite_articles" do
+  describe "#favorite_recipes" do
     before do
       @user = create(:user)
-      @article1, @article2, @article3 = create_list(:article, 3)
+      @recipe1, @recipe2, @recipe3 = create_list(:recipe, 3)
       session[:user_id] = @user.id
-      create(:bookmark, user_id: @user.id, article_id: @article1.id)
+      create(:bookmark, user_id: @user.id, recipe_id: @recipe1.id)
     end
     context 'リクエストユーザーとログインユーザーが一致' do
       before do
-        get :favorite_articles, params: {id: @user.id}
+        get :favorite_recipes, params: {id: @user.id}
       end
       it "200レスポンスが返る" do
         expect(response.status).to eq(200)
@@ -173,18 +173,18 @@ RSpec.describe UsersController, type: :controller do
       it "@userにリクエストされたユーザーを割り当てる" do
         expect(assigns(:user)).to eq(@user)
       end
-      it "@articleにリクエストされたユーザーがブックマークした記事を割り当てる" do
-        expect(assigns(:favorite_articles)).to eq([@article1])
+      it "@recipeにリクエストされたユーザーがブックマークした記事を割り当てる" do
+        expect(assigns(:favorite_recipes)).to eq([@recipe1])
       end
-      it ':favorite_articlesテンプレートを表示する' do
-        expect(response).to render_template :favorite_articles
+      it ':favorite_recipesテンプレートを表示する' do
+        expect(response).to render_template :favorite_recipes
       end
     end
     context 'リクエストユーザーとログインユーザーが一致しない' do
       before do
         @login_user = create(:user)
         session[:user_id] = @login_user.id
-        get :favorite_articles, params: {id: @user.id}
+        get :favorite_recipes, params: {id: @user.id}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
@@ -195,17 +195,17 @@ RSpec.describe UsersController, type: :controller do
     end
   end
   
-  describe "#draft_articles" do
+  describe "#draft_recipes" do
     before do
       @user = create(:user)
-      @article1 = create(:article, user_id: @user.id, status: "draft")
-      @article2 = create(:article, user_id: @user.id, status: "published")
-      @article3 = create(:article, status: "draft")
+      @recipe1 = create(:recipe, user_id: @user.id, status: "draft")
+      @recipe2 = create(:recipe, user_id: @user.id, status: "published")
+      @recipe3 = create(:recipe, status: "draft")
     end
     context 'リクエストユーザーとログインユーザーが一致' do
       before do
         session[:user_id] = @user.id
-        get :draft_articles, params: {id: @user.id}
+        get :draft_recipes, params: {id: @user.id}
       end
       it "200レスポンスが返る" do
         expect(response.status).to eq(200)
@@ -213,18 +213,18 @@ RSpec.describe UsersController, type: :controller do
       it "@userにリクエストされたユーザーを割り当てる" do
         expect(assigns(:user)).to eq(@user)
       end
-      it "@articleにリクエストされたユーザーの下書き記事を割り当てる" do
-        expect(assigns(:draft_articles)).to eq([@article1])
+      it "@recipeにリクエストされたユーザーの下書き記事を割り当てる" do
+        expect(assigns(:draft_recipes)).to eq([@recipe1])
       end
-      it ':draft_articlesテンプレートを表示する' do
-        expect(response).to render_template :draft_articles
+      it ':draft_recipesテンプレートを表示する' do
+        expect(response).to render_template :draft_recipes
       end
     end
     context 'リクエストユーザーとログインユーザーが一致しない' do
       before do
         @login_user = create(:user)
         session[:user_id] = @login_user.id
-        get :draft_articles, params: {id: @user.id}
+        get :draft_recipes, params: {id: @user.id}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
