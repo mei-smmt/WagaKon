@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_070247) do
+ActiveRecord::Schema.define(version: 2020_11_05_070547) do
 
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_bookmarks_on_article_id"
+    t.bigint "recipe_id"
+    t.index ["recipe_id"], name: "index_bookmarks_on_recipe_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2020_11_05_070247) do
     t.string "image"
   end
 
-  add_foreign_key "bookmarks", "recipes", column: "article_id"
+  add_foreign_key "bookmarks", "recipes"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "ingredients", "recipes"
   add_foreign_key "recipes", "users"
