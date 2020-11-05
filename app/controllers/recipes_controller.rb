@@ -18,7 +18,7 @@ class RecipesController < ApplicationController
   def create
     @recipe = current_user.recipes.build(recipe_params)
     if @recipe.save
-      redirect_to new_recipe_material_path(@recipe)
+      redirect_to new_recipe_ingredient_path(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
@@ -30,7 +30,7 @@ class RecipesController < ApplicationController
   
   def update
     if @recipe.update(recipe_params)
-      redirect_to edit_recipe_materials_path(@recipe)
+      redirect_to edit_recipe_ingredients_path(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :edit

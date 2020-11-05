@@ -86,7 +86,7 @@ RSpec.describe RecipesController, type: :controller do
       end
       it '材料入力画面にリダイレクトする' do
         post :create, params:{recipe: @recipe}
-        expect(response).to redirect_to new_recipe_material_path(@user.recipes.last)
+        expect(response).to redirect_to new_recipe_ingredient_path(@user.recipes.last)
       end
     end
     context '無効なパラメータの場合' do
@@ -163,7 +163,7 @@ RSpec.describe RecipesController, type: :controller do
           expect(@recipe.title).to eq 'new_title'
         end
         it '材料編集画面にリダイレクトする' do
-          expect(response).to redirect_to edit_recipe_materials_path(@recipe)
+          expect(response).to redirect_to edit_recipe_ingredients_path(@recipe)
         end
       end
       context '無効なパラメータの場合' do

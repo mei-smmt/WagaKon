@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       patch :publish
       patch :stop_publish 
     end
-    resources :materials, :steps, only: [:new, :create] do
+    resources :ingredients, :steps, only: [:new, :create] do
       collection do
         get :edit
         patch :update

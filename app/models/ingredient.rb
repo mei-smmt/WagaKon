@@ -1,4 +1,4 @@
-class Material < ApplicationRecord
+class Ingredient < ApplicationRecord
   belongs_to :recipe
   
   # 材料名、量必須
@@ -6,11 +6,11 @@ class Material < ApplicationRecord
   validates :quantity, presence: true
   
   # 材料の一括保存処理
-  def self.bulk_save(materials)
+  def self.bulk_save(ingredients)
     all_valid = true
-    Material.transaction do
-      materials.each do |material|
-        all_valid &= material.save
+    Ingredient.transaction do
+      ingredients.each do |ingredient|
+        all_valid &= ingredient.save
       end
 
       unless all_valid
