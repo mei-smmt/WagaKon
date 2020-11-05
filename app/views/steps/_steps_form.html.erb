@@ -1,6 +1,6 @@
-<%= render 'articles/article_upper', article: @article %>
+<%= render 'recipes/recipe_upper', recipe: @recipe %>
 
-<%= form_with(url: article_steps_path, method: method, local: true) do |form| %>
+<%= form_with(url: recipe_steps_path, method: method, local: true) do |form| %>
   <div class="form-row">
     <% @steps.each.with_index(1) do |step, index|%>
       <%= form.fields_for 'steps[]', step do |f| %>

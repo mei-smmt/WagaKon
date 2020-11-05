@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe ArticlesController, type: :controller do
+RSpec.describe RecipesController, type: :controller do
   describe "#show" do
     context 'リクエストした記事のstatusが「公開」の場合' do
       before do
-        @article = create(:article, status: "published")
-        get :show, params: {id: @article.id}
+        @recipe = create(:recipe, status: "published")
+        get :show, params: {id: @recipe.id}
       end
       it "200レスポンスが返る" do
         expect(response.status).to eq(200)
       end
-      it "@articleにリクエストされた記事を割り当てる" do
-        expect(assigns(:article)).to eq(@article)
+      it "@recipeにリクエストされた記事を割り当てる" do
+        expect(assigns(:recipe)).to eq(@recipe)
       end
       it ':showテンプレートを表示する' do
         expect(response).to render_template :show
@@ -19,18 +19,18 @@ RSpec.describe ArticlesController, type: :controller do
     end
     context 'リクエストした記事のstatusが「非公開」の場合' do
       before do
-        @article = create(:article, status: "draft")
-        session[:user_id] = @article.user_id
-        get :show, params: {id: @article.id}
+        @recipe = create(:recipe, status: "draft")
+        session[:user_id] = @recipe.user_id
+        get :show, params: {id: @recipe.id}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
       end
-      it "@articleにリクエストされた記事を割り当てる" do
-        expect(assigns(:article)).to eq(@article)
+      it "@recipeにリクエストされた記事を割り当てる" do
+        expect(assigns(:recipe)).to eq(@recipe)
       end
       it ':previewにリダイレクトする' do
-        expect(response).to redirect_to preview_article_path(@article)
+        expect(response).to redirect_to preview_recipe_path(@recipe)
       end
     end
   end
@@ -45,8 +45,8 @@ RSpec.describe ArticlesController, type: :controller do
       it "200レスポンスが返る" do
         expect(response.status).to eq(200)
       end
-      it "@articleに新しい記事を割り当てる" do
-        expect(assigns(:article)).to be_a_new(Article)
+      it "@recipeに新しい記事を割り当てる" do
+        expect(assigns(:recipe)).to be_a_new(Recipe)
       end
       it ':newテンプレートを表示する' do
         expect(response).to render_template :new
@@ -73,37 +73,37 @@ RSpec.describe ArticlesController, type: :controller do
     end
     context '有効なパラメータの場合' do
       before do
-        @article = attributes_for(:article)
+        @recipe = attributes_for(:recipe)
       end
       it '302レスポンスが返る' do
-        post :create, params:{article: @article}
+        post :create, params:{recipe: @recipe}
         expect(response.status).to eq 302
       end
       it 'データベースにユーザーの新しい記事が登録される' do
         expect{
-          post :create, params:{article: @article}
-        }.to change(@user.articles, :count).by(1)
+          post :create, params:{recipe: @recipe}
+        }.to change(@user.recipes, :count).by(1)
       end
       it '材料入力画面にリダイレクトする' do
-        post :create, params:{article: @article}
-        expect(response).to redirect_to new_article_material_path(@user.articles.last)
+        post :create, params:{recipe: @recipe}
+        expect(response).to redirect_to new_recipe_ingredient_path(@user.recipes.last)
       end
     end
     context '無効なパラメータの場合' do
       before do
-        @invalid_article = attributes_for(:article, title: nil)
+        @invalid_recipe = attributes_for(:recipe, title: nil)
       end
       it '200レスポンスが返る' do
-        post :create, params:{article: @invalid_article}
+        post :create, params:{recipe: @invalid_recipe}
         expect(response.status).to eq 200
       end
       it 'データベースに新しい記事が登録されない' do
         expect{
-          post :create, params:{article: @invalid_article}
-        }.not_to change(@user.articles, :count)
+          post :create, params:{recipe: @invalid_recipe}
+        }.not_to change(@user.recipes, :count)
       end
       it ':newテンプレートを再表示する' do
-        post :create, params:{article: @invalid_article}
+        post :create, params:{recipe: @invalid_recipe}
         expect(response).to render_template :new
       end
     end
@@ -113,15 +113,15 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致' do
       before do
         @user = create(:user)
-        @article = create(:article, user_id: @user.id)
+        @recipe = create(:recipe, user_id: @user.id)
         session[:user_id] = @user.id
-        get :edit, params: {id: @article.id}
+        get :edit, params: {id: @recipe.id}
       end
       it "200レスポンスが返る" do
         expect(response.status).to eq(200)
       end
-      it "@articleにリクエストされた記事を割り当てる" do
-        expect(assigns(:article)).to eq(@article)
+      it "@recipeにリクエストされた記事を割り当てる" do
+        expect(assigns(:recipe)).to eq(@recipe)
       end
       it ':editテンプレートを表示する' do
         expect(response).to render_template :edit
@@ -130,9 +130,9 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致していない' do
       before do
         @user, @login_user = create_list(:user, 2)
-        @article = create(:article, user_id: @user.id)
+        @recipe = create(:recipe, user_id: @user.id)
         session[:user_id] = @login_user.id
-        get :edit, params: {id: @article.id}
+        get :edit, params: {id: @recipe.id}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
@@ -147,35 +147,35 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致' do
       before do
         @user = create(:user)
-        @article = create(:article, user_id: @user.id)
-        @original_title = @article.title
+        @recipe = create(:recipe, user_id: @user.id)
+        @original_title = @recipe.title
         session[:user_id] = @user.id
       end
       context '有効なパラメータの場合' do
         before do
-          patch :update, params:{id: @article.id, article: attributes_for(:article, title: "new_title")}
+          patch :update, params:{id: @recipe.id, recipe: attributes_for(:recipe, title: "new_title")}
         end
         it '302レスポンスが返る' do
           expect(response.status).to eq 302
         end
         it 'データベースの記事が更新される' do
-          @article.reload
-          expect(@article.title).to eq 'new_title'
+          @recipe.reload
+          expect(@recipe.title).to eq 'new_title'
         end
         it '材料編集画面にリダイレクトする' do
-          expect(response).to redirect_to edit_article_materials_path(@article)
+          expect(response).to redirect_to edit_recipe_ingredients_path(@recipe)
         end
       end
       context '無効なパラメータの場合' do
         before do
-          patch :update, params:{id: @article.id, article: attributes_for(:article, title: nil)}
+          patch :update, params:{id: @recipe.id, recipe: attributes_for(:recipe, title: nil)}
         end
         it '200レスポンスが返る' do
           expect(response.status).to eq 200
         end
         it 'データベースのユーザーは更新されない' do
-          @article.reload
-          expect(@article.title).to eq @original_title
+          @recipe.reload
+          expect(@recipe.title).to eq @original_title
         end
         it ':editテンプレートを再表示する' do
           expect(response).to render_template :edit
@@ -185,9 +185,9 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致しない' do
       before do
         @user, @login_user = create_list(:user, 2)
-        @article = create(:article, user_id: @user.id)
+        @recipe = create(:recipe, user_id: @user.id)
         session[:user_id] = @login_user.id
-        patch :update, params:{id: @article.id, article: attributes_for(:article, title: "new_title")}
+        patch :update, params:{id: @recipe.id, recipe: attributes_for(:recipe, title: "new_title")}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
@@ -202,40 +202,40 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致' do
       before do
         @user = create(:user)
-        @article = create(:article, user_id: @user.id)
+        @recipe = create(:recipe, user_id: @user.id)
         session[:user_id] = @user.id
       end
       it '302レスポンスが返る' do
-        delete :destroy, params: {id: @article.id}
+        delete :destroy, params: {id: @recipe.id}
         expect(response.status).to eq 302
       end
       it 'データベースからユーザーの記事が削除される' do
         expect{
-          delete :destroy, params: {id: @article.id}
-        }.to change(@user.articles, :count).by(-1)
+          delete :destroy, params: {id: @recipe.id}
+        }.to change(@user.recipes, :count).by(-1)
       end
       it 'rootにリダイレクトする' do
-        delete :destroy, params: {id: @article.id}
+        delete :destroy, params: {id: @recipe.id}
         expect(response).to redirect_to root_path
       end
     end
     context '記事作者とログインユーザーが一致しない' do
       before do
         @user, @login_user = create_list(:user, 2)
-        @article = create(:article, user_id: @user.id)
+        @recipe = create(:recipe, user_id: @user.id)
         session[:user_id] = @login_user.id
       end
       it "302レスポンスが返る" do
-        delete :destroy, params: {id: @article.id}
+        delete :destroy, params: {id: @recipe.id}
         expect(response.status).to eq(302)
       end
       it 'データベースからユーザーの記事は削除されない' do
         expect{
-          delete :destroy, params: {id: @article.id}
-        }.not_to change(@user.articles, :count)
+          delete :destroy, params: {id: @recipe.id}
+        }.not_to change(@user.recipes, :count)
       end
       it 'rootにリダイレクトする' do
-        delete :destroy, params: {id: @article.id}
+        delete :destroy, params: {id: @recipe.id}
         expect(response).to redirect_to root_path
       end
     end
@@ -245,15 +245,15 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致' do
       before do
         @user = create(:user)
-        @article = create(:article, user_id: @user.id)
+        @recipe = create(:recipe, user_id: @user.id)
         session[:user_id] = @user.id
-        get :preview, params: {id: @article.id}
+        get :preview, params: {id: @recipe.id}
       end
       it "200レスポンスが返る" do
         expect(response.status).to eq(200)
       end
-      it "@articleにリクエストされた記事を割り当てる" do
-        expect(assigns(:article)).to eq(@article)
+      it "@recipeにリクエストされた記事を割り当てる" do
+        expect(assigns(:recipe)).to eq(@recipe)
       end
       it ':previewテンプレートを表示する' do
         expect(response).to render_template :preview
@@ -262,9 +262,9 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致していない' do
       before do
         @user, @login_user = create_list(:user, 2)
-        @article = create(:article, user_id: @user.id)
+        @recipe = create(:recipe, user_id: @user.id)
         session[:user_id] = @login_user.id
-        get :preview, params: {id: @article.id}
+        get :preview, params: {id: @recipe.id}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
@@ -279,34 +279,34 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致' do
       before do
         @user = create(:user)
-        @article = create(:article, user_id: @user.id, status: "draft")
+        @recipe = create(:recipe, user_id: @user.id, status: "draft")
         session[:user_id] = @user.id
-        patch :publish, params:{id: @article.id, article: attributes_for(:article, status: "published")}
+        patch :publish, params:{id: @recipe.id, recipe: attributes_for(:recipe, status: "published")}
       end
       it '302レスポンスが返る' do
         expect(response.status).to eq 302
       end
       it 'データベースの記事が更新される' do
-        @article.reload
-        expect(@article.status).to eq 'published'
+        @recipe.reload
+        expect(@recipe.status).to eq 'published'
       end
       it '記事詳細画面にリダイレクトする' do
-        expect(response).to redirect_to article_url(@article)
+        expect(response).to redirect_to recipe_url(@recipe)
       end
     end
     context '記事作者とログインユーザーが一致しない' do
       before do
         @user, @login_user = create_list(:user, 2)
-        @article = create(:article, user_id: @user.id, status: "draft")
+        @recipe = create(:recipe, user_id: @user.id, status: "draft")
         session[:user_id] = @login_user.id
-        patch :publish, params:{id: @article.id, article: attributes_for(:article, status: "published")}
+        patch :publish, params:{id: @recipe.id, recipe: attributes_for(:recipe, status: "published")}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
       end
       it 'データベースの記事は更新されない' do
-        @article.reload
-        expect(@article.status).to eq "draft"
+        @recipe.reload
+        expect(@recipe.status).to eq "draft"
       end
       it 'rootにリダイレクトする' do
         expect(response).to redirect_to root_path
@@ -318,34 +318,34 @@ RSpec.describe ArticlesController, type: :controller do
     context '記事作者とログインユーザーが一致' do
       before do
         @user = create(:user)
-        @article = create(:article, user_id: @user.id, status: "published")
+        @recipe = create(:recipe, user_id: @user.id, status: "published")
         session[:user_id] = @user.id
-        patch :stop_publish, params:{id: @article.id, article: attributes_for(:article, status: "draft")}
+        patch :stop_publish, params:{id: @recipe.id, recipe: attributes_for(:recipe, status: "draft")}
       end
       it '302レスポンスが返る' do
         expect(response.status).to eq 302
       end
       it 'データベースの記事が更新される' do
-        @article.reload
-        expect(@article.status).to eq 'draft'
+        @recipe.reload
+        expect(@recipe.status).to eq 'draft'
       end
       it '下書き一覧にリダイレクトする' do
-        expect(response).to redirect_to draft_articles_user_url(@user)
+        expect(response).to redirect_to draft_recipes_user_url(@user)
       end
     end
     context '記事作者とログインユーザーが一致しない' do
       before do
         @user, @login_user = create_list(:user, 2)
-        @article = create(:article, user_id: @user.id, status: "published")
+        @recipe = create(:recipe, user_id: @user.id, status: "published")
         session[:user_id] = @login_user.id
-        patch :stop_publish, params:{id: @article.id, article: attributes_for(:article, status: "draft")}
+        patch :stop_publish, params:{id: @recipe.id, recipe: attributes_for(:recipe, status: "draft")}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
       end
       it 'データベースの記事は更新されない' do
-        @article.reload
-        expect(@article.status).to eq "published"
+        @recipe.reload
+        expect(@recipe.status).to eq "published"
       end
       it 'rootにリダイレクトする' do
         expect(response).to redirect_to root_path
@@ -355,8 +355,8 @@ RSpec.describe ArticlesController, type: :controller do
   
   describe "#search" do
     before do
-      @article_published = create(:article, status: "published", title: "本棚の作成", explanation: "木材を用いて本棚を作る" )
-      @article_draft = create(:article, status: "draft", title: "本棚の作成", explanation: "木材を用いて本棚を作る" )
+      @recipe_published = create(:recipe, status: "published", title: "本棚の作成", explanation: "木材を用いて本棚を作る" )
+      @recipe_draft = create(:recipe, status: "draft", title: "本棚の作成", explanation: "木材を用いて本棚を作る" )
     end
     context '検索ワードが入力されている場合' do
       context '検索ワードのいずれか一つでも"title" または "explanation"に含まれている場合' do
@@ -366,8 +366,8 @@ RSpec.describe ArticlesController, type: :controller do
         it "200レスポンスが返る" do
           expect(response.status).to eq(200)
         end
-        it "@articlesに同じ記事が重複して登録されない, 下書き記事は登録されない" do
-          expect(assigns(:articles)).to eq([@article_published])
+        it "@recipesに同じ記事が重複して登録されない, 下書き記事は登録されない" do
+          expect(assigns(:recipes)).to eq([@recipe_published])
         end
         it ':searchテンプレートを表示する' do
           expect(response).to render_template :search
@@ -380,8 +380,8 @@ RSpec.describe ArticlesController, type: :controller do
         it "200レスポンスが返る" do
           expect(response.status).to eq(200)
         end
-        it "@articlesに記事が割り当てられない" do
-          expect(assigns(:articles)).to eq([])
+        it "@recipesに記事が割り当てられない" do
+          expect(assigns(:recipes)).to eq([])
         end
         it ':searchテンプレートを表示する' do
           expect(response).to render_template :search

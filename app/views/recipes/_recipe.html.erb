@@ -1,0 +1,13 @@
+<%= render 'recipes/recipe_upper', recipe: recipe %>
+
+<div class="container">
+  <h5>作り方</h5>
+  <div class="row">
+    <% recipe.steps.each do |step| %>
+      <div class="col-sm-3">
+        <h4>STEP<%= step.number %></h4>
+        <h6><%= step.content %></h6>
+      </div>
+    <% end %>
+  </div>
+</div>

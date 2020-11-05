@@ -1,0 +1,10 @@
+<h5>プレビュー</h5>
+
+<!--編集、削除ボタン-->
+<%= render 'recipes/edit_delete_button', recipe: @recipe %>
+  
+<!--記事詳細view-->
+<%= render 'recipes/recipe', recipe: @recipe %>
+
+<!--記事公開ボタン-->
+<%= render 'recipes/publish_button', recipe: @recipe %>

@@ -11,8 +11,8 @@ class ApplicationController < ActionController::Base
   end
   
   def user_author_match(pa)
-    @article = Article.find(pa)
-    @user = @article.user
+    @recipe = Recipe.find(pa)
+    @user = @recipe.user
     unless @user == current_user
       redirect_to root_url
     end

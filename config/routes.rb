@@ -8,14 +8,14 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   resources :users, only: [:show, :create, :edit, :update] do
     member do
-      get :favorite_articles
-      get :draft_articles
+      get :favorite_recipes
+      get :draft_recipes
     end
   end
   
   resources :bookmarks, only: [:create, :destroy]
 
-  resources :articles, only: [:show, :new, :create, :edit, :update, :destroy] do
+  resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy] do
     collection do
       get :search
     end
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       patch :publish
       patch :stop_publish 
     end
-    resources :materials, :steps, only: [:new, :create] do
+    resources :ingredients, :steps, only: [:new, :create] do
       collection do
         get :edit
         patch :update

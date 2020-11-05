@@ -7,8 +7,6 @@
   <div class="col-md-8 mb-3">
     <h5>名前</h5>
     <h3><%= @user.name %></h3>
-    <h5>プロフィール</h5>
-    <h3><%= @user.profile %></h3>
     <!--編集ボタン-->
     <div>
       <% if current_user == @user %>
@@ -19,4 +17,4 @@
 </div>
 <!--投稿記事一覧-->
 <h5 class="mt-4">投稿した記事</h5>
-<%= render 'articles/articles', articles: @articles %>
+<%= render 'recipes/recipes', recipes: @recipes %>

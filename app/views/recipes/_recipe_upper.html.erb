@@ -1,0 +1,26 @@
+<div class="container mb-4">
+  <h3><%= recipe.title %></h3>
+  <div class="row">
+    <div class="col-sm-5">
+      <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
+    </div>
+    <div class="col-sm-7">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">説明</h5>
+          <h6 class="card-text"><%= recipe.explanation %></h6>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">材料</h5>
+          <% @recipe.ingredients.each do |ingredient| %> 
+            <div class="d-flex justify-content-between">
+              <span><%= ingredient.name %></span><span><%= ingredient.quantity %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
