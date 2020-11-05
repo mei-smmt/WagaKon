@@ -14,9 +14,9 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">材料</h5>
-          <% @recipe.materials.each do |material| %> 
+          <% @recipe.ingredients.each do |ingredient| %> 
             <div class="d-flex justify-content-between">
-              <span><%= material.name %></span><span><%= material.quantity %></span>
+              <span><%= ingredient.name %></span><span><%= ingredient.quantity %></span>
             </div>
           <% end %>
         </div>

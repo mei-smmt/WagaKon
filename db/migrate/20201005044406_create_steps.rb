@@ -4,7 +4,7 @@ class CreateSteps < ActiveRecord::Migration[5.2]
       t.integer :number
       t.string :image
       t.text :content
-      t.references :recipe, foreign_key: true
+      t.references :article, foreign_key: true
 
       t.timestamps
     end

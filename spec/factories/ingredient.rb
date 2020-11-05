@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :material do
+  factory :ingredient do
     sequence(:name) { |n| "TEST_NAME#{n}" }
     sequence(:quantity) { |n| "TEST_QUANTITY#{n}" }
     association :recipe

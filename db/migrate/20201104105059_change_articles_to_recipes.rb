@@ -1,5 +1,5 @@
-class ChangeRecipesToRecipes < ActiveRecord::Migration[5.2]
+class ChangeArticlesToRecipes < ActiveRecord::Migration[5.2]
   def change
-    rename_table :recipes, :recipes
+    rename_table :articles, :recipes
   end
 end

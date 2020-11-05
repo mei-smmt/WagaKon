@@ -10,9 +10,9 @@
         <h6 class="card-text"><%= recipe.explanation %></h6>
       </div>
     </div>
-    <%= form_with(url: recipe_materials_path, method: method, local: true) do |form| %>
-      <% @materials.each do |material|%>
-        <%= form.fields_for 'materials[]', material do |f| %>
+    <%= form_with(url: recipe_ingredients_path, method: method, local: true) do |form| %>
+      <% @ingredients.each do |ingredient|%>
+        <%= form.fields_for 'ingredients[]', ingredient do |f| %>
           <%= render 'layouts/error_messages', model: f.object %>
           <div class="form-row">
             <div class="form-group col-md-6 mb-2">
