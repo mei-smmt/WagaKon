@@ -1,0 +1,17 @@
+nav {
+  margin: 20px 40px;
+}
+
+.navbar-brand {
+  font-size: 30px;
+  letter-spacing: 0.15em;
+}
+
+.navbar-light .navbar-toggler {
+    border-color: rgba(0,0,0,0);
+}
+
+.nav-item {
+  font-size: 13px;
+}
+
