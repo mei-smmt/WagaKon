@@ -1,4 +1,4 @@
-<h3><%= recipe.title %></h3>
+<h5><%= recipe.title %></h5>
 <div class="row">
   <div class="col-md-5">
     <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
@@ -6,8 +6,8 @@
   <div class="col-md-7">
     <div class="card mb-4">
       <div class="card-body">
-        <h5 class="card-title">説明</h5>
-        <h6 class="card-text"><%= recipe.explanation %></h6>
+        <h4 class="card-title">説明</h4>
+        <h5 class="card-text"><%= recipe.explanation %></h5>
       </div>
     </div>
     <%= form_with(url: recipe_ingredients_path, method: method, local: true) do |form| %>
