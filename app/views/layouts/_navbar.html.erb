@@ -1,23 +1,32 @@
+<%= stylesheet_link_tag "layouts/navbar", :media => "all" %>
 <header class="mb-3">
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">DIY STOCK</a>
+  <nav class="navbar navbar-expand-sm navbar-light bg-white">
+    <a class="navbar-brand" href="/">WagaKon</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
+    <!--検索フォーム-->
+    <%= form_with(url: search_recipes_path, method: :get, local: true) do |f| %>
+      <div class="form-row align-items-center">
+        <div class="col-9">
+          <%= f.text_field :search, class: 'form-control form-control-sm' %>
+        </div>
+        <div class="col-3">
+          <%= f.submit '検索', class: 'btn btn-sm btn-outline-dark' %>
+        </div>
+      </div>
+    <% end %>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <!--ログイン済み-->
         <% if logged_in? %>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><%= current_user.name %></a>
-            <ul class="dropdown-menu dropdown-menu-right">
-              <li class="dropdown-item"><%= link_to 'Myプロフィール', user_path(current_user) %></li>
-              <li class="dropdown-item"><%= link_to '下書き一覧', draft_recipes_user_path(current_user) %></li>
-              <li class="dropdown-divider"></li>
-              <li class="dropdown-item"><%= link_to 'ログアウト', logout_path, method: :delete %></li>
-            </ul>
-          </li>
+          <li class="nav-item"><%= link_to 'マイページ', user_path(current_user), class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to "お気に入りレシピ", favorite_recipes_user_path(current_user), class: 'nav-link' %>
+          <li class="nav-item"><%= link_to "レシピを追加する", new_recipe_path, class: 'nav-link' %>
+          <li class="nav-item"><%= link_to '下書き', draft_recipes_user_path(current_user), class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link' %></li>
         <!--ログインなし-->
         <% else %>
           <li class="nav-item"><%= link_to '新規登録', signup_path, class: 'nav-link' %></li>

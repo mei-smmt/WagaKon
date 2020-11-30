@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+ 
+ body {
+   font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
+   letter-spacing: 0.15em
+ }
+
