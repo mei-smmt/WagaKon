@@ -1,3 +1,5 @@
+<%= stylesheet_link_tag "users/edit", :media => "all" %>
+
 <h4>プロフィール編集</h4>
 
 <%= form_with(model: @user, local: true) do |f| %>
@@ -29,8 +31,8 @@
         <%= f.password_field :password_confirmation, class: 'form-control' %>
       </div>
     </div>
-    <div class="col-md-6 offset-md-3">
-      <%= f.submit '登録', class: 'btn btn-primary btn-block' %>
+    <div class="col-md-2 offset-md-5">
+      <%= f.submit '登録', class: 'btn btn-outline-info btn-block' %>
     </div>
   </div>
 <% end %>
