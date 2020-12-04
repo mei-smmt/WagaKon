@@ -3,7 +3,7 @@ nav {
 }
 
 .navbar-brand {
-  font-size: 30px;
+  font-size: 2rem;
   letter-spacing: 0.15em;
 }
 
@@ -12,7 +12,7 @@ nav {
 }
 
 .nav-item {
-  font-size: 13px;
+  font-size: .8rem;
 }
 
 #search-box {
