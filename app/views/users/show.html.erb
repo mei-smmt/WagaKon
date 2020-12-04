@@ -1,8 +1,8 @@
 <%= stylesheet_link_tag "users/show", :media => "all" %>
 
 <div class="row">
-  <div class="col-md-4 offset-md-4">
-    <h5><%= @user.name %></h5>
+  <div class="col-sm-4 offset-sm-4">
+    <h2><%= @user.name %></h2>
     <%= cl_image_tag(@user.image.to_s, alt: @user.name) if @user.image? %>
     <!--編集ボタン-->
     <div>
@@ -13,5 +13,5 @@
   </div>
 </div>
 <!--投稿記事一覧-->
-<h5 class="mt-4">投稿した記事</h5>
+<h2 class="mt-4">投稿した記事</h2>
 <%= render 'recipes/recipes', recipes: @recipes %>
