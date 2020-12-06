@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe StepsController, type: :controller do
   describe "#new" do
-    context '記事作者とログインユーザーが一致' do
+    context 'レシピ作者とログインユーザーが一致' do
       before do
         @user = create(:user)
         session[:user_id] = @user.id
@@ -25,7 +25,7 @@ RSpec.describe StepsController, type: :controller do
         expect(response).to render_template :new
       end
     end
-    context "記事作者とログインユーザーが一致しない" do
+    context "レシピ作者とログインユーザーが一致しない" do
       before do
         @user, @login_user = create_list(:user, 2)
         @recipe = create(:recipe, user_id: @user.id)
@@ -45,7 +45,7 @@ RSpec.describe StepsController, type: :controller do
     before do
       @steps = attributes_for_list(:step, 2)
     end
-    context '記事作者とログインユーザーが一致' do
+    context 'レシピ作者とログインユーザーが一致' do
       before do
         @user = create(:user)
         @recipe = create(:recipe, user_id: @user.id)
@@ -81,7 +81,7 @@ RSpec.describe StepsController, type: :controller do
           post :create, params:{steps: @steps, recipe_id: @recipe.id}
           expect(response.status).to eq 200
         end
-        it 'データベースに新しい記事が登録されない' do
+        it 'データベースに新しいレシピが登録されない' do
           expect{
             post :create, params:{steps: @steps, recipe_id: @recipe.id}
           }.not_to change(@recipe.steps, :count)
@@ -92,7 +92,7 @@ RSpec.describe StepsController, type: :controller do
         end
       end
     end
-    context "記事作者とログインユーザーが一致しない" do
+    context "レシピ作者とログインユーザーが一致しない" do
       before do
         @user, @login_user = create_list(:user, 2)
         @recipe = create(:recipe, user_id: @user.id)
@@ -109,7 +109,7 @@ RSpec.describe StepsController, type: :controller do
   end
   
   describe "#edit" do
-    context '記事作者とログインユーザーが一致' do
+    context 'レシピ作者とログインユーザーが一致' do
       before do
         @user = create(:user)
         session[:user_id] = @user.id
@@ -120,7 +120,7 @@ RSpec.describe StepsController, type: :controller do
       it "200レスポンスが返る" do
         expect(response.status).to eq(200)
       end
-      it "@stepsにリクエストされた記事のstepsを割り当てる" do
+      it "@stepsにリクエストされたレシピのstepsを割り当てる" do
         expect(assigns(:steps)).to include(@steps[1])
       end
       it "@stepsのrecipe_idには@recipeのidが登録される" do
@@ -133,7 +133,7 @@ RSpec.describe StepsController, type: :controller do
         expect(response).to render_template :edit
       end
     end
-    context '記事作者とログインユーザーが一致していない' do
+    context 'レシピ作者とログインユーザーが一致していない' do
       before do
         @user, @login_user = create_list(:user, 2)
         @recipe = create(:recipe, user_id: @user.id)
@@ -153,7 +153,7 @@ RSpec.describe StepsController, type: :controller do
     before do
       @new_steps = attributes_for_list(:step, 3)
     end
-    context '記事作者とログインユーザーが一致' do
+    context 'レシピ作者とログインユーザーが一致' do
       before do
         @user = create(:user)
         @recipe = create(:recipe, user_id: @user.id)
@@ -202,7 +202,7 @@ RSpec.describe StepsController, type: :controller do
         end
       end
     end
-    context "記事作者とログインユーザーが一致しない" do
+    context "レシピ作者とログインユーザーが一致しない" do
       before do
         @user, @login_user = create_list(:user, 2)
         @recipe = create(:recipe, user_id: @user.id)

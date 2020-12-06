@@ -173,7 +173,7 @@ RSpec.describe UsersController, type: :controller do
       it "@userにリクエストされたユーザーを割り当てる" do
         expect(assigns(:user)).to eq(@user)
       end
-      it "@recipeにリクエストされたユーザーがブックマークした記事を割り当てる" do
+      it "@recipeにリクエストされたユーザーがブックマークしたレシピを割り当てる" do
         expect(assigns(:favorite_recipes)).to eq([@recipe1])
       end
       it ':favorite_recipesテンプレートを表示する' do
@@ -213,7 +213,7 @@ RSpec.describe UsersController, type: :controller do
       it "@userにリクエストされたユーザーを割り当てる" do
         expect(assigns(:user)).to eq(@user)
       end
-      it "@recipeにリクエストされたユーザーの下書き記事を割り当てる" do
+      it "@recipeにリクエストされたユーザーの下書きレシピを割り当てる" do
         expect(assigns(:draft_recipes)).to eq([@recipe1])
       end
       it ':draft_recipesテンプレートを表示する' do

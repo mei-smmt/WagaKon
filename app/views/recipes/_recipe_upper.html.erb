@@ -1,9 +1,11 @@
+<%= stylesheet_link_tag "recipes/recipe_upper", :media => "all" %>
+
 <div class="row">
   <div class="col-sm-4 offset-sm-1">
     <h1><%= recipe.title %></h1>
   </div>
 </div>
-<div class="row mb-4">
+<div class="row mb-2">
   <div class="col-sm-4 offset-sm-1">
     <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
   </div>
@@ -12,7 +14,7 @@
       <p><%= recipe.explanation %></p>
     </div>
     <table class="table table-sm">
-      <h3>材料</h3>
+      <h2>材料</h2>
       <% @recipe.ingredients.each do |ingredient| %> 
         <tr><td><%= ingredient.name %></td><td><%= ingredient.quantity %></td></tr>
       <% end %>

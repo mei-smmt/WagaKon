@@ -6,10 +6,9 @@
       <%= form.fields_for 'steps[]', step do |f| %>
         <div class="col-sm-3">
           <%= render 'layouts/error_messages', model: f.object %>
-          <h4>STEP<%= index %></h4>
+          <h3>STEP<%= index %></h3>
           <%= f.hidden_field :number, :value => index %>
           <div class="form-group mb-2">
-            <%= f.label :content, "説明" %>
             <%= f.text_area :content, class: "form-control" %>
           </div>
         </div>  

@@ -25,12 +25,16 @@
  }
  
  h1 {
-   font-size: 1.2rem;
- }
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #998a8a ;
+}
 
- h2 {
-   font-size: 1rem;
- }
+h2 {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #a9a9a9 ;
+}
 
  h3 {
    font-size: 0.8rem;
@@ -64,6 +68,12 @@
  .btn-primary {
   color: #fff;
   background-color: #e67147;
+  border-color: #e67147;
+}
+
+ .btn-primary:hover {
+  color: #fff;
+  background-color: #ff8f66;
   border-color: #e67147;
 }
 
