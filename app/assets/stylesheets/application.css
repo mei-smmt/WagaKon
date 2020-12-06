@@ -60,6 +60,12 @@
  td {
   font-size: 0.8rem;
  }
+ 
+ .btn-primary {
+  color: #fff;
+  background-color: #e67147;
+  border-color: #e67147;
+}
 
 img {
 max-width: 100%;
