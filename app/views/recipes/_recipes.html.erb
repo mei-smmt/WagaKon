@@ -7,7 +7,7 @@
           <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
           <div class="card-body">
             <h3 class="card-title text-secondary"><%= recipe.title %></h3>
-            <p class="text-secondary text-right">ブックマーク：<%= recipe.bookmarks.count %></p>
+            <p class="text-secondary text-right"><i class="fas fa-heart"></i><%= recipe.bookmarks.count %></p>
           </div>
         </a>
       </div>
