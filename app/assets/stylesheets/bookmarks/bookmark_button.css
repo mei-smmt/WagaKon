@@ -1,0 +1,9 @@
+.bookmark-btn {
+  font-size: 0.7rem;
+  padding: .2rem .5rem;
+}
+
+#unlike-btn {
+  background-color: #e6b8be;
+  border: 0;
+}

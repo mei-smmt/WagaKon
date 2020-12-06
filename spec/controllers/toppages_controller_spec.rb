@@ -10,7 +10,7 @@ RSpec.describe ToppagesController, type: :controller do
     it "200レスポンスが返る" do
       expect(response.status).to eq(200)
     end
-    it "@recipesに公開済みの記事を割り当てる" do
+    it "@recipesに公開済みのレシピを割り当てる" do
       expect(assigns(:recipes)).to eq([@recipe1, @recipe2])
     end
     it ':indexテンプレートを表示する' do

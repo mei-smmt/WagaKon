@@ -1,9 +1,11 @@
-<h4>プロフィール編集</h4>
+<%= stylesheet_link_tag "users/edit", :media => "all" %>
+
+<h2>プロフィール編集</h2>
 
 <%= form_with(model: @user, local: true) do |f| %>
   <%= render 'layouts/error_messages', model: f.object %>
   <div class="form-row mt-4">
-    <div class="form-group col-md-4 offset-md-1">
+    <div class="form-group col-sm-4 offset-sm-1">
       <div class="mb-3">
         <%= f.label :image, "プロフィール画像(変更前)" %><br>
         <%= cl_image_tag(@user.image.to_s, alt: @user.name) if @user.image? %>
@@ -11,7 +13,7 @@
       <%= f.label :image, "新しいプロフィール画像" %><br>
       <%= f.file_field :image, class: "image" %>      
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
       <div class="form-group">
         <%= f.label :name, '名前' %>
         <%= f.text_field :name, class: 'form-control' %>
@@ -29,7 +31,7 @@
         <%= f.password_field :password_confirmation, class: 'form-control' %>
       </div>
     </div>
-    <div class="col-md-6 offset-md-3">
+    <div class="col-sm-2 offset-sm-5">
       <%= f.submit '登録', class: 'btn btn-primary btn-block' %>
     </div>
   </div>

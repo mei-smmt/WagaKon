@@ -21,12 +21,12 @@ RSpec.describe BookmarksController, type: :controller do
             post :create, params:{recipe_id: @recipe.id}
           }.to change(@user.bookmarks, :count).by(1)
         end
-        it 'データベースに記事の新しいブックマークが登録される' do
+        it 'データベースにレシピの新しいブックマークが登録される' do
           expect{
             post :create, params:{recipe_id: @recipe.id}
           }.to change(@recipe.bookmarks, :count).by(1)
         end
-        it "記事詳細にリダイレクトする" do
+        it "レシピ詳細にリダイレクトする" do
           post :create, params:{recipe_id: @recipe.id}
           expect(response).to redirect_to recipe_path(@recipe)
         end
@@ -44,12 +44,12 @@ RSpec.describe BookmarksController, type: :controller do
             post :create, params:{recipe_id: @recipe.id}
           }.not_to change(@user.bookmarks, :count)
         end
-        it 'データベースに記事の新しいブックマークが登録されない' do
+        it 'データベースにレシピの新しいブックマークが登録されない' do
           expect{
             post :create, params:{recipe_id: @recipe.id}
           }.not_to change(@recipe.bookmarks, :count)
         end
-        it "記事詳細にリダイレクトする" do
+        it "レシピ詳細にリダイレクトする" do
           post :create, params:{recipe_id: @recipe.id}
           expect(response).to redirect_to recipe_path(@recipe)
         end
@@ -87,12 +87,12 @@ RSpec.describe BookmarksController, type: :controller do
           delete :destroy, params:{id: @bookmark.id, recipe_id: @recipe.id}
         }.to change(@user.bookmarks, :count).by(-1)
       end
-      it 'データベースから記事のブックマークが削除される' do
+      it 'データベースからレシピのブックマークが削除される' do
         expect{
           delete :destroy, params:{id: @bookmark.id, recipe_id: @recipe.id}
         }.to change(@recipe.bookmarks, :count).by(-1)
       end
-      it "記事詳細にリダイレクトする" do
+      it "レシピ詳細にリダイレクトする" do
         delete :destroy, params:{id: @bookmark.id, recipe_id: @recipe.id}
         expect(response).to redirect_to recipe_path(@recipe)
       end

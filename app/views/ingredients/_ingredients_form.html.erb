@@ -1,25 +1,20 @@
-<h5><%= recipe.title %></h5>
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-sm-4 offset-sm-1">
+    <h1><%= recipe.title %></h1>
     <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
   </div>
-  <div class="col-md-7">
-    <div class="card mb-4">
-      <div class="card-body">
-        <h4 class="card-title">説明</h4>
-        <h5 class="card-text"><%= recipe.explanation %></h5>
-      </div>
-    </div>
+  <div class="col-12 col-sm-5">
+    <p><%= recipe.explanation %></p>
     <%= form_with(url: recipe_ingredients_path, method: method, local: true) do |form| %>
       <% @ingredients.each do |ingredient|%>
         <%= form.fields_for 'ingredients[]', ingredient do |f| %>
           <%= render 'layouts/error_messages', model: f.object %>
           <div class="form-row">
-            <div class="form-group col-md-6 mb-2">
+            <div class="form-group col-8 col-sm-8 mb-2">
               <%= f.label :name, "材料" %>
               <%= f.text_field :name, class: "form-control" %>
             </div>
-            <div class="form-group col-md-6 mb-2">
+            <div class="form-group col-4 col-sm-4 mb-2">
               <%= f.label :quantity, "数量" %>
               <%= f.text_field :quantity, class: "form-control" %>
             </div>

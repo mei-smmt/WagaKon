@@ -15,7 +15,7 @@ class Recipe < ApplicationRecord
   has_many :steps, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   
-  # 記事の公開、非公開設定
+  # レシピの公開、非公開設定
   def publishing
     self.update_attribute(:status, 1)
   end
@@ -24,7 +24,7 @@ class Recipe < ApplicationRecord
     self.update_attribute(:status, 0)
   end
 
-  # 記事検索
+  # レシピ検索
   def self.search(search)   
     keywords = search.split(/[[:blank:]]+/)
     recipes = []
