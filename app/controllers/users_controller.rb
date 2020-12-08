@@ -27,11 +27,16 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update(user_params)
-      flash[:success] = 'ユーザー情報が更新されました'
-      redirect_to @user
+    if @user.authenticate(user_params[:password])
+      if @user.update(user_params)
+        flash[:success] = 'ユーザー情報が更新されました'
+        redirect_to @user
+      else
+        flash.now[:danger] = '内容に誤りがあります'
+        render :edit
+      end
     else
-      flash.now[:danger] = '内容に誤りがあります'
+      flash.now[:danger] = 'パスワードが間違っています'
       render :edit
     end
   end
@@ -47,7 +52,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :image, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :image, :password)
   end
   
   def correct_user
