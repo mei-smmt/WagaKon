@@ -169,7 +169,106 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+  describe "#password_edit" do
+    context '被編集ユーザーとログインユーザーが一致' do
+      before do
+        @user = create(:user)
+        session[:user_id] = @user.id
+        get :edit, params: {id: @user.id}
+      end
+      it "200レスポンスが返る" do
+        expect(response.status).to eq(200)
+      end
+      it "@userにリクエストされたユーザーを割り当てる" do
+        expect(assigns(:user)).to eq(@user)
+      end
+      it ':editテンプレートを表示する' do
+        expect(response).to render_template :edit
+      end
+    end
+    context '被編集ユーザーとログインユーザーが一致していない' do
+      before do
+        @user, @login_user = create_list(:user, 2)
+        session[:user_id] = @login_user.id
+        get :edit, params: {id: @user.id}
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it 'rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
   
+  describe 'Patch #password_update' do
+    context '被編集ユーザーとログインユーザーが一致' do
+      before do
+        @user = create(:user, password: 'original_pass')
+        session[:user_id] = @user.id
+      end
+      context '現在のパスワードが正しく、有効な新パスワード(４文字以上)の場合' do
+        before do
+          patch :update, params:{id: @user.id, user: attributes_for(:user, current_password: 'original_pass', password: 'new_pass', password_confirmation: 'new_pass')}
+        end
+        it '302レスポンスが返る' do
+          expect(response.status).to eq 302
+        end
+        it 'データベースのユーザーが更新される' do
+          @user.reload
+          expect(@user.password).to eq 'new_pass'
+        end
+        it 'users#showにリダイレクトする' do
+          expect(response).to redirect_to user_path(@user)
+        end
+      end
+      context '現在のパスワードが間違っている場合' do
+        before do
+          patch :update, params:{id: @user.id, user: attributes_for(:user, current_password: 'incorrect_pass', password: 'new_pass', password_confirmation: 'new_pass')}
+        end
+        it '200レスポンスが返る' do
+          expect(response.status).to eq 200
+        end
+        it 'データベースのユーザーは更新されない' do
+          @user.reload
+          expect(@user.password).to eq 'original_pass'
+        end
+        it ':password_editテンプレートを再表示する' do
+          expect(response).to render_template :password_edit
+        end
+      end
+      context '無効なパスワードの場合' do
+        before do
+          patch :update, params:{id: @user.id, user: attributes_for(:user, current_password: 'original_pass', password: 'p', password_confirmation: 'p')}
+        end
+        it '200レスポンスが返る' do
+          expect(response.status).to eq 200
+        end
+        it 'データベースのユーザーは更新されない' do
+          @user.reload
+          expect(@user.password).to eq 'original_pass'
+        end
+        it ':password_editテンプレートを再表示する' do
+          expect(response).to render_template :password_edit
+        end
+      end
+    end
+    context '被編集ユーザーとログインユーザーが一致しない' do
+      before do
+        @user, @login_user = create_list(:user, 2)
+        session[:user_id] = @login_user.id
+          patch :update, params:{id: @user.id, user: attributes_for(:user, current_password: 'original_pass', password: 'new_pass', password_confirmation: 'new_pass')}
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it 'rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
+
   describe "#favorite_recipes" do
     before do
       @user = create(:user)
