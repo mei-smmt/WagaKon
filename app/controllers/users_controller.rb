@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:edit, :update, :favorite_recipes, :draft_recipes]
-  before_action :correct_user, only: [:edit, :update, :favorite_recipes, :draft_recipes]
+  before_action :require_user_logged_in, only: [:edit, :update, :password_edit, :password_update, :favorite_recipes, :draft_recipes]
+  before_action :correct_user, only: [:edit, :update, :password_edit, :password_update, :favorite_recipes, :draft_recipes]
   
   def show
     @user = User.find(params[:id])
@@ -27,12 +27,34 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update(user_params)
-      flash[:success] = 'ユーザー情報が更新されました'
-      redirect_to @user
+    if @user.authenticate(user_params[:password])
+      if @user.update(user_params)
+        flash[:success] = 'ユーザー情報が更新されました'
+        redirect_to @user
+      else
+        flash.now[:danger] = '内容に誤りがあります'
+        render :edit
+      end
     else
-      flash.now[:danger] = '内容に誤りがあります'
+      flash.now[:danger] = 'パスワードが間違っています'
       render :edit
+    end
+  end
+  
+  def password_edit
+  end
+  
+  def password_update
+    if @user.authenticate(password_params[:current_password])
+      if @user.update(password_params.except(:current_password))
+        flash[:success] = 'パスワードが更新されました'
+        redirect_to @user
+      else
+        render :password_edit
+      end
+    else
+      flash.now[:danger] = 'パスワードが間違っています'
+      render :password_edit
     end
   end
   
@@ -48,6 +70,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :image, :password, :password_confirmation)
+  end
+  
+  def password_params
+    params.permit(:current_password, :password, :password_confirmation)
   end
   
   def correct_user
