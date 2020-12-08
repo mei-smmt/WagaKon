@@ -107,34 +107,50 @@ RSpec.describe UsersController, type: :controller do
     context '被編集ユーザーとログインユーザーが一致' do
       before do
         @user = create(:user)
-        @originalname = @user.name
+        @original_name = @user.name
+        @original_email = @user.email
         session[:user_id] = @user.id
       end
-      context '有効なパラメータの場合' do
+      context 'パスワードが正しく、有効なパラメータの場合' do
         before do
-          patch :update, params:{id: @user.id, user: attributes_for(:user, name: "new_name")}
+          patch :update, params:{id: @user.id, user: attributes_for(:user, name: "new_name", email: "new@example.com", password: @user.password)}
         end
         it '302レスポンスが返る' do
           expect(response.status).to eq 302
         end
         it 'データベースのユーザーが更新される' do
           @user.reload
-          expect(@user.name).to eq 'new_name'
+          expect([@user.name, @user.email]).to eq ['new_name', 'new@example.com']
         end
         it 'users#showにリダイレクトする' do
           expect(response).to redirect_to user_path(@user)
         end
       end
-      context '無効なパラメータの場合' do
+      context 'パスワードが間違っている場合' do
         before do
-          patch :update, params:{id: @user.id, user: attributes_for(:user, name: nil)}
+          patch :update, params:{id: @user.id, user: attributes_for(:user, name: "new_name", email: "new@example.com", password: 'incorrect_password')}
         end
         it '200レスポンスが返る' do
           expect(response.status).to eq 200
         end
         it 'データベースのユーザーは更新されない' do
           @user.reload
-          expect(@user.name).to eq @originalname
+          expect([@user.name, @user.email]).to eq [@original_name, @original_email]
+        end
+        it ':editテンプレートを再表示する' do
+          expect(response).to render_template :edit
+        end
+      end
+      context '無効なパラメータの場合' do
+        before do
+          patch :update, params:{id: @user.id, user: attributes_for(:user, name: nil, email: "new@example.com", password: @user.password)}
+        end
+        it '200レスポンスが返る' do
+          expect(response.status).to eq 200
+        end
+        it 'データベースのユーザーは更新されない' do
+          @user.reload
+          expect([@user.name, @user.email]).to eq [@original_name, @original_email]
         end
         it ':editテンプレートを再表示する' do
           expect(response).to render_template :edit
