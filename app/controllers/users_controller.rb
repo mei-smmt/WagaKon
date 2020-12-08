@@ -46,11 +46,10 @@ class UsersController < ApplicationController
   
   def password_update
     if @user.authenticate(password_params[:current_password])
-      if @user.update(password_params.slice(:password))
+      if @user.update(password_params.except(:current_password))
         flash[:success] = 'パスワードが更新されました'
         redirect_to @user
       else
-        flash.now[:danger] = '内容に誤りがあります'
         render :password_edit
       end
     else
@@ -70,11 +69,11 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :image, :password)
+    params.require(:user).permit(:name, :email, :image, :password, :password_confirmation)
   end
   
   def password_params
-    params.permit(:current_password, :password)
+    params.permit(:current_password, :password, :password_confirmation)
   end
   
   def correct_user
