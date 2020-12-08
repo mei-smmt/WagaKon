@@ -106,9 +106,7 @@ RSpec.describe UsersController, type: :controller do
   describe 'Patch #update' do
     context '被編集ユーザーとログインユーザーが一致' do
       before do
-        @user = create(:user)
-        @original_name = @user.name
-        @original_email = @user.email
+        @user = create(:user, name: "original_name", email: "original@example.com")
         session[:user_id] = @user.id
       end
       context 'パスワードが正しく、有効なパラメータの場合' do
@@ -135,7 +133,7 @@ RSpec.describe UsersController, type: :controller do
         end
         it 'データベースのユーザーは更新されない' do
           @user.reload
-          expect([@user.name, @user.email]).to eq [@original_name, @original_email]
+          expect([@user.name, @user.email]).to eq ["original_name", "original@example.com"]
         end
         it ':editテンプレートを再表示する' do
           expect(response).to render_template :edit
@@ -150,7 +148,7 @@ RSpec.describe UsersController, type: :controller do
         end
         it 'データベースのユーザーは更新されない' do
           @user.reload
-          expect([@user.name, @user.email]).to eq [@original_name, @original_email]
+          expect([@user.name, @user.email]).to eq ["original_name", "original@example.com"]
         end
         it ':editテンプレートを再表示する' do
           expect(response).to render_template :edit
