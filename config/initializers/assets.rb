@@ -16,3 +16,5 @@ Rails.application.config.assets.precompile += %w( layouts/* )
 Rails.application.config.assets.precompile += %w( users/* )
 Rails.application.config.assets.precompile += %w( bookmarks/* )
 Rails.application.config.assets.precompile += %w( recipes/* )
+
+Rails.application.config.assets.precompile += %w( *.js )
