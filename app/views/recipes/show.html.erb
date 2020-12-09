@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag "recipes/show", :media => "all" %>
 
-<div class="button-group mb-2">
+<div id="likes_buttons_<%= @recipe.id %>", class="button-group mb-2">
   <!--ブックマークボタン-->
   <%= render 'bookmarks/bookmark_button', recipe: @recipe %>
 </div>

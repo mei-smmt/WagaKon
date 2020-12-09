@@ -5,5 +5,12 @@
 
 #unlike-btn {
   background-color: #e6b8be;
-  border: 0;
+  border: 1px solid;
+  border-color: #e6b8be;
+}
+
+#like-btn:hover {
+  background-color: #e6b8be;
+  border: 1px solid;
+  border-color: #e6b8be;
 }
