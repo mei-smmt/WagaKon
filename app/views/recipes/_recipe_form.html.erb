@@ -8,11 +8,9 @@
         </div>
         <div class="form-group">
           <div class="mb-3">
-            <%= f.label :image, "画像（変更前）" %><br>
-            <%= cl_image_tag(@recipe.image.to_s, alt: @recipe.title) if @recipe.image? %>
+            <%= cl_image_tag(@recipe.image.to_s, alt: @recipe.title, id: :img_prev) if @recipe.image? %>
           </div>
-          <%= f.label :image, "新しい画像" %><br>
-          <%= f.file_field :image, class: "image" %>      
+          <%= f.file_field :image, class: "image", id: "book_img" %>      
         </div>
       </div>
       <div class="col-sm-5">
