@@ -65,13 +65,13 @@ h2 {
   font-size: 0.8rem;
  }
  
- .btn-primary {
+ .btn-light {
   color: #fff;
   background-color: #e67147;
   border-color: #e67147;
 }
 
- .btn-primary:hover {
+ .btn-light:hover {
   color: #fff;
   background-color: #ff8f66;
   border-color: #e67147;
