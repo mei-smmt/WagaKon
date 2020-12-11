@@ -10,12 +10,14 @@ class IngredientsController < ApplicationController
   
   def create
     @ingredients = []
-    ingredients = ingredients_params
-    ingredients.each do |ingredient|
-      if ingredient[:name].present? || ingredient[:quantity].present?
-        @ingredients << @recipe.ingredients.build(ingredient)
-      end
+    @new_ingredients = ingredients_params
+    # 空フォーム除外
+    Ingredient.remove_empty_form(@new_ingredients)
+    # 新規インスタンスを作成
+    @new_ingredients.each do |new_ingredient|
+        @ingredients << @recipe.ingredients.build(new_ingredient)
     end
+    # 一括保存処理呼び出し
     if Ingredient.bulk_save(@ingredients)
       redirect_to new_recipe_step_path(@recipe)
     else
@@ -36,12 +38,8 @@ class IngredientsController < ApplicationController
   def update
     @ingredients = @recipe.ingredients
     @new_ingredients = ingredients_params.is_a?(Array) ? ingredients_params : ingredients_params.values
-    # 空のフォームを除外
-    @new_ingredients.each do |new_ingredient|
-      if new_ingredient[:name].blank? && new_ingredient[:quantity].blank?
-        @new_ingredients.delete(new_ingredient)
-      end
-    end
+    # 空フォーム除外
+    Ingredient.remove_empty_form(@new_ingredients)
     # 一括更新処理呼び出し
     if Ingredient.bulk_update(@recipe, @new_ingredients)
       redirect_to edit_recipe_steps_path(@recipe)
