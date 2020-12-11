@@ -191,7 +191,6 @@ RSpec.describe IngredientsController, type: :controller do
           expect(response.status).to eq 200
         end
         it 'データベースは変更されない' do
-          pending "実現できていない"
           expect{
             patch :update, params:{ingredients: @new_ingredients, recipe_id: @recipe.id}
           }.not_to change(@recipe.ingredients, :count)
