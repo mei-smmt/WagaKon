@@ -18,7 +18,7 @@ class IngredientsController < ApplicationController
       @ingredients << @recipe.ingredients.build(new_ingredient)
     end
     # 一括保存処理呼び出し
-    if Ingredient.bulk_save(@ingredients)
+    if Ingredient.bulk_save(@recipe, @ingredients, @new_ingredients)
       redirect_to new_recipe_step_path(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
