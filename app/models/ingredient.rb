@@ -14,13 +14,17 @@ class Ingredient < ApplicationRecord
   end
 
   # 材料の一括保存処理
-  def self.bulk_save(ingredients)
+  def self.bulk_save(recipe, ingredients, new_ingredients)
     all_valid = true
     Ingredient.transaction do
       ingredients.each do |ingredient|
         all_valid &= ingredient.save
       end
       unless all_valid
+        missing_forms_size = 10 - new_ingredients.size
+        missing_forms_size.times do
+          ingredients << recipe.ingredients.build
+        end
         raise ActiveRecord::Rollback
       end
     end
