@@ -53,6 +53,11 @@ class Ingredient < ApplicationRecord
         all_valid &= prev_ingredient.update(new_ingredient)
       end
       unless all_valid
+        missing_forms_size = 10 - new_ingredients.size
+        missing_forms_size.times do
+          recipe.ingredients.build(id: temp_id)
+          temp_id += 1
+        end
         raise ActiveRecord::Rollback
       end
     end
