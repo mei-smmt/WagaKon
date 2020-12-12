@@ -15,7 +15,7 @@ class IngredientsController < ApplicationController
     Ingredient.remove_empty_form(@new_ingredients)
     # 新規インスタンスを作成
     @new_ingredients.each do |new_ingredient|
-        @ingredients << @recipe.ingredients.build(new_ingredient)
+      @ingredients << @recipe.ingredients.build(new_ingredient)
     end
     # 一括保存処理呼び出し
     if Ingredient.bulk_save(@ingredients)
