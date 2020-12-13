@@ -28,6 +28,7 @@ class Step < ApplicationRecord
     all_valid = true
     # 以下、失敗したらロールバック
     Step.transaction do
+      # 保存処理
       step_number = 1
       steps.each do |step|
         step[:number] = step_number
@@ -90,20 +91,3 @@ class Step < ApplicationRecord
     all_valid
   end
 end
-
-  
-#   # 手順の一括保存処理
-#   def self.bulk_save(steps)
-#     all_valid = true
-#     Step.transaction do
-#       steps.each do |step|
-#         all_valid &= step.save
-#       end
-
-#       unless all_valid
-#         raise ActiveRecord::Rollback
-#       end
-#     end
-#     all_valid
-#   end
-# end
