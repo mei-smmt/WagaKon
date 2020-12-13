@@ -5,10 +5,10 @@ class Ingredient < ApplicationRecord
   validates :name, presence: true
 
   # 空フォーム除外
-  def self.remove_empty_form(new_ingredients)
-    new_ingredients.each do |new_ingredient|
-      if new_ingredient[:name].blank? && new_ingredient[:quantity].blank?
-        new_ingredients.delete(new_ingredient)
+  def self.remove_empty_form(form_ingredients)
+    form_ingredients.each do |form_ingredient|
+      if form_ingredient[:name].blank? && form_ingredient[:quantity].blank?
+        form_ingredients.delete(form_ingredient)
       end
     end
   end
