@@ -73,9 +73,10 @@ RSpec.describe StepsController, type: :controller do
           expect(response).to redirect_to preview_recipe_url(@recipe)
         end
       end
-      context '１つでも無効なパラメータを含む場合' do
+      context '無効なパラメータを含む場合(contentが１４０文字より長い)' do
         before do
-          @steps << attributes_for(:step, number: nil)
+          text = "a" * 150
+          @steps << attributes_for(:step, content: text)
         end
         it '200レスポンスが返る' do
           post :create, params:{steps: @steps, recipe_id: @recipe.id}
@@ -182,16 +183,16 @@ RSpec.describe StepsController, type: :controller do
           expect(response).to redirect_to recipe_url(@recipe)
         end
       end
-      context '１つでも無効なパラメータを含む場合' do
+      context '無効なパラメータを含む場合(contentが１４０文字より長い)' do
         before do
-          @new_steps << attributes_for(:step, number: nil)
+          text = "a" * 150
+          @new_steps << attributes_for(:step, content: text)
         end
         it '200レスポンスが返る' do
           patch :update, params:{steps: @new_steps, recipe_id: @recipe.id}
           expect(response.status).to eq 200
         end
         it 'データベースは変更されない' do
-          pending "実現できていない"
           expect{
             patch :update, params:{steps: @new_steps, recipe_id: @recipe.id}
           }.not_to change(@recipe.steps, :count)
