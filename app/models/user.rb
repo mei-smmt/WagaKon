@@ -10,9 +10,10 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 4}
   
-  has_many :recipes
-  has_many :bookmarks
+  has_many :recipes, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
   has_many :favorite_recipes, through: :bookmarks, source: :recipe
+  has_many :meals, dependent: :destroy
   
   def bookmark(recipe)
     self.bookmarks.find_or_create_by(recipe_id: recipe.id)
