@@ -1,0 +1,8 @@
+<h2>献立一覧</h2>
+<ul>
+  <% week_loop.each do |index| %>
+    <li>
+      <h3><%= wday_jp(index) %>曜日の献立</h3>
+    </li>
+  <% end %>
+</ul>

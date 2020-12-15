@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   end
   
   resources :bookmarks, only: [:create, :destroy]
+  
+  resources :meals, only: [:index, :show, :create, :update]
 
   resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy] do
     collection do
