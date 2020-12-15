@@ -1,5 +1,5 @@
 class MealsController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show, :create, :update]
+  before_action :require_user_logged_in, only: [:index, :show]
   
   def index
     @meals = current_user.meals
@@ -7,11 +7,5 @@ class MealsController < ApplicationController
 
   def show
     @meal = Meal.find(paramas[:id])
-  end
-
-  def create
-  end
-  
-  def update
   end
 end
