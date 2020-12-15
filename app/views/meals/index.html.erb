@@ -1,8 +1,13 @@
 <h2>献立一覧</h2>
 <ul>
-  <% week_loop.each do |index| %>
+  <% week_loop.each do |day| %>
     <li>
-      <h3><%= wday_jp(index) %>曜日の献立</h3>
+      <h3><%= wday_jp(day) %>の献立</h3>
+      <ul>
+        <% @meals.day(day).menu_recipes.each do |recipe| %>
+          <li><%= recipe.title %></li>
+        <% end %>
+      </ul>
     </li>
   <% end %>
 </ul>

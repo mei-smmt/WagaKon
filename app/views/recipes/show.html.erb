@@ -1,18 +1,19 @@
 <%= stylesheet_link_tag "recipes/show", :media => "all" %>
-
+<!--献立追加ボタン-->
+<%= render 'menus/add_to_meal', recipe: @recipe %>
+<!--ブックマークボタン-->
 <div id="likes_buttons_<%= @recipe.id %>", class="button-group mb-2">
-  <!--ブックマークボタン-->
   <%= render 'bookmarks/bookmark_button', recipe: @recipe %>
 </div>
+<!--公開非公開、編集、削除ボタン-->
 <div class="button-group">
-  <!--公開非公開、編集、削除ボタン-->
   <% if current_user == @recipe.user %>
     <%= render 'recipes/stop_publish_button', recipe: @recipe %>
     <%= render 'recipes/edit_delete_button', recipe: @recipe %>
   <% end %>
 </div>
-
+<!--レシピ上部-->
 <%= render 'recipes/recipe_upper', recipe: @recipe %>
-
+<!--レシピ下部-->
 <%= render 'recipes/recipe_lower', recipe: @recipe %>
 
