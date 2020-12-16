@@ -71,7 +71,7 @@ class RecipesController < ApplicationController
       :explanation,
       feature_attributes: [ :id,
                             :amount,
-                            :type,
+                            :dish_type,
                             :cooking_method,
                             :main_food])
   end
