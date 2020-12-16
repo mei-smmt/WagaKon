@@ -12,6 +12,6 @@ before_action :require_user_logged_in
     @recipe = Recipe.find(params[:recipe_id])
     meal = current_user.meals.day(params[:day])
     meal.remove_from_meal(@recipe)
-    redirect_to recipe
+    redirect_to meals_path
   end
 end
