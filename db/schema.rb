@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_045648) do
+ActiveRecord::Schema.define(version: 2020_12_16_072813) do
 
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_045648) do
 
   create_table "features", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "amount"
-    t.integer "type"
+    t.integer "dish_type"
     t.integer "cooking_method"
     t.integer "main_food"
     t.bigint "recipe_id"
