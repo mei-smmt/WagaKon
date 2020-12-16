@@ -5,7 +5,7 @@ before_action :require_user_logged_in
     @recipe = Recipe.find(params[:recipe_id])
     meal = current_user.meals.day(params[:day])
     meal.add_to_meal(@recipe)
-    # redirect_to recipe
+    redirect_to recipe_path(@recipe)
   end
 
   def destroy
