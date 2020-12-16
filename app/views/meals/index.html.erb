@@ -5,7 +5,7 @@
       <h3><%= wday_jp(day) %>の献立</h3>
       <ul>
         <% @meals.day(day).menu_recipes.each do |recipe| %>
-          <li><%= recipe.title %></li>
+          <li><%= link_to recipe.title, recipe_path(recipe) %></li>
         <% end %>
       </ul>
     </li>
