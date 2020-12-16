@@ -12,9 +12,12 @@ class UsersController < ApplicationController
   end
 
   def create
-     @user = User.new(user_params)
+    @user = User.new(user_params)
 
     if @user.save
+      (0..6).each do |index|
+        @user.meals.create(day_of_week: index)
+      end
       flash[:success] = '登録しました'
       redirect_to root_url
     else

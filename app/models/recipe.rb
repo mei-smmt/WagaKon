@@ -14,6 +14,7 @@ class Recipe < ApplicationRecord
   has_many :ingredients, dependent: :destroy
   has_many :steps, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
+  has_many :menus, dependent: :destroy
   
   # レシピの公開、非公開設定
   def publishing

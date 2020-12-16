@@ -1,0 +1,20 @@
+<% if logged_in? %> 
+  <button class="btn btn-primary"
+          data-toggle="collapse"
+          data-target="#example-1"
+          aria-expand="false"
+          aria-controls="example-1">献立に追加</button>
+  <div class="collapse" id="example-1">
+    <div class="card card-body">
+      <% week_loop.each do |day| %>
+        <% unless current_user.meals.day(day).menus.find_by(recipe_id: recipe.id) %>
+          <%= form_with(model: current_user.meals.day(day).menus.build, local: true) do |f| %>
+            <%= hidden_field_tag :recipe_id, recipe.id %>
+            <%= hidden_field_tag :day, day %>
+            <%= f.submit wday_jp(day), class: 'btn btn-sm btn-outline-secondary' %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>  
+<% end %>
