@@ -7,7 +7,7 @@ ja:
         side: 副菜
         small_side: 小鉢・おつまみ
         other: その他
-      type:
+      dish_type:
         japanese: 和食
         western: 洋食
         chinese: 中華

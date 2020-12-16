@@ -31,6 +31,6 @@ module DiyStock
     config.generators.system_tests = nil
     
     config.i18n.default_locale = :ja
-    config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb, yml}').to_s]
   end
 end
