@@ -1,0 +1,27 @@
+ja:
+  enums:
+    feature:
+      amount:
+        one_dish: 一品もの
+        main: メイン
+        side: 副菜
+        small_side: 小鉢・おつまみ
+        other: その他
+      dish_type:
+        japanese: 和食
+        western: 洋食
+        chinese: 中華
+        ethnic: エスニック
+        other: その他
+      cooking_method:
+        fry: 焼く・炒める
+        boil: 煮る・茹でる
+        deep_fry: 揚げる
+        steam: 蒸す
+        unheated: 加熱しない
+        other: その他
+      main_food:
+        meat: 肉
+        fish: 魚
+        vegetable: 野菜
+        other: その他

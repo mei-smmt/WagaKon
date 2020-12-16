@@ -12,6 +12,7 @@ class RecipesController < ApplicationController
   def new
     if logged_in?
       @recipe = current_user.recipes.build
+      @recipe.build_feature
     end
   end
 
@@ -64,6 +65,14 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.require(:recipe).permit(:title, :image, :explanation)
+    params.require(:recipe).permit(
+      :title, 
+      :image, 
+      :explanation,
+      feature_attributes: [ :id,
+                            :amount,
+                            :dish_type,
+                            :cooking_method,
+                            :main_food])
   end
 end
