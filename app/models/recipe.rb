@@ -11,7 +11,8 @@ class Recipe < ApplicationRecord
   enum status: { draft: 0, published: 1 }
 
   belongs_to :user
-  has_one :feature
+  has_one :feature, dependent: :destroy
+  accepts_nested_attributes_for :feature
   has_many :ingredients, dependent: :destroy
   has_many :steps, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
