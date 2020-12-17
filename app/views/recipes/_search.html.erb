@@ -1,0 +1,13 @@
+<!--キーワード検索フォーム-->
+<%= form_with(url: keyword_search_recipes_path, method: :get, local: true) do |f| %>
+  <h2>キーワードでレシピ検索</h2>
+  <div class="form-row">
+    <div class="col-9">
+      <%= f.text_field :search, class: 'form-control form-control-sm', id: 'search-box' %>
+    </div>
+    <div class="col-3">
+      <%= f.submit '検索', class: 'btn btn-sm btn-outline-dark' %>
+    </div>
+  </div>
+<% end %>
+
