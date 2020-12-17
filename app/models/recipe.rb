@@ -27,7 +27,7 @@ class Recipe < ApplicationRecord
     self.update_attribute(:status, 0)
   end
 
-  # レシピ検索
+  # レシピキーワード検索
   def self.keyword_search(search)   
     keywords = search.split(/[[:blank:]]+/)
     recipes = []
@@ -36,5 +36,16 @@ class Recipe < ApplicationRecord
         recipes += Recipe.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])   
       end 
     recipes.uniq
+  end  
+  
+  # レシピ特徴検索
+  def self.feature_search(search)
+    requirement = search.select!{|k, v| v.present?}
+    features = Feature.where(requirement)
+    recipes = []
+    features.each do |feature|
+      recipes << feature.recipe
+    end
+    recipes
   end  
 end
