@@ -57,9 +57,9 @@ class RecipesController < ApplicationController
     redirect_to draft_recipes_user_url(@user)
   end
     
-  def search
+  def keyword_search
     redirect_to root_url if params[:search] == ""
-    @recipes = Recipe.published.search(params[:search])
+    @recipes = Recipe.published.keyword_search(params[:search])
   end
     
   private
