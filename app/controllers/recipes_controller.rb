@@ -57,9 +57,13 @@ class RecipesController < ApplicationController
     redirect_to draft_recipes_user_url(@user)
   end
     
-  def search
+  def keyword_search
     redirect_to root_url if params[:search] == ""
-    @recipes = Recipe.published.search(params[:search])
+    @recipes = Recipe.published.keyword_search(params[:search])
+  end
+  
+  def feature_search
+    @recipes = Recipe.published.feature_search(feature_params)
   end
     
   private
@@ -74,5 +78,9 @@ class RecipesController < ApplicationController
                             :dish_type,
                             :cooking_method,
                             :main_food])
+  end
+  
+  def feature_params
+    params.permit(:amount, :dish_type, :main_food, :cooking_method)
   end
 end
