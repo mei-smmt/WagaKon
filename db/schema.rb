@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_072813) do
+ActiveRecord::Schema.define(version: 2020_12_20_030009) do
 
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_072813) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
+    t.string "personal_id"
   end
 
   add_foreign_key "bookmarks", "recipes"
