@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :favorite_recipes, through: :bookmarks, source: :recipe
   has_many :meals, dependent: :destroy
+  has_many :relationships, dependent: :destroy
+  has_many :friends, through: :relationships, source: :friend
   
   def bookmark(recipe)
     self.bookmarks.find_or_create_by(recipe_id: recipe.id)
