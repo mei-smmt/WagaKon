@@ -61,6 +61,16 @@ class UsersController < ApplicationController
     end
   end
   
+  def friends
+  end
+  
+  def search
+    unless params[:search] == ""
+      @user = User.search(params[:search])
+    end
+    render :friends
+  end
+  
   def favorite_recipes
     @favorite_recipes = @user.favorite_recipes
   end
