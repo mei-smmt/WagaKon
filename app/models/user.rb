@@ -30,4 +30,13 @@ class User < ApplicationRecord
     self.favorite_recipes.include?(recipe)
   end
   
+  # ユーザー検索
+  def self.search(search)
+    user = User.find_by(personal_id: search)
+    if user.present?
+      user
+    else
+      ""
+    end
+  end
 end
