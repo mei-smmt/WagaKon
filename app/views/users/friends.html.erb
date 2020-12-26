@@ -13,7 +13,8 @@
     <tr><th>友だちリクエストされているユーザー</th><th></th></tr>
     <% current_user.receiving_friends.each do |friend| %>
       <tr><td><%= friend.name %></td>
-          <td><%= render 'relationships/delete_friend_button', user: current_user, friend: friend, delete_message: "拒否"%></td></tr>
+          <td><%= render 'relationships/approve_friend_button', user: current_user, friend: friend %>
+            <%= render 'relationships/delete_friend_button', user: current_user, friend: friend, delete_message: "拒否"%></td></tr>
     <% end %>
   </table>
 <% end %>
