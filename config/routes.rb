@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :relationships, only: [:create, :destroy]
+  resources :relationships, only: [:create, :update, :destroy]
   resources :bookmarks, only: [:create, :destroy]
   resources :meals, only: [:index, :show]
   resources :menus, only: [:create, :destroy]

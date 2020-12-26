@@ -1,2 +1,21 @@
 class RelationshipsController < ApplicationController
+before_action :require_user_logged_in
+
+  def create
+    @user = User.find(params[:user_id])
+    current_user.friend_request(@user)
+    redirect_to friends_user_url(current_user)
+  end
+
+  def update
+    @user = User.find(params[:user_id])
+    current_user.bookmark(@user)
+    redirect_to user
+  end
+
+  def destroy
+    @user = User.find(params[:user_id])
+    current_user.unbookmark(@user)
+    redirect_to user
+  end
 end
