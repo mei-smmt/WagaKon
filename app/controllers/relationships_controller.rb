@@ -15,7 +15,7 @@ before_action :require_user_logged_in
 
   def destroy
     @user = User.find(params[:user_id])
-    current_user.unbookmark(@user)
-    redirect_to user
+    current_user.friend_delete(@user)
+    redirect_to friends_user_url(current_user)
   end
 end
