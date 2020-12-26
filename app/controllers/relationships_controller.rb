@@ -9,8 +9,8 @@ before_action :require_user_logged_in
 
   def update
     @user = User.find(params[:user_id])
-    current_user.bookmark(@user)
-    redirect_to user
+    current_user.friend_approve(@user)
+    redirect_to friends_user_url(current_user)
   end
 
   def destroy

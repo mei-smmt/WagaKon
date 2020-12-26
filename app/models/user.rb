@@ -42,6 +42,13 @@ class User < ApplicationRecord
     user.relationships.find_or_create_by(friend_id: self.id, status: 'receiving')
   end
   
+  def friend_approve(user)
+    relationship = self.relationships.find_by(friend_id: user.id)
+    relationship.update(status: 'approved') if relationship
+    relationship = user.relationships.find_by(friend_id: self.id)
+    relationship.update(status: 'approved') if relationship
+  end
+  
   def friend_delete(user)
     relationship = self.relationships.find_by(friend_id: user.id)
     relationship.destroy if relationship
