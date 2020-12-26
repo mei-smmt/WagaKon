@@ -1,3 +1,30 @@
+<% if @user.approved_friends.present? %>
+  <table class="table">
+    <tr><th>友だち</th><th></th></tr>
+    <% @user.approved_friends.each do |friend| %>
+      <tr><td><%= friend.name %></td><td>x</td></tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if @user.receiving_friends.present? %>
+  <table class="table">
+    <tr><th>友だちリクエストされているユーザー</th><th></th></tr>
+    <% @user.receiving_friends.each do |friend| %>
+      <tr><td><%= friend.name %></td><td>x</td></tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if @user.requesting_friends.present? %>
+  <table class="table">
+    <tr><th>友だちリクエスト中のユーザー</th><th></th></tr>
+    <% @user.requesting_friends.each do |friend| %>
+      <tr><td><%= friend.name %></td><td>x</td></tr>
+    <% end %>
+  </table>
+<% end %>
+
 <!--ユーザー検索フォーム-->
 <%= form_with(url: search_users_path, method: :get, local: true) do |f| %>
   <h2>IDを入力してユーザーを検索</h2>
