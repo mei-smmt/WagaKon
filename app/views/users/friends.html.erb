@@ -2,7 +2,7 @@
   <table class="table">
     <tr><th>友だち</th><th></th></tr>
     <% current_user.approved_friends.each do |friend| %>
-      <tr><td><%= friend.name %></td>
+      <tr><td><%= link_to friend.name, user_path(friend) %></td>
           <td><%= render 'relationships/delete_friend_button', user: current_user, friend: friend, delete_message: "削除"%></td></tr>
     <% end %>
   </table>
