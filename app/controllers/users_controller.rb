@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:edit, :update, :password_edit, :password_update, :favorite_recipes, :draft_recipes]
-  before_action :correct_user, only: [:edit, :update, :password_edit, :password_update, :favorite_recipes, :draft_recipes]
+  before_action :require_user_logged_in, only: [:edit, :update, :password_edit, :password_update, :friends, :search, :favorite_recipes, :draft_recipes]
+  before_action :correct_user, only: [:edit, :update, :password_edit, :password_update, :friends, :favorite_recipes, :draft_recipes]
   
   def show
     @user = User.find(params[:id])
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   
   def search
     unless params[:search] == ""
-      @user = User.search(params[:search])
+      @result_user = User.search(params[:search])
     end
     render :friends
   end

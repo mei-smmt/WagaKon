@@ -14,8 +14,15 @@ class User < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :favorite_recipes, through: :bookmarks, source: :recipe
   has_many :meals, dependent: :destroy
+  
   has_many :relationships, dependent: :destroy
   has_many :friends, through: :relationships, source: :friend
+  has_many :requesting_relationships, -> { requesting }, class_name: 'Relationship'
+  has_many :requesting_friends, through: :requesting_relationships, source: :friend
+  has_many :receiving_relationships, -> { receiving }, class_name: 'Relationship'
+  has_many :receiving_friends, through: :receiving_relationships, source: :friend
+  has_many :approved_relationships, -> { approved }, class_name: 'Relationship'
+  has_many :approved_friends, through: :approved_relationships, source: :friend
   
   def bookmark(recipe)
     self.bookmarks.find_or_create_by(recipe_id: recipe.id)
@@ -28,6 +35,23 @@ class User < ApplicationRecord
 
   def favorite?(recipe)
     self.favorite_recipes.include?(recipe)
+  end
+
+  def friend_request(user)
+    self.relationships.find_or_create_by(friend_id: user.id)
+    user.relationships.find_or_create_by(friend_id: self.id, status: 'receiving')
+  end
+  
+  def requesting_friend?(user)
+    self.requesting_friends.include?(user)
+  end
+  
+  def receiving_friend?(user)
+    self.receiving_friends.include?(user)
+  end
+  
+  def approved_friend?(user)
+    self.approved_friends.include?(user)
   end
   
   # ユーザー検索
