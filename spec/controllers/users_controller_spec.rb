@@ -235,7 +235,7 @@ RSpec.describe UsersController, type: :controller do
           expect(response.status).to eq 302
         end
         it 'データベースのユーザーが更新される' do
-          pending "実現できていない(テストが通らない)"
+          pending
           @user.reload
           expect(@user.password).to eq 'new_pass'
         end
