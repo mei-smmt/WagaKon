@@ -4,7 +4,11 @@ RSpec.describe RecipesController, type: :controller do
   describe "#show" do
     context 'リクエストしたレシピのstatusが「公開」の場合' do
       before do
-        @recipe = create(:recipe, status: "published")
+        @user = create(:user)
+        @friend = create(:user)
+        @recipe = create(:recipe, status: "published", user_id: @friend.id)
+        create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
+        session[:user_id] = @user.id
         get :show, params: {id: @recipe.id}
       end
       it "200レスポンスが返る" do
@@ -19,7 +23,10 @@ RSpec.describe RecipesController, type: :controller do
     end
     context 'リクエストしたレシピのstatusが「非公開」の場合' do
       before do
-        @recipe = create(:recipe, status: "draft")
+        @user = create(:user)
+        @friend = create(:user)
+        @recipe = create(:recipe, status: "draft", user_id: @friend.id)
+        create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
         session[:user_id] = @recipe.user_id
         get :show, params: {id: @recipe.id}
       end
@@ -353,15 +360,19 @@ RSpec.describe RecipesController, type: :controller do
     end
   end
   
-  describe "#search" do
+  describe "#keyword_search" do
     before do
-      @recipe_published = create(:recipe, status: "published", title: "本棚の作成", explanation: "木材を用いて本棚を作る" )
-      @recipe_draft = create(:recipe, status: "draft", title: "本棚の作成", explanation: "木材を用いて本棚を作る" )
+      @user = create(:user)
+      @friend = create(:user)
+      create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
+      @recipe_published = create(:recipe, status: "published", title: "本棚の作成", explanation: "木材を用いて本棚を作る", user_id: @friend.id)
+      @recipe_draft = create(:recipe, status: "draft", title: "本棚の作成", explanation: "木材を用いて本棚を作る", user_id: @friend.id)
+      session[:user_id] = @user.id
     end
     context '検索ワードが入力されている場合' do
       context '検索ワードのいずれか一つでも"title" または "explanation"に含まれている場合' do
         before do
-          get :search, params: {search: "本棚　木材 猫"}
+          get :keyword_search, params: {search: "本棚　木材 猫"}
         end
         it "200レスポンスが返る" do
           expect(response.status).to eq(200)
@@ -369,13 +380,13 @@ RSpec.describe RecipesController, type: :controller do
         it "@recipesに同じレシピが重複して登録されない, 下書きレシピは登録されない" do
           expect(assigns(:recipes)).to eq([@recipe_published])
         end
-        it ':searchテンプレートを表示する' do
-          expect(response).to render_template :search
+        it ':keyword_searchテンプレートを表示する' do
+          expect(response).to render_template :keyword_search
         end
       end
       context '検索ワードが"title"と"explanation"どちらにも含まれていない場合' do
         before do
-          get :search, params: {search: "test example"}
+          get :keyword_search, params: {search: "test example"}
         end
         it "200レスポンスが返る" do
           expect(response.status).to eq(200)
@@ -383,14 +394,14 @@ RSpec.describe RecipesController, type: :controller do
         it "@recipesにレシピが割り当てられない" do
           expect(assigns(:recipes)).to eq([])
         end
-        it ':searchテンプレートを表示する' do
-          expect(response).to render_template :search
+        it ':keyword_searchテンプレートを表示する' do
+          expect(response).to render_template :keyword_search
         end
       end
     end
     context '検索ワードが入力されていない場合' do
       before do
-        get :search, params: {search: ""}
+        get :keyword_search, params: {search: ""}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
