@@ -1,30 +1,30 @@
-<% if current_user.approved_friends.present? %>
+<% if @user.approved_friends.present? %>
   <table class="table">
     <tr><th>友だち</th><th></th></tr>
-    <% current_user.approved_friends.each do |friend| %>
+    <% @user.approved_friends.each do |friend| %>
       <tr><td><%= link_to friend.name, user_path(friend) %></td>
-          <td><%= render 'relationships/delete_friend_button', user: current_user, friend: friend, delete_message: "削除"%></td></tr>
+          <td><%= render 'relationships/delete_friend_button', user: @user, friend: friend, delete_message: "削除"%></td></tr>
     <% end %>
   </table>
 <% end %>
 
-<% if current_user.receiving_friends.present? %>
+<% if @user.receiving_friends.present? %>
   <table class="table">
     <tr><th>友だちリクエストされているユーザー</th><th></th></tr>
-    <% current_user.receiving_friends.each do |friend| %>
+    <% @user.receiving_friends.each do |friend| %>
       <tr><td><%= friend.name %></td>
-          <td><%= render 'relationships/approve_friend_button', user: current_user, friend: friend %>
-            <%= render 'relationships/delete_friend_button', user: current_user, friend: friend, delete_message: "拒否"%></td></tr>
+          <td><%= render 'relationships/approve_friend_button', user: @user, friend: friend %>
+            <%= render 'relationships/delete_friend_button', user: @user, friend: friend, delete_message: "拒否"%></td></tr>
     <% end %>
   </table>
 <% end %>
 
-<% if current_user.requesting_friends.present? %>
+<% if @user.requesting_friends.present? %>
   <table class="table">
     <tr><th>友だちリクエスト中のユーザー</th><th></th></tr>
-    <% current_user.requesting_friends.each do |friend| %>
+    <% @user.requesting_friends.each do |friend| %>
       <tr><td><%= friend.name %></td>
-          <td><%= render 'relationships/delete_friend_button', user: current_user, friend: friend, delete_message: "取り消し"%></td></tr>
+          <td><%= render 'relationships/delete_friend_button', user: @user, friend: friend, delete_message: "取り消し"%></td></tr>
     <% end %>
   </table>
 <% end %>
