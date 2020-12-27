@@ -1,19 +1,17 @@
 class RecipesController < ApplicationController
-  before_action :require_user_logged_in, only: [:new, :create]
+  before_action :require_user_logged_in
+  before_action -> {accessable_recipe_check(params[:id])}, only: :show
   before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :destroy, :preview, :publish, :stop_publish]
 
   def show
-    @recipe = Recipe.find(params[:id])
     if @recipe.status == "draft"
       redirect_to preview_recipe_url(@recipe)
     end
   end
 
   def new
-    if logged_in?
-      @recipe = current_user.recipes.build
-      @recipe.build_feature
-    end
+    @recipe = current_user.recipes.build
+    @recipe.build_feature
   end
 
   def create
@@ -59,11 +57,11 @@ class RecipesController < ApplicationController
     
   def keyword_search
     redirect_to root_url if params[:search] == ""
-    @recipes = Recipe.published.keyword_search(params[:search])
+    @recipes = current_user.accessable_recipes.keyword_search(params[:search])
   end
   
   def feature_search
-    @recipes = Recipe.published.feature_search(feature_params)
+    @recipes = urrent_user.accessable_recipes.feature_search(feature_params)
   end
     
   private

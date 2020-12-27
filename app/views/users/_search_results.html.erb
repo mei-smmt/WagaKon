@@ -1,0 +1,13 @@
+<div class="row">
+  <% if user.kind_of?(User) %>
+  <div class="col-sm-4 offset-sm-4">
+    <h1><%= user.name %></h1>
+    <%= cl_image_tag(user.image.to_s, alt: user.name) if user.image? %>
+    <%= render 'relationships/add_friend_button', user: user %>
+  </div>
+  <% else %>
+    <h2>該当するユーザーが見つかりませんでした。</h2>
+  <% end %>
+</div>
+
+

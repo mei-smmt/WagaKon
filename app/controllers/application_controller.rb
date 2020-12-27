@@ -10,12 +10,18 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def user_author_match(pa)
-    @recipe = Recipe.find(pa)
+  def user_author_match(recipe_id)
+    @recipe = Recipe.find(recipe_id)
     @user = @recipe.user
     unless @user == current_user
       redirect_to root_url
     end
-  end  
-
+  end
+  
+  def accessable_recipe_check(recipe_id)
+    @recipe = Recipe.find(recipe_id)
+    unless current_user.accessable_recipes.include?(@recipe)
+      redirect_to root_url
+    end
+  end
 end

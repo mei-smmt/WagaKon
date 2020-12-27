@@ -1,15 +1,12 @@
 class BookmarksController < ApplicationController
-before_action :require_user_logged_in
+  before_action :require_user_logged_in
+  before_action -> {accessable_recipe_check(params[:recipe_id])}
 
   def create
-    @recipe = Recipe.find(params[:recipe_id])
     current_user.bookmark(@recipe)
-    # redirect_to recipe
   end
 
   def destroy
-    @recipe = Recipe.find(params[:recipe_id])
     current_user.unbookmark(@recipe)
-    # redirect_to recipe
   end
 end

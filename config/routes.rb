@@ -7,14 +7,19 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   resources :users, only: [:show, :create, :edit, :update] do
+    collection do
+      get :search
+    end
     member do
       get :password_edit
       patch :password_update
       get :favorite_recipes
       get :draft_recipes
+      get :friends
     end
   end
   
+  resources :relationships, only: [:create, :update, :destroy]
   resources :bookmarks, only: [:create, :destroy]
   resources :meals, only: [:index, :show]
   resources :menus, only: [:create, :destroy]

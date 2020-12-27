@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_072813) do
+ActiveRecord::Schema.define(version: 2020_12_25_133519) do
 
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -69,6 +69,17 @@ ActiveRecord::Schema.define(version: 2020_12_16_072813) do
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
+  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "friend_id"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["friend_id"], name: "index_relationships_on_friend_id"
+    t.index ["user_id", "friend_id"], name: "index_relationships_on_user_id_and_friend_id", unique: true
+    t.index ["user_id"], name: "index_relationships_on_user_id"
+  end
+
   create_table "steps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "number"
     t.text "content"
@@ -85,6 +96,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_072813) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
+    t.string "personal_id"
   end
 
   add_foreign_key "bookmarks", "recipes"
@@ -95,5 +107,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_072813) do
   add_foreign_key "menus", "meals"
   add_foreign_key "menus", "recipes"
   add_foreign_key "recipes", "users"
+  add_foreign_key "relationships", "users"
+  add_foreign_key "relationships", "users", column: "friend_id"
   add_foreign_key "steps", "recipes"
 end

@@ -1,0 +1,48 @@
+<% if @user.approved_friends.present? %>
+  <table class="table">
+    <tr><th>友だち</th><th></th></tr>
+    <% @user.approved_friends.each do |friend| %>
+      <tr><td><%= link_to friend.name, user_path(friend) %></td>
+          <td><%= render 'relationships/delete_friend_button', user: @user, friend: friend, delete_message: "削除"%></td></tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if @user.receiving_friends.present? %>
+  <table class="table">
+    <tr><th>友だちリクエストされているユーザー</th><th></th></tr>
+    <% @user.receiving_friends.each do |friend| %>
+      <tr><td><%= friend.name %></td>
+          <td><%= render 'relationships/approve_friend_button', user: @user, friend: friend %>
+            <%= render 'relationships/delete_friend_button', user: @user, friend: friend, delete_message: "拒否"%></td></tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if @user.requesting_friends.present? %>
+  <table class="table">
+    <tr><th>友だちリクエスト中のユーザー</th><th></th></tr>
+    <% @user.requesting_friends.each do |friend| %>
+      <tr><td><%= friend.name %></td>
+          <td><%= render 'relationships/delete_friend_button', user: @user, friend: friend, delete_message: "取り消し"%></td></tr>
+    <% end %>
+  </table>
+<% end %>
+
+<!--ユーザー検索フォーム-->
+<%= form_with(url: search_users_path, method: :get, local: true) do |f| %>
+  <h2>IDを入力してユーザーを検索</h2>
+  <div class="form-row">
+    <div class="col-9">
+      <%= f.text_field :search, class: 'form-control form-control-sm', id: 'search-box' %>
+    </div>
+    <div class="col-3">
+      <%= f.submit '検索', class: 'btn btn-sm btn-outline-dark' %>
+    </div>
+  </div>
+<% end %>
+
+<% if @result_user %>
+  <!--検索結果-->
+  <%= render 'users/search_results', user: @result_user %>
+<% end %>

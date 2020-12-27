@@ -13,6 +13,7 @@
     <div>
       <p><%= recipe.explanation %></p>
     </div>
+    <h4>by <%= link_to recipe.user.name, user_path(recipe.user) %></h4>
     <table class="table table-sm">
       <h2>材料</h2>
       <% @recipe.ingredients.each do |ingredient| %> 

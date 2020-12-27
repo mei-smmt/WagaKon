@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:edit, :update, :password_edit, :password_update, :favorite_recipes, :draft_recipes]
-  before_action :correct_user, only: [:edit, :update, :password_edit, :password_update, :favorite_recipes, :draft_recipes]
+  before_action :require_user_logged_in
+  before_action :accessable_user, only: :show
+  before_action :correct_user, only: [:edit, :update, :password_edit, :password_update, :friends, :favorite_recipes, :draft_recipes]
   
   def show
-    @user = User.find(params[:id])
     @recipes = @user.recipes.published
   end
 
@@ -61,6 +61,17 @@ class UsersController < ApplicationController
     end
   end
   
+  def friends
+  end
+  
+  def search
+    @user = current_user
+    unless params[:search] == ""
+      @result_user = User.search(params[:search])
+    end
+    render :friends
+  end
+  
   def favorite_recipes
     @favorite_recipes = @user.favorite_recipes
   end
@@ -72,7 +83,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :image, :password, :password_confirmation)
+    params.require(:user).permit(:name, :personal_id, :email, :image, :password, :password_confirmation)
   end
   
   def password_params
@@ -82,6 +93,13 @@ class UsersController < ApplicationController
   def correct_user
     @user = User.find(params[:id])
     unless @user == current_user
+      redirect_to root_url
+    end
+  end
+  
+  def accessable_user
+    @user = User.find(params[:id])
+    unless (@user == current_user) || current_user.approved_friends.include?(@user)
       redirect_to root_url
     end
   end
