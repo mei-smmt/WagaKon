@@ -61,7 +61,7 @@ class RecipesController < ApplicationController
   end
   
   def feature_search
-    @recipes = urrent_user.accessable_recipes.feature_search(feature_params)
+    @recipes = current_user.accessable_recipes.feature_search(feature_params)
   end
     
   private

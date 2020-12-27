@@ -80,7 +80,12 @@ class User < ApplicationRecord
       recipes << friend.recipes.published
     end
     recipes << self.recipes
-    recipes.flatten
+    recipes.flatten!
+    accessable_id_list = []
+    recipes.each do |recipe|
+      accessable_id_list << recipe.id
+    end
+    Recipe.where(id: accessable_id_list)
   end
 
   # ユーザー検索
