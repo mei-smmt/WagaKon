@@ -6,8 +6,19 @@ RSpec.describe User, type: :model do
   end
   
   describe 'バリデーション' do
-    it 'name,email,password,password_confirmationが入力されていればOK' do
+    it 'personal_id,name,email,password,password_confirmationが入力されていればOK' do
       expect(@user.valid?).to eq(true)
+    end
+
+    it 'personal_idが空だとNG' do
+      @user.personal_id = nil
+      expect(@user.valid?).to eq(false)
+    end
+    
+    it 'personal_idが重複するとNG' do
+      @user.save
+      user2 = build(:user, personal_id: @user.personal_id)
+      expect(user2.valid?).to eq(false)
     end
 
     it 'nameが空だとNG' do

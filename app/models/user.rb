@@ -2,7 +2,10 @@ class User < ApplicationRecord
   mount_uploader :image, ImageUploader
   
   before_save { self.email.downcase! }
-  validates :personal_id, presence: true, length: { in: 4..8 }, format: { with: /\A[a-z0-9]+\z/ }, uniqueness: true
+  validates :personal_id, presence: true,
+                          length: { in: 4..12 },
+                          format: { with: /\A[a-z0-9]+\z/ },#半角英数字限定
+                          uniqueness: true
   validates :name, presence: true, length: { maximum: 20 }
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
