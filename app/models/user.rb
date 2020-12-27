@@ -68,6 +68,15 @@ class User < ApplicationRecord
     self.approved_friends.include?(user)
   end
   
+  def accessable_recipes
+    recipes = []
+    self.approved_friends.each do |friend|
+      recipes << friend.recipes.published
+    end
+    recipes << self.recipes
+    recipes.flatten
+  end
+
   # ユーザー検索
   def self.search(search)
     user = User.find_by(personal_id: search)
