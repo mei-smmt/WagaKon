@@ -2,7 +2,10 @@ class User < ApplicationRecord
   mount_uploader :image, ImageUploader
   
   before_save { self.email.downcase! }
-  validates :personal_id, presence: true, length: { in: 4..8 }, format: { with: /\A[a-z0-9]+\z/ }, uniqueness: true
+  validates :personal_id, presence: true,
+                          length: { in: 4..12 },
+                          format: { with: /\A[a-z0-9]+\z/ },#半角英数字限定
+                          uniqueness: true
   validates :name, presence: true, length: { maximum: 20 }
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
@@ -37,35 +40,38 @@ class User < ApplicationRecord
     self.favorite_recipes.include?(recipe)
   end
 
-  def friend_request(user)
-    self.relationships.find_or_create_by(friend_id: user.id)
-    user.relationships.find_or_create_by(friend_id: self.id, status: 'receiving')
+  def friend_request(friend)
+    unless self == friend
+      self.relationships.find_or_create_by(friend_id: friend.id)
+      relationship = friend.relationships.find_or_create_by(friend_id: self.id)
+      relationship.update(status: 'receiving')
+    end
   end
   
-  def friend_approve(user)
-    relationship = self.relationships.find_by(friend_id: user.id)
+  def friend_approve(friend)
+    relationship = self.relationships.find_by(friend_id: friend.id)
     relationship.update(status: 'approved') if relationship
-    relationship = user.relationships.find_by(friend_id: self.id)
+    relationship = friend.relationships.find_by(friend_id: self.id)
     relationship.update(status: 'approved') if relationship
   end
   
-  def friend_delete(user)
-    relationship = self.relationships.find_by(friend_id: user.id)
+  def friend_delete(friend)
+    relationship = self.relationships.find_by(friend_id: friend.id)
     relationship.destroy if relationship
-    relationship = user.relationships.find_by(friend_id: self.id)
+    relationship = friend.relationships.find_by(friend_id: self.id)
     relationship.destroy if relationship
   end
   
-  def requesting_friend?(user)
-    self.requesting_friends.include?(user)
+  def requesting_friend?(friend)
+    self.requesting_friends.include?(friend)
   end
   
-  def receiving_friend?(user)
-    self.receiving_friends.include?(user)
+  def receiving_friend?(friend)
+    self.receiving_friends.include?(friend)
   end
   
-  def approved_friend?(user)
-    self.approved_friends.include?(user)
+  def approved_friend?(friend)
+    self.approved_friends.include?(friend)
   end
   
   def accessable_recipes
@@ -74,7 +80,12 @@ class User < ApplicationRecord
       recipes << friend.recipes.published
     end
     recipes << self.recipes
-    recipes.flatten
+    recipes.flatten!
+    accessable_id_list = []
+    recipes.each do |recipe|
+      accessable_id_list << recipe.id
+    end
+    Recipe.where(id: accessable_id_list)
   end
 
   # ユーザー検索

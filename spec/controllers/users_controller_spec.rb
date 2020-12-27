@@ -4,16 +4,35 @@ RSpec.describe UsersController, type: :controller do
   describe "#show" do
     before do
       @user = create(:user)
-      get :show, params: {id: @user.id}
+      @friend = create(:user)
     end
-    it "200レスポンスが返る" do
-      expect(response.status).to eq(200)
+    context '閲覧者がログインユーザーの友達である' do
+      before do
+        session[:user_id] = @user.id
+        create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
+        get :show, params: {id: @friend.id}
+      end
+      it "200レスポンスが返る" do
+        expect(response.status).to eq(200)
+      end
+      it "@userにリクエストされたユーザーを割り当てる" do
+        expect(assigns(:user)).to eq(@friend)
+      end
+      it ':showテンプレートを表示する' do
+        expect(response).to render_template :show
+      end
     end
-    it "@userにリクエストされたユーザーを割り当てる" do
-      expect(assigns(:user)).to eq(@user)
-    end
-    it ':showテンプレートを表示する' do
-      expect(response).to render_template :show
+    context '閲覧者がログインユーザーの友達でない' do
+      before do
+        session[:user_id] = @user.id
+        get :show, params: {id: @friend.id}
+      end
+      it "302レスポンスが返る" do
+        expect(response.status).to eq(302)
+      end
+      it 'rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
+      end
     end
   end
   
@@ -106,7 +125,7 @@ RSpec.describe UsersController, type: :controller do
   describe 'Patch #update' do
     context '被編集ユーザーとログインユーザーが一致' do
       before do
-        @user = create(:user, name: "original_name", email: "original@example.com")
+        @user = create(:user, name: "orig_name", email: "orig@example.com")
         session[:user_id] = @user.id
       end
       context 'パスワードが正しく、有効なパラメータの場合' do
@@ -133,7 +152,7 @@ RSpec.describe UsersController, type: :controller do
         end
         it 'データベースのユーザーは更新されない' do
           @user.reload
-          expect([@user.name, @user.email]).to eq ["original_name", "original@example.com"]
+          expect([@user.name, @user.email]).to eq ["orig_name", "orig@example.com"]
         end
         it ':editテンプレートを再表示する' do
           expect(response).to render_template :edit
@@ -148,7 +167,7 @@ RSpec.describe UsersController, type: :controller do
         end
         it 'データベースのユーザーは更新されない' do
           @user.reload
-          expect([@user.name, @user.email]).to eq ["original_name", "original@example.com"]
+          expect([@user.name, @user.email]).to eq ["orig_name", "orig@example.com"]
         end
         it ':editテンプレートを再表示する' do
           expect(response).to render_template :edit
@@ -205,18 +224,18 @@ RSpec.describe UsersController, type: :controller do
   describe 'Patch #password_update' do
     context '被編集ユーザーとログインユーザーが一致' do
       before do
-        @user = create(:user, password: 'original_pass', password_confirmation: 'original_pass')
+        @user = create(:user, password: 'orig_pass', password_confirmation: 'orig_pass')
         session[:user_id] = @user.id
       end
       context '現在のパスワードが正しく、有効な新パスワード(４文字以上)の場合' do
         before do
-          patch :password_update, params:{id: @user.id, current_password: 'original_pass', password: 'new_pass', password_confirmation: 'new_pass'}
+          patch :password_update, params:{id: @user.id, current_password: 'orig_pass', password: 'new_pass', password_confirmation: 'new_pass'}
         end
         it '302レスポンスが返る' do
           expect(response.status).to eq 302
         end
         it 'データベースのユーザーが更新される' do
-          pending "実現できていない(テストが通らない)"
+          pending
           @user.reload
           expect(@user.password).to eq 'new_pass'
         end
@@ -233,7 +252,7 @@ RSpec.describe UsersController, type: :controller do
         end
         it 'データベースのユーザーは更新されない' do
           @user.reload
-          expect(@user.password).to eq 'original_pass'
+          expect(@user.password).to eq 'orig_pass'
         end
         it ':password_editテンプレートを再表示する' do
           expect(response).to render_template :password_edit
@@ -241,14 +260,14 @@ RSpec.describe UsersController, type: :controller do
       end
       context '無効なパスワードの場合' do
         before do
-          patch :password_update, params:{id: @user.id, current_password: 'original_pass', password: 'p', password_confirmation: 'p'}
+          patch :password_update, params:{id: @user.id, current_password: 'orig_pass', password: 'p', password_confirmation: 'p'}
         end
         it '200レスポンスが返る' do
           expect(response.status).to eq 200
         end
         it 'データベースのユーザーは更新されない' do
           @user.reload
-          expect(@user.password).to eq 'original_pass'
+          expect(@user.password).to eq 'orig_pass'
         end
         it ':password_editテンプレートを再表示する' do
           expect(response).to render_template :password_edit
@@ -259,7 +278,7 @@ RSpec.describe UsersController, type: :controller do
       before do
         @user, @login_user = create_list(:user, 2)
         session[:user_id] = @login_user.id
-          patch :update, params:{id: @user.id, user: attributes_for(:user, current_password: 'original_pass', password: 'new_pass', password_confirmation: 'new_pass')}
+          patch :update, params:{id: @user.id, user: attributes_for(:user, current_password: 'orig_pass', password: 'new_pass', password_confirmation: 'new_pass')}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
