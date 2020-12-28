@@ -8,9 +8,8 @@
     <div class="form-group col-sm-4 offset-sm-1">
       <div class="mb-3">
         <%= f.label :image, "プロフィール画像" %><br>
-        <%= cl_image_tag(@user.image.to_s, alt: @user.name, id: :img_prev) if @user.image? %>
+        <%= cl_image_tag(@user.image.to_s, alt: @user.name, id: :img_prev) %>
       </div>
-      <%= f.label :image, "新しいプロフィール画像" %><br>
       <%= f.file_field :image, class: "image", id: "book_img" %>      
     </div>
     <div class="col-sm-6">

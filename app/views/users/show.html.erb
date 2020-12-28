@@ -6,7 +6,7 @@
     <% if current_user == @user %>
     <h3>(ID: <%= @user.personal_id %>)</h3>
     <% end %>
-    <%= cl_image_tag(@user.image.to_s, alt: @user.name) if @user.image? %>
+    <%= cl_image_tag(@user.image.to_s, alt: @user.name) %>
     <div>
       <% if current_user == @user %>
         <!--編集ボタン-->
