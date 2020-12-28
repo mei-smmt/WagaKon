@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   before_action :require_user_logged_in
   before_action -> {accessable_recipe_check(params[:id])}, only: :show
-  before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :destroy, :preview, :publish, :stop_publish]
+  before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :easy_update, :destroy, :preview, :publish, :stop_publish]
 
   def show
     if @recipe.status == "draft"
@@ -17,9 +17,17 @@ class RecipesController < ApplicationController
   def create
     @recipe = current_user.recipes.build(recipe_params)
     if @recipe.save
-      redirect_to new_recipe_ingredient_path(@recipe)
+      redirect_to new_recipe_ingredient_url(@recipe)
     else
-      flash.now[:danger] = '内容に誤りがあります'
+      render :new
+    end
+  end
+
+  def easy_create
+    @recipe = current_user.recipes.build(recipe_params)
+    if @recipe.save
+        redirect_to preview_recipe_url(@recipe)
+    else
       render :new
     end
   end
@@ -29,9 +37,16 @@ class RecipesController < ApplicationController
   
   def update
     if @recipe.update(recipe_params)
-      redirect_to edit_recipe_ingredients_path(@recipe)
+      redirect_to edit_recipe_ingredients_url(@recipe)
     else
-      flash.now[:danger] = '内容に誤りがあります'
+      render :edit
+    end
+  end
+  
+  def easy_update
+    if @recipe.update(recipe_params)
+      redirect_to recipe_url(@recipe)
+    else
       render :edit
     end
   end
@@ -58,10 +73,16 @@ class RecipesController < ApplicationController
   def keyword_search
     redirect_to root_url if params[:search] == ""
     @recipes = current_user.accessable_recipes.keyword_search(params[:search])
+    @keyword = params[:search]
   end
   
   def feature_search
-    @recipes = current_user.accessable_recipes.feature_search(feature_params)
+    if params[:keyword]
+      recipes = current_user.accessable_recipes.keyword_search(params[:keyword])
+      @recipes = recipes.feature_search(feature_params)
+    else
+      @recipes = current_user.accessable_recipes.feature_search(feature_params)
+    end
   end
     
   private

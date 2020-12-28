@@ -1,4 +1,7 @@
-<h2>検索結果：<%= @recipes.count %>件</h2>
+<!--レシピ検索フォーム-->
+<%= render 'recipes/search', keyword: @keyword, keyword_submit: "再検索", feature_submit: "絞込み" %>
+
+<h2>「<%= @keyword %>」の検索結果：<%= @recipes.count %>件</h2>
 <% if @recipes.empty? %>
   <div class="alert alert-warning">キーワードに一致するレシピがありません</div>
 <% else %>

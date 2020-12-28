@@ -26,10 +26,12 @@ Rails.application.routes.draw do
 
   resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy] do
     collection do
+      post :easy_create
       get :keyword_search
       get :feature_search
     end
     member do
+      patch :easy_update
       get :preview
       patch :publish
       patch :stop_publish 
