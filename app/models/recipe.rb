@@ -29,13 +29,12 @@ class Recipe < ApplicationRecord
   # レシピキーワード検索
   def self.keyword_search(search)   
     keywords = search.split(/[[:blank:]]+/)
-    recipes = []
+    recipes = Recipe
     keywords.each do |keyword|
-      next if keyword == "" 
-        recipes += Recipe.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])   
-      end 
-    recipes.uniq
-  end  
+      recipes = recipes.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])
+    end
+    recipes
+  end
   
   # レシピ特徴検索
   def self.feature_search(search)
