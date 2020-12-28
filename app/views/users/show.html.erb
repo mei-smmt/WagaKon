@@ -6,11 +6,12 @@
     <% if current_user == @user %>
     <h3>(ID: <%= @user.personal_id %>)</h3>
     <% end %>
-    <%= cl_image_tag(@user.image.to_s, alt: @user.name) if @user.image? %>
+    <%= cl_image_tag(@user.image.to_s, alt: @user.name) %>
     <div>
       <% if current_user == @user %>
         <!--編集ボタン-->
         <%= link_to "編集", edit_user_path(@user), class: 'border-bottom', id: 'edit-button' %>
+        <%= link_to "アカウント削除", @user, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'button' %>
       <% end %>
     </div>
   </div>
