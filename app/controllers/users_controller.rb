@@ -18,6 +18,7 @@ class UsersController < ApplicationController
       (0..6).each do |index|
         @user.meals.create(day_of_week: index)
       end
+      login(@user.email, @user.password)
       flash[:success] = '登録しました'
       redirect_to root_url
     else
