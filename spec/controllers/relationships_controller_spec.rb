@@ -85,8 +85,7 @@ RSpec.describe RelationshipsController, type: :controller do
         expect(response.status).to eq 302
       end
       it 'リレーションstatusがapprovedになる' do
-        pending
-        expect([@user_relationship.status, @friend_relationship.status]).to eq ['approved']
+        expect([@user_relationship.reload.status, @friend_relationship.reload.status]).to eq ['approved', 'approved']
       end
       it "友達ページにリダイレクトする" do
         expect(response).to redirect_to friends_user_path(@user)
