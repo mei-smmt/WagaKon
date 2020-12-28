@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :meals, dependent: :destroy
   
   has_many :relationships, dependent: :destroy
+  has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'friend_id', dependent: :destroy
   has_many :friends, through: :relationships, source: :friend
   has_many :requesting_relationships, -> { requesting }, class_name: 'Relationship'
   has_many :requesting_friends, through: :requesting_relationships, source: :friend
