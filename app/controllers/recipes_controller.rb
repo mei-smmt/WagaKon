@@ -19,7 +19,15 @@ class RecipesController < ApplicationController
     if @recipe.save
       redirect_to new_recipe_ingredient_path(@recipe)
     else
-      flash.now[:danger] = '内容に誤りがあります'
+      render :new
+    end
+  end
+
+  def easy_create
+    @recipe = current_user.recipes.build(recipe_params)
+    if @recipe.save
+        redirect_to preview_recipe_url(@recipe)
+    else
       render :new
     end
   end
