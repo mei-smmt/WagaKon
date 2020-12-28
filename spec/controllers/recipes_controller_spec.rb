@@ -411,4 +411,45 @@ RSpec.describe RecipesController, type: :controller do
       end
     end
   end
+  
+  describe "#feature_search" do
+    before do
+      @user = create(:user)
+      @friend = create(:user)
+      create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
+      @recipe_published = create(:recipe, status: "published", user_id: @friend.id)
+      create(:feature, recipe_id: @recipe_published.id, cooking_method: 'fry')
+      @recipe_draft = create(:recipe, status: "draft", user_id: @friend.id)
+      create(:feature, recipe_id: @recipe_draft.id, cooking_method: 'fry')
+      session[:user_id] = @user.id
+    end
+    context '検索条件に一致する場合' do
+      before do
+        get :feature_search, params: {cooking_method: 'fry'}
+      end
+      it "200レスポンスが返る" do
+        expect(response.status).to eq(200)
+      end
+      it "@recipesに該当するレシピが登録される" do
+        expect(assigns(:recipes)).to eq([@recipe_published])
+      end
+      it ':keyword_searchテンプレートを表示する' do
+        expect(response).to render_template :feature_search
+      end
+    end
+    context '検索条件に一致しない場合' do
+      before do
+        get :feature_search, params: {cooking_method: 'boil'}
+      end
+      it "200レスポンスが返る" do
+        expect(response.status).to eq(200)
+      end
+      it "@recipesにレシピが割り当てられない" do
+        expect(assigns(:recipes)).to eq([])
+      end
+      it ':feature_searchテンプレートを表示する' do
+        expect(response).to render_template :feature_search
+      end
+    end
+  end
 end
