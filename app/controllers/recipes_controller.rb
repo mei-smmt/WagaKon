@@ -73,6 +73,7 @@ class RecipesController < ApplicationController
   def keyword_search
     redirect_to root_url if params[:search] == ""
     @recipes = current_user.accessable_recipes.keyword_search(params[:search])
+    @keyword = params[:search]
   end
   
   def feature_search
