@@ -77,7 +77,12 @@ class RecipesController < ApplicationController
   end
   
   def feature_search
-    @recipes = current_user.accessable_recipes.feature_search(feature_params)
+    if params[:keyword]
+      recipes = current_user.accessable_recipes.keyword_search(params[:keyword])
+      @recipes = recipes.feature_search(feature_params)
+    else
+      @recipes = current_user.accessable_recipes.feature_search(feature_params)
+    end
   end
     
   private
