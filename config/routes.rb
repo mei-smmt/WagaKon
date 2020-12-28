@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get :feature_search
     end
     member do
+      patch :easy_update
       get :preview
       patch :publish
       patch :stop_publish 
