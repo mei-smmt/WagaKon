@@ -17,13 +17,17 @@ class Recipe < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :menus, dependent: :destroy
   
-  # レシピの公開、非公開設定
+  # レシピの公開、非公開
   def publishing
     self.update_attribute(:status, 1)
   end
   
   def drafting
     self.update_attribute(:status, 0)
+  end
+  
+  def draft?
+    self.status == "draft"
   end
 
   # レシピキーワード検索

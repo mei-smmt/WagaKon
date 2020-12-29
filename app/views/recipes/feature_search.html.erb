@@ -1,5 +1,5 @@
 <!--レシピ検索フォーム-->
-<%= render 'recipes/search', keyword: nil, keyword_submit: "再検索", feature_submit: "絞込み" %>
+<%= render 'recipes/search', keyword: @keyword, feature: @feature, keyword_submit: "再検索", feature_submit: "絞込み" %>
 
 <h2>検索結果：<%= @recipes.count %>件</h2>
 <% if @recipes.empty? %>

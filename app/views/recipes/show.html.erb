@@ -1,4 +1,7 @@
 <%= stylesheet_link_tag "recipes/show", :media => "all" %>
+<% if @recipe.draft? %>
+  <h2>非公開</h2>
+<% end %>
 <!--献立追加ボタン-->
 <%= render 'menus/add_to_meal', recipe: @recipe %>
 <!--ブックマークボタン-->
@@ -8,7 +11,7 @@
 <!--公開非公開、編集、削除ボタン-->
 <div class="button-group">
   <% if current_user == @recipe.user %>
-    <%= render 'recipes/stop_publish_button', recipe: @recipe %>
+    <%= render 'recipes/stop_publish_button', recipe: @recipe unless @recipe.draft? %>
     <%= render 'recipes/edit_delete_button', recipe: @recipe %>
   <% end %>
 </div>
@@ -18,3 +21,8 @@
 <%= render 'recipes/recipe_lower', recipe: @recipe %>
 <!--レシピ特徴-->
 <%= render 'features/index', recipe: @recipe %>
+
+<% if @recipe.draft? %>
+  <!--レシピ公開ボタン-->
+  <%= render 'recipes/publish_button', recipe: @recipe %>
+<% end %>
