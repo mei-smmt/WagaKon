@@ -302,8 +302,8 @@ RSpec.describe RecipesController, type: :controller do
         @recipe.reload
         expect(@recipe.status).to eq 'draft'
       end
-      it '下書き一覧にリダイレクトする' do
-        expect(response).to redirect_to draft_recipes_user_url(@user)
+      it ':showにリダイレクトする' do
+        expect(response).to redirect_to recipe_url(@user)
       end
     end
     context 'レシピ作者とログインユーザーが一致しない' do

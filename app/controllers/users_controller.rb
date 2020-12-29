@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:show, :edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes, :draft_recipes]
+  before_action :require_user_logged_in, only: [:show, :edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes]
   before_action :accessable_user, only: :show
-  before_action :correct_user, only: [:edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes, :draft_recipes]
+  before_action :correct_user, only: [:edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes]
   
   def show
     @recipes = @user.recipes.published
@@ -82,11 +82,7 @@ class UsersController < ApplicationController
   def favorite_recipes
     @favorite_recipes = @user.favorite_recipes
   end
-  
-  def draft_recipes
-    @draft_recipes = @user.recipes.draft
-  end
-  
+
   private
 
   def user_params

@@ -14,7 +14,6 @@ Rails.application.routes.draw do
       get :password_edit
       patch :password_update
       get :favorite_recipes
-      get :draft_recipes
       get :friends
     end
   end
