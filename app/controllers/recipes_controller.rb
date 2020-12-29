@@ -1,12 +1,9 @@
 class RecipesController < ApplicationController
   before_action :require_user_logged_in
   before_action -> {accessable_recipe_check(params[:id])}, only: :show
-  before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :easy_update, :destroy, :preview, :publish, :stop_publish]
+  before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :easy_update, :destroy, :publish, :stop_publish]
 
   def show
-    if @recipe.status == "draft"
-      redirect_to preview_recipe_url(@recipe)
-    end
   end
 
   def new
@@ -26,7 +23,7 @@ class RecipesController < ApplicationController
   def easy_create
     @recipe = current_user.recipes.build(recipe_params)
     if @recipe.save
-        redirect_to preview_recipe_url(@recipe)
+        redirect_to recipe_url(@recipe)
     else
       render :new
     end
@@ -56,10 +53,7 @@ class RecipesController < ApplicationController
     flash[:success] = '正常に削除されました'
     redirect_to root_url
   end
-  
-  def preview
-  end
-  
+
   def publish
     @recipe.publishing
     redirect_to recipe_url(@recipe)
@@ -67,7 +61,7 @@ class RecipesController < ApplicationController
   
   def stop_publish
     @recipe.drafting
-    redirect_to draft_recipes_user_url(@user)
+    redirect_to recipe_url(@recipe)
   end
     
   def keyword_search

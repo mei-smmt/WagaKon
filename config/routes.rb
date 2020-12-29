@@ -32,7 +32,6 @@ Rails.application.routes.draw do
     end
     member do
       patch :easy_update
-      get :preview
       patch :publish
       patch :stop_publish 
     end

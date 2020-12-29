@@ -13,7 +13,7 @@ class StepsController < ApplicationController
     @form_steps = steps_params
     # 一括保存処理呼び出し
     if Step.bulk_create(@recipe, @steps, @form_steps)
-      redirect_to preview_recipe_url(@recipe)
+      redirect_to recipe_url(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :new
