@@ -327,45 +327,5 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
-  
-  describe "#draft_recipes" do
-    before do
-      @user = create(:user)
-      @recipe1 = create(:recipe, user_id: @user.id, status: "draft")
-      @recipe2 = create(:recipe, user_id: @user.id, status: "published")
-      @recipe3 = create(:recipe, status: "draft")
-    end
-    context 'リクエストユーザーとログインユーザーが一致' do
-      before do
-        session[:user_id] = @user.id
-        get :draft_recipes, params: {id: @user.id}
-      end
-      it "200レスポンスが返る" do
-        expect(response.status).to eq(200)
-      end
-      it "@userにリクエストされたユーザーを割り当てる" do
-        expect(assigns(:user)).to eq(@user)
-      end
-      it "@recipeにリクエストされたユーザーの下書きレシピを割り当てる" do
-        expect(assigns(:draft_recipes)).to eq([@recipe1])
-      end
-      it ':draft_recipesテンプレートを表示する' do
-        expect(response).to render_template :draft_recipes
-      end
-    end
-    context 'リクエストユーザーとログインユーザーが一致しない' do
-      before do
-        @login_user = create(:user)
-        session[:user_id] = @login_user.id
-        get :draft_recipes, params: {id: @user.id}
-      end
-      it "302レスポンスが返る" do
-        expect(response.status).to eq(302)
-      end
-      it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
-      end
-    end
-  end
 end
 
