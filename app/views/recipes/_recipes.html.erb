@@ -8,7 +8,10 @@
           <div class="card-body">
             <h2 class="card-title text-secondary"><%= recipe.title %></h2>
             <h4>by <%= recipe.user.name %></h4>
-            <p class="text-secondary text-right"><i class="fas fa-heart"></i><%= recipe.bookmarks.count %></p>
+            <% if recipe.draft? %>
+              <p class="text-secondary">非公開</p>
+            <% end %>
+            <p class="text-secondary text-right">♡<%= recipe.bookmarks.count %></p>
           </div>
         </a>
       </div>
