@@ -13,7 +13,6 @@
 
 <!--特徴検索フォーム-->
 <%= form_with(url: feature_search_recipes_path, method: :get, local: true) do |f| %>
-  <%= hidden_field_tag :keyword, keyword if keyword %>
   <h2>特徴でレシピ検索</h2>
   <div class="form-row">
     <div class="col-sm-2">
