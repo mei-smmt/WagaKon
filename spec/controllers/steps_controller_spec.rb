@@ -68,9 +68,9 @@ RSpec.describe StepsController, type: :controller do
             post :create, params:{steps: @steps, recipe_id: @recipe.id}
           }.to change(@recipe.steps, :count).by(2)
         end
-        it 'ステップ入力画面にリダイレクトする' do
+        it ':showにリダイレクトする' do
           post :create, params:{steps: @steps, recipe_id: @recipe.id}
-          expect(response).to redirect_to preview_recipe_url(@recipe)
+          expect(response).to redirect_to recipe_url(@recipe)
         end
       end
       context '無効なパラメータを含む場合(contentが１４０文字より長い)' do

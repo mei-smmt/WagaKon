@@ -36,8 +36,8 @@ RSpec.describe RecipesController, type: :controller do
       it "@recipeにリクエストされたレシピを割り当てる" do
         expect(assigns(:recipe)).to eq(@recipe)
       end
-      it ':previewにリダイレクトする' do
-        expect(response).to redirect_to preview_recipe_path(@recipe)
+      it ':showにリダイレクトする' do
+        expect(response).to redirect_to recipe_path(@recipe)
       end
     end
   end
@@ -243,40 +243,6 @@ RSpec.describe RecipesController, type: :controller do
       end
       it 'rootにリダイレクトする' do
         delete :destroy, params: {id: @recipe.id}
-        expect(response).to redirect_to root_path
-      end
-    end
-  end
-  
-  describe "#preview" do
-    context 'レシピ作者とログインユーザーが一致' do
-      before do
-        @user = create(:user)
-        @recipe = create(:recipe, user_id: @user.id)
-        session[:user_id] = @user.id
-        get :preview, params: {id: @recipe.id}
-      end
-      it "200レスポンスが返る" do
-        expect(response.status).to eq(200)
-      end
-      it "@recipeにリクエストされたレシピを割り当てる" do
-        expect(assigns(:recipe)).to eq(@recipe)
-      end
-      it ':previewテンプレートを表示する' do
-        expect(response).to render_template :preview
-      end
-    end
-    context 'レシピ作者とログインユーザーが一致していない' do
-      before do
-        @user, @login_user = create_list(:user, 2)
-        @recipe = create(:recipe, user_id: @user.id)
-        session[:user_id] = @login_user.id
-        get :preview, params: {id: @recipe.id}
-      end
-      it "302レスポンスが返る" do
-        expect(response.status).to eq(302)
-      end
-      it 'rootにリダイレクトする' do
         expect(response).to redirect_to root_path
       end
     end
