@@ -70,10 +70,12 @@ class UsersController < ApplicationController
   end
   
   def friends
+    @meals = current_user.meals
   end
   
   def search
     @user = current_user
+    @meals = current_user.meals
     unless params[:search] == ""
       @result_user = User.search(params[:search])
     end
