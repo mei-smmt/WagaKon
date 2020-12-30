@@ -4,12 +4,13 @@ class ToppagesController < ApplicationController
   def index
     session_clear
     @recipes = current_user.accessable_recipes
+    @meals = current_user.meals
   end
   
   private
   
   def session_clear
-    session[:keyword].clear
-    session[:feature].clear
+    session[:keyword].clear if session[:keyword]
+    session[:feature].clear if session[:feature]
   end
 end
