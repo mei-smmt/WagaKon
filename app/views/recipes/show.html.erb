@@ -1,15 +1,16 @@
-<%= stylesheet_link_tag "recipes/show", :media => "all" %>
 <% if @recipe.draft? %>
   <h2>非公開</h2>
 <% end %>
 <div class="card">
-  <div class="card-body p-4">
+  <div class="card-header">
     <!--献立追加ボタン-->
     <%= render 'menus/add_to_meal', recipe: @recipe %>
     <!--ブックマークボタン-->
-    <div id="likes_buttons_<%= @recipe.id %>", class="button-group mb-2">
+    <div id="likes_buttons_<%= @recipe.id %>", class="mb-2">
       <%= render 'bookmarks/bookmark_button', recipe: @recipe %>
     </div>
+  </div>
+  <div class="card-body p-4">
     <!--レシピ上部-->
     <%= render 'recipes/recipe_upper', recipe: @recipe %>
     <!--レシピ下部-->
@@ -22,7 +23,7 @@
       <%= render 'recipes/publish_button', recipe: @recipe %>
     <% end %>
     <!--公開非公開、編集、削除ボタン-->
-    <div class="button-group">
+    <div>
       <% if current_user == @recipe.user %>
         <%= render 'recipes/stop_publish_button', recipe: @recipe unless @recipe.draft? %>
         <%= render 'recipes/edit_delete_button', recipe: @recipe %>
