@@ -1,21 +1,28 @@
 <%= stylesheet_link_tag "users/show", :media => "all" %>
+<!--レシピ検索フォーム-->
+<%= render 'recipes/search', keyword: nil, feature:{} , recipes: @recipes, keyword_submit: "検索", feature_submit: "検索" %>
 
-<div class="row">
-  <div class="col-sm-4 offset-sm-4">
-    <h1><%= @user.name %></h1>
-    <% if current_user == @user %>
-    <h3>(ID: <%= @user.personal_id %>)</h3>
-    <% end %>
-    <%= cl_image_tag(@user.image.to_s, alt: @user.name) %>
-    <div>
+<div class="col-sm-6">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <h1><%= @user.name %></h1>
       <% if current_user == @user %>
-        <!--編集ボタン-->
-        <%= link_to "編集", edit_user_path(@user), class: 'border-bottom', id: 'edit-button' %>
-        <%= link_to "アカウント削除", @user, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'button' %>
+      <h3>(ID: <%= @user.personal_id %>)</h3>
       <% end %>
+      <%= cl_image_tag(@user.image.to_s, alt: @user.name) %>
+      <div>
+        <% if current_user == @user %>
+          <!--編集ボタン-->
+          <%= link_to "編集", edit_user_path(@user), class: 'border-bottom', id: 'edit-button' %>
+          <%= link_to "アカウント削除", @user, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'button' %>
+        <% end %>
+      </div>
     </div>
   </div>
+  <!--投稿レシピ一覧-->
+  <h2 class="mt-4">投稿したレシピ</h2>
+  <%= render 'recipes/recipes', recipes: @recipes %>
 </div>
+
 <!--投稿レシピ一覧-->
-<h2 class="mt-4">投稿したレシピ</h2>
-<%= render 'recipes/recipes', recipes: @recipes %>
+<%= render 'meals/index', recipes: @recipes %>
