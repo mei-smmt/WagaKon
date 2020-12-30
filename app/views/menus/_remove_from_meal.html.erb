@@ -1,5 +1,5 @@
-    <%= form_with(model: current_user.meals.day(day).menus.find_by(recipe_id: recipe.id), method: :delete, local: true) do |f| %>
-      <%= hidden_field_tag :recipe_id, recipe.id %>
-      <%= hidden_field_tag :day, day %>
-      <%= f.submit '×', class: 'btn' %>
-    <% end %>
+<%= form_with(model: current_user.meals.day(day).menus.find_by(recipe_id: recipe.id), method: :delete, local: true) do |f| %>
+  <%= hidden_field_tag :recipe_id, recipe.id %>
+  <%= hidden_field_tag :day, day %>
+  <%= f.submit '×', class: 'btn' %>
+<% end %>
