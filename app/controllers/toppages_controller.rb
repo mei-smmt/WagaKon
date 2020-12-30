@@ -1,10 +1,11 @@
 class ToppagesController < ApplicationController
-  before_action :require_user_logged_in  
+  before_action :require_user_logged_in 
+  before_action :prepare_search
+  before_action :set_meals
 
   def index
     session_clear
     @recipes = current_user.accessable_recipes
-    @meals = current_user.meals
   end
   
   private
