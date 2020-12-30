@@ -1,17 +1,19 @@
 <div class="col-sm-3">
-  <h2>献立一覧</h2>
-  <ul>
+  <div class="card">
     <% week_loop.each do |day| %>
-      <li>
-        <h3><%= wday_jp(day) %>の献立</h3>
-        <ul>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0"><%= wday_jp(day) %>の献立</h2>
+        </div>
+        <div class="card-body">
           <% @meals.day(day).menu_recipes.each do |recipe| %>
-            <li><%= link_to recipe.title, recipe_path(recipe) %>
-                <%= render 'menus/remove_from_meal', recipe: recipe, day: day %>
-            </li>
+            <div class="row">
+              <div class="col-sm-1"><%= render 'menus/remove_from_meal', recipe: recipe, day: day %></div>
+              <div class="col-sm-10 d-flex align-items-center"><%= link_to recipe.title, recipe_path(recipe) %></div>
+            </div>
           <% end %>
-        </ul>
-      </li>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  </div>
 </div>
