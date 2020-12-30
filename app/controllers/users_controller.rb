@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   
   def show
     @recipes = @user.recipes.published
+    @meals = current_user.meals
   end
 
   def new
