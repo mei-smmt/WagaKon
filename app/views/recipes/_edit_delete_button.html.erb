@@ -1,5 +1,3 @@
-<%= stylesheet_link_tag "recipes/button", :media => "all" %>
-
 <!--編集、削除ボタン-->
 <%= link_to "編集", edit_recipe_path(recipe), class: 'button' %>
 <%= link_to "削除", recipe, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'button' %>

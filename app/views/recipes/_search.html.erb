@@ -1,19 +1,19 @@
-<div class="col-sm-3">
+<div class="col-sm-3 pr-4">
   <!--キーワード検索フォーム-->
   <div class="card mb-3">
     <div class="card-header py-2 px-3">
       <h3 class="mb-0">キーワードでレシピ検索</h3>
     </div>
-    <div class="card-body">
-      <div class="row">
+    <div class="card-body p-2">
+      <div class="row mt-2">
         <div class="col-sm-12">
           <%= form_with(url: keyword_search_recipes_path, method: :get, local: true) do |f| %>
             <div class="form-row">
-              <div class="col-9">
-                <%= f.text_field :search, value: keyword,  class: 'form-control form-control-sm', id: 'search-box' %>
+              <div class="col-9 pr-0">
+                <%= f.text_field :search, value: keyword,  class: 'form-control form-control-sm search-box' %>
               </div>
-              <div class="col-3">
-                <%= f.submit keyword_submit, class: 'btn btn-sm btn-outline-dark' %>
+              <div class="col-3 d-flex justify-content-end">
+                <%= f.submit keyword_submit, class: 'btn btn-sm search-btn' %>
               </div>
             </div>
           <% end %>
@@ -25,7 +25,7 @@
     <div class="card-header py-2 px-3">
       <h3 class="mb-0">特徴でレシピ検索</h3>
     </div>
-    <div class="card-body">
+    <div class="card-body p-2">
       <div class="row">
         <div class="col-sm-12">
           <!--特徴検索フォーム-->
@@ -67,8 +67,8 @@
                       class: 'form-control' %>
                 </div>
               </div>
-              <div class="col-sm-3 offset-sm-9">
-                <%= f.submit feature_submit, class: 'btn btn-sm btn-outline-dark' %>
+              <div class="col-sm-3 offset-sm-9 d-flex justify-content-end">
+                <%= f.submit feature_submit, class: 'btn btn-sm search-btn' %>
               </div>
             </div>
           <% end %>

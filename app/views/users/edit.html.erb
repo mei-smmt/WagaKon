@@ -1,11 +1,8 @@
-<%= stylesheet_link_tag "users/edit", :media => "all" %>
-
 <h2>プロフィール編集</h2>
-
 <%= form_with(model: @user, local: true) do |f| %>
   <%= render 'layouts/error_messages', model: f.object %>
   <div class="form-row mt-4">
-    <div class="form-group col-sm-4 offset-sm-1">
+    <div class="form-group col-sm-6">
       <div class="mb-3">
         <%= f.label :image, "プロフィール画像" %><br>
         <%= cl_image_tag(@user.image.to_s, alt: @user.name, id: :img_prev) %>
