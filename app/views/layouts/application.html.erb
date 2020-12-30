@@ -22,7 +22,17 @@
     <div class="container-fluid">
       <%= render 'layouts/flash_messages' %>
       <div class="row">
-        <%= yield %>
+        <% if logged_in? %>
+          <!--レシピ検索フォーム-->
+          <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
+        <% end %>
+        <div class="col-sm-6">
+          <%= yield %>
+        </div>
+        <% if logged_in? %>
+          <!--献立一覧-->
+          <%= render 'meals/index', recipes: @recipes %>
+        <% end %>
       </div>
     </div>
   </body>

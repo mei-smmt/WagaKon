@@ -36,4 +36,15 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
     end
   end
+  
+  def prepare_search
+    @search_keyword = nil
+    @search_feature = {}
+    @k_submit = "検索"
+    @f_submit = "検索"
+  end
+  
+  def set_meals
+    @meals = current_user.meals
+  end
 end
