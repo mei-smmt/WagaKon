@@ -16,12 +16,12 @@
  
  body {
    font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
-   letter-spacing: 0.15em;
+   letter-spacing: 0.08em;
  }
  
  input {
    font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
-   letter-spacing: 0.15em;
+   letter-spacing: 0.08em;
  }
  
  h1 {
@@ -37,7 +37,8 @@ h2 {
 }
 
  h3 {
-   font-size: 0.8rem;
+   font-weight: bold;
+   font-size: 0.9rem;
  }
 
  h4 {
