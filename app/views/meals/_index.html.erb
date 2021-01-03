@@ -1,21 +1,23 @@
-<div class="col-sm-3 pl-4">
-  <div class="card p-2 rouded-0 border-0 bg_skew_dot">
+<div class="col-sm-2 pl-2">
+  <div class="card p-2 rouded-0 border-0 bg-gray">
     <% week_loop.each do |day| %>
-      <div class="card border-0">
-        <div class="card-header meal-header p-2 border-0 rounded-0">
-          <h4 class="mb-0 text-white fw-normal text-center"><%= wday_jp(day) %>の献立</h4>
+      <% if @meals.day(day).menu_recipes.present? %>
+        <div class="card rouded-0 border-0">
+          <div class="card-header bg-gray px-1 pt-2 pb-0 border-0 rounded-0">
+            <h4 class="mb-0 fw-normal"><%= wday_jp(day) %></h4>
+          </div>
+          <div class="card-body p-0">
+            <table class="table table-sm table-borderless bg-gray m-0">
+              <% @meals.day(day).menu_recipes.each do |recipe| %>
+                <tr>
+                  <th class="p-0"><h5 class="mx-1 mt-2"><%= link_to recipe.title, recipe_path(recipe) %></h5></th>
+                  <th class="p-0"><%= render 'menus/remove_from_meal', recipe: recipe, day: day %></th>
+                </tr>
+              <% end %>
+            </table>
+          </div>
         </div>
-        <div class="card-body p-0">
-          <table class="table m-0">
-            <% @meals.day(day).menu_recipes.each do |recipe| %>
-              <tr>
-                <th class="p-0"><h5 class="mx-2 mt-2"><%= link_to recipe.title, recipe_path(recipe) %></h5></th>
-                <th class="p-0"><%= render 'menus/remove_from_meal', recipe: recipe, day: day %></th>
-              </tr>
-            <% end %>
-          </table>
-        </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>

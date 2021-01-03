@@ -1,77 +1,74 @@
 <div class="col-sm-3 pr-4">
-  <!--キーワード検索フォーム-->
-  <div class="card mb-3">
-    <div class="card-header py-2 px-3">
-      <h3 class="mb-0">キーワードでレシピ検索</h3>
-    </div>
-    <div class="card-body p-2">
-      <div class="row mt-2">
-        <div class="col-sm-12">
-          <%= form_with(url: keyword_search_recipes_path, method: :get, local: true) do |f| %>
-            <div class="form-row">
-              <div class="col-9 pr-0">
-                <%= f.text_field :search, value: keyword,  class: 'form-control form-control-sm search-box' %>
-              </div>
-              <div class="col-3 d-flex justify-content-end">
-                <%= f.submit keyword_submit, class: 'btn btn-sm search-btn' %>
-              </div>
-            </div>
-          <% end %>
-        </div>
+  <div class="card p-2 rouded-0 border-0 bg_skew_dot">
+    <div class="card border-0">
+      <div class="card-header bg-orange p-2 border-0 rounded-0">
+        <h4 class="mb-0 text-white text-center">レシピを探す</h4>
       </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header py-2 px-3">
-      <h3 class="mb-0">特徴でレシピ検索</h3>
-    </div>
-    <div class="card-body p-2">
-      <div class="row">
-        <div class="col-sm-12">
-          <!--特徴検索フォーム-->
-          <%= form_with(url: feature_search_recipes_path, method: :get, local: true) do |f| %>
-            <div class="form-row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <%= f.label :amount, "ボリュームは？" %>
-                  <%= f.select :amount,
-                      Feature.amounts.keys.map {|k| [I18n.t("enums.feature.amount.#{k}"), k]},
-                      { include_blank: '指定しない', selected: feature[:amount] },
-                      class: 'form-control' %>
+      <div class="card-body px-3 py-2">
+        <!--キーワード検索フォーム-->
+        <h3 class="mb-3 mt-0">キーワードで検索</h3>
+        <div class="row mt-2">
+          <div class="col-sm-12">
+            <%= form_with(url: keyword_search_recipes_path, method: :get, local: true) do |f| %>
+              <div class="form-row">
+                <div class="col-sm-8 pr-0">
+                  <%= f.text_field :search, value: keyword,  class: 'form-control form-control-sm search-box' %>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                  <%= f.submit keyword_submit, class: 'btn btn-sm search-btn' %>
                 </div>
               </div>
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <%= f.label :dish_type, "何系料理？" %>
-                  <%= f.select :dish_type,
-                      Feature.dish_types.keys.map {|k| [I18n.t("enums.feature.dish_type.#{k}"), k]},
-                      { include_blank: '指定しない', selected: feature[:dish_type]},
-                      class: 'form-control' %>
+            <% end %>
+          </div>
+        </div>
+        <h3 class="my-3">特徴で検索</h3>
+        <div class="row">
+          <div class="col-sm-12">
+            <!--特徴検索フォーム-->
+            <%= form_with(url: feature_search_recipes_path, method: :get, local: true) do |f| %>
+              <div class="form-row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <%= f.label :amount, "ボリュームは？", class: 'ash-blue' %>
+                    <%= f.select :amount,
+                        Feature.amounts.keys.map {|k| [I18n.t("enums.feature.amount.#{k}"), k]},
+                        { include_blank: '指定しない', selected: feature[:amount] },
+                        class: 'form-control form-control-sm search-box' %>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <%= f.label :dish_type, "何系料理？", class: 'ash-blue' %>
+                    <%= f.select :dish_type,
+                        Feature.dish_types.keys.map {|k| [I18n.t("enums.feature.dish_type.#{k}"), k]},
+                        { include_blank: '指定しない', selected: feature[:dish_type]},
+                        class: 'form-control form-control-sm search-box' %>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <%= f.label :main_food, "メインの食材は？", class: 'ash-blue' %>
+                    <%= f.select :main_food,
+                        Feature.main_foods.keys.map {|k| [I18n.t("enums.feature.main_food.#{k}"), k]},
+                        { include_blank: '指定しない', selected: feature[:main_food]},
+                        class: 'form-control form-control-sm search-box' %>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <%= f.label :cooking_method, "調理法は？", class: 'ash-blue' %>
+                    <%= f.select :cooking_method,
+                        Feature.cooking_methods.keys.map {|k| [I18n.t("enums.feature.cooking_method.#{k}"), k]},
+                        { include_blank: '指定しない', selected: feature[:cooking_method]},
+                        class: 'form-control form-control-sm search-box' %>
+                  </div>
+                </div>
+                <div class="col-sm-3 offset-sm-9 d-flex justify-content-end">
+                  <%= f.submit feature_submit, class: 'btn btn-sm search-btn' %>
                 </div>
               </div>
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <%= f.label :main_food, "メインの食材は？" %>
-                  <%= f.select :main_food,
-                      Feature.main_foods.keys.map {|k| [I18n.t("enums.feature.main_food.#{k}"), k]},
-                      { include_blank: '指定しない', selected: feature[:main_food]},
-                      class: 'form-control' %>
-                </div>
-              </div>
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <%= f.label :cooking_method, "調理法は？" %>
-                  <%= f.select :cooking_method,
-                      Feature.cooking_methods.keys.map {|k| [I18n.t("enums.feature.cooking_method.#{k}"), k]},
-                      { include_blank: '指定しない', selected: feature[:cooking_method]},
-                      class: 'form-control' %>
-                </div>
-              </div>
-              <div class="col-sm-3 offset-sm-9 d-flex justify-content-end">
-                <%= f.submit feature_submit, class: 'btn btn-sm search-btn' %>
-              </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

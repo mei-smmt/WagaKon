@@ -1,11 +1,16 @@
 <% if @user.approved_friends.present? %>
-  <table class="table">
-    <tr><th>友だち</th><th></th></tr>
+  <h2>友だち</h2>
+  <div class="row">
     <% @user.approved_friends.each do |friend| %>
-      <tr><td><%= link_to friend.name, user_path(friend) %></td>
-          <td><%= render 'relationships/delete_friend_button', user: @user, friend: friend, delete_message: "削除"%></td></tr>
+      <div class="col-sm-4">
+        <%= cl_image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
+        <div class="d-flex justify-content-center">
+          <h3 class="mt-3 mb-0"><%= link_to friend.name, user_path(friend) %></h3>
+        </div>
+        <%= render 'relationships/delete_friend_button', user: @user, friend: friend, delete_message: "削除" %>
+      </div>
     <% end %>
-  </table>
+  </div>
 <% end %>
 
 <% if @user.receiving_friends.present? %>

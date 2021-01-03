@@ -10,7 +10,6 @@
         <!--ログイン済み-->
         <% if logged_in? %>
           <li class="nav-item"><%= link_to 'マイページ', user_path(current_user), class: 'nav-link' %></li>
-          <li class="nav-item"><%= link_to '友だち', friends_user_path(current_user), class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to "お気に入りレシピ", favorite_recipes_user_path(current_user), class: 'nav-link' %>
           <li class="nav-item"><%= link_to "レシピを追加する", new_recipe_path, class: 'nav-link' %>
           <li class="nav-item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link' %></li>

@@ -3,7 +3,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include Cloudinary::CarrierWave
   include CarrierWave::MiniMagick
-  process resize_to_fill: [480, 360]
+  process resize_to_fill: [640, 640]
 
   # Choose what kind of storage to use for this uploader:
   # storage :file
