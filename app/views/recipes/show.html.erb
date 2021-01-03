@@ -1,16 +1,18 @@
 <% if @recipe.draft? %>
   <h2>非公開</h2>
 <% end %>
-<div class="card">
-  <div class="card-header">
+<div class="card border-0">
+  <div class="card-header d-flex justify-content-end py-1 bg-darkgray">
     <!--献立追加ボタン-->
-    <%= render 'menus/add_to_meal', recipe: @recipe %>
+    <div class="d-inline-block mr-2">
+      <%= render 'menus/add_to_meal', recipe: @recipe %>
+    </div>
     <!--ブックマークボタン-->
-    <div id="likes_buttons_<%= @recipe.id %>", class="mb-2">
+    <div id="likes_buttons_<%= @recipe.id %>", class="d-inline-block">
       <%= render 'bookmarks/bookmark_button', recipe: @recipe %>
     </div>
   </div>
-  <div class="card-body p-4">
+  <div class="card-body px-4 py-2 bg-gray">
     <!--レシピ上部-->
     <%= render 'recipes/recipe_upper', recipe: @recipe %>
     <!--レシピ下部-->

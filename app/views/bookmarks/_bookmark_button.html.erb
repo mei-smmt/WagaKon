@@ -1,15 +1,13 @@
-<%= stylesheet_link_tag "bookmarks/bookmark_button", :media => "all" %>
-
 <% if logged_in? %> 
   <% if current_user.favorite?(recipe) %>
     <%= form_with(model: current_user.bookmarks.find_by(recipe_id: recipe.id), method: :delete) do |f| %>
       <%= hidden_field_tag :recipe_id, recipe.id %>
-      <%= f.submit '♡お気に入りに追加済', class: 'btn btn-sm btn-secondary bookmark-btn', id: 'unlike-btn' %>
+      <%= f.submit '♡お気に入りに追加済', class: 'btn btn-sm btn-secondary header-btn', id: 'unlike-btn' %>
     <% end %>
   <% else %>
     <%= form_with(model: current_user.bookmarks.build) do |f| %>
       <%= hidden_field_tag :recipe_id, recipe.id %>
-      <%= f.submit '♡お気に入りに追加', class: 'btn btn-sm btn-outline-secondary bookmark-btn', id: 'like-btn' %>
+      <%= f.submit '♡お気に入りに追加', class: 'btn btn-sm btn-light header-btn', id: 'like-btn' %>
     <% end %>
   <% end %>
 <% end %>

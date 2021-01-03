@@ -16,30 +16,28 @@
  
 body {
  font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
- letter-spacing: 0.08em;
 }
 a{
  color: black;
 }
 input {
  font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
- letter-spacing: 0.08em;
  }
 h1 {
- font-weight: bold;
- font-size: 1.5rem;
- color: #998a8a ;
+ font-size: 1.3rem;
+ color: #332d2d ;
 }
 h2 {
- font-weight: bold;
  font-size: 1rem;
  color: #a9a9a9 ;
 }
 h3 {
  font-size: 0.9rem;
+ color: #666666;
 }
 h4 {
  font-size: 0.8rem;
+ color: #666666;
 }
 h5 {
  font-size: 0.7rem;
@@ -58,20 +56,25 @@ img {
 max-width: 100%;
 height: auto;
 }
+.sm-font {
+ font-size: .75rem;
+}
+.ash-blue {
+ color: #1285b3;
+}
+.bg-gray {
+ background-color: #f7f6f5;
+}
+.bg-darkgray {
+ background-color: #b3afad;
+}
+.bg-orange {
+ background-color: #e67e00;
+}
 .button {
  font-size: 0.8rem;
- color: silver;
+ color: #999694;
  font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
- letter-spacing: 0.15em;
-}.btn-light {
- color: #fff;
- background-color: #e67147;
- border-color: #e67147;
-}
-.btn-light:hover {
- color: #fff;
- background-color: #ff8f66;
- border-color: #e67147;
 }
 .navbar-brand {
  font-weight: bold;
@@ -80,18 +83,14 @@ height: auto;
 }
 .nav-item {
  font-size: .8rem;
+ letter-spacing: .15rem
 }
 .form-control {
- display: block;
- width: 100%;
  height: calc(2.25rem + 2px);
  padding: .375rem .75rem;
  font-size: 0.8rem;
- font-weight: 400;
- line-height: 1.5;
  color: #495057;
  background-color: #F5F5F5;
- background-clip: padding-box;
  border: 0px;
  border-radius: 0rem;
  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -105,36 +104,47 @@ height: auto;
   background-size: 4px 4px;
   background-position: 0 0, 2px 2px;
 }
-.meal-header {
- background-color: #d2691e;
-}
 .search-box {
- display: block;
- width: 100%;
  height: calc(1.7rem);
  padding: .2rem .4rem;
  font-size: .8rem;
- font-weight: 400;
- line-height: 1.5;
  color: #495057;
  background-color: #fff;
- background-clip: padding-box;
  border: 1px solid #ced4da;
- border-radius: .25rem;
- transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+ border-radius: .2rem;
+}
+.search-box:focus {
+ border: 2px solid #8b9eb3;
+ box-shadow: 0 0 0 0;
 }
 .search-btn {
  height: calc(1.7rem);
  font-size: .8rem;
  color: white;
- background-color: #808080;
+ background-color: #e67e00;
 }
 .search-btn:hover {
  color: white;
- background-color: #666666;
+ background-color: #d2691e;
+}
+.header-btn {
+  font-size: 0.7rem;
+  padding: .15rem .5rem;
+}
+
+#unlike-btn {
+  background-color: #e6b8be;
+  border: 1px solid;
+  border-color: #e6b8be;
+}
+
+#like-btn:hover {
+  background-color: #e6b8be;
+  border: 1px solid;
+  border-color: #e6b8be;
 }
 #remove-menu-btn {
- color: #f4a460;
+ color: #999491;
  font-size: .8rem;
  height: 1.2rem;
  padding: 0;

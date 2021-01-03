@@ -21,14 +21,18 @@
       <%= render 'layouts/navbar' %>
     </div>
     <div class="border-bottom"></div> 
-    <div class="container py-4 px-1">
+    <div class="container">
+      <%= render 'layouts/second_navbar' %>
+    </div>
+    <div class="border-bottom"></div> 
+    <div class="container py-3 px-1">
       <%= render 'layouts/flash_messages' %>
       <div class="row">
         <% if logged_in? %>
           <!--レシピ検索フォーム-->
           <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
         <% end %>
-        <div class="col-sm-6 p-0">
+        <div class="col-sm-7 p-0">
           <%= yield %>
         </div>
         <% if logged_in? %>
