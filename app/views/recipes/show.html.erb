@@ -1,28 +1,47 @@
-<%= stylesheet_link_tag "recipes/show", :media => "all" %>
-<% if @recipe.draft? %>
-  <h2>非公開</h2>
-<% end %>
-<!--献立追加ボタン-->
-<%= render 'menus/add_to_meal', recipe: @recipe %>
-<!--ブックマークボタン-->
-<div id="likes_buttons_<%= @recipe.id %>", class="button-group mb-2">
-  <%= render 'bookmarks/bookmark_button', recipe: @recipe %>
+<div class="row mx-0">
+  <!--レシピ検索フォーム-->
+  <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
+  <div class="col-sm-7 pr-3">
+    <% if @recipe.draft? %>
+      <h2>非公開</h2>
+    <% end %>
+    <div class="card border-0">
+      <div class="card-header d-flex justify-content-end py-1 bg-darkgray border-0">
+        <!--献立追加ボタン-->
+        <div class="d-inline-block mr-2">
+          <%= render 'menus/add_to_meal', recipe: @recipe %>
+        </div>
+        <!--ブックマークボタン-->
+        <div id="likes_buttons_<%= @recipe.id %>", class="d-inline-block">
+          <%= render 'bookmarks/bookmark_button', recipe: @recipe %>
+        </div>
+      </div>
+      <div class="card-body px-4 py-2 bg-gray">
+        <!--レシピ上部-->
+        <%= render 'recipes/recipe_upper', recipe: @recipe %>
+        <!--レシピ下部-->
+        <%= render 'recipes/recipe_lower', recipe: @recipe %>
+        <!--レシピ特徴-->
+        <%= render 'features/index', recipe: @recipe %>
+        
+        <% if @recipe.draft? %>
+          <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+              <!--レシピ公開ボタン-->
+              <%= render 'recipes/publish_button', recipe: @recipe %>
+            </div>
+          </div>
+        <% end %>
+        <!--公開非公開、編集、削除ボタン-->
+        <div>
+          <% if current_user == @recipe.user %>
+            <%= render 'recipes/stop_publish_button', recipe: @recipe unless @recipe.draft? %>
+            <%= render 'recipes/edit_delete_button', recipe: @recipe %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--献立一覧-->
+  <%= render 'meals/index', recipes: @recipes %>
 </div>
-<!--公開非公開、編集、削除ボタン-->
-<div class="button-group">
-  <% if current_user == @recipe.user %>
-    <%= render 'recipes/stop_publish_button', recipe: @recipe unless @recipe.draft? %>
-    <%= render 'recipes/edit_delete_button', recipe: @recipe %>
-  <% end %>
-</div>
-<!--レシピ上部-->
-<%= render 'recipes/recipe_upper', recipe: @recipe %>
-<!--レシピ下部-->
-<%= render 'recipes/recipe_lower', recipe: @recipe %>
-<!--レシピ特徴-->
-<%= render 'features/index', recipe: @recipe %>
-
-<% if @recipe.draft? %>
-  <!--レシピ公開ボタン-->
-  <%= render 'recipes/publish_button', recipe: @recipe %>
-<% end %>

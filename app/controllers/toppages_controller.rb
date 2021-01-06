@@ -1,5 +1,7 @@
 class ToppagesController < ApplicationController
-  before_action :require_user_logged_in  
+  before_action :require_user_logged_in 
+  before_action :prepare_search
+  before_action :set_meals
 
   def index
     session_clear
@@ -9,7 +11,7 @@ class ToppagesController < ApplicationController
   private
   
   def session_clear
-    session[:keyword].clear
-    session[:feature].clear
+    session[:keyword].clear if session[:keyword]
+    session[:feature].clear if session[:feature]
   end
 end

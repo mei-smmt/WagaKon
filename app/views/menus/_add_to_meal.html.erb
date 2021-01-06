@@ -1,20 +1,20 @@
 <% if logged_in? %> 
-  <button class="btn btn-primary"
-          data-toggle="collapse"
-          data-target="#example-1"
-          aria-expand="false"
-          aria-controls="example-1">献立に追加</button>
-  <div class="collapse" id="example-1">
-    <div class="card card-body">
+  <div class="dropdown">
+    <!-- 切替ボタンの設定 -->
+    <button type="button" class="btn btn-sm btn-light header-btn dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      ☆献立に追加
+    </button>
+    <!-- ドロップメニューの設定 -->
+    <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton">
       <% week_loop.each do |day| %>
         <% unless current_user.meals.day(day).menus.find_by(recipe_id: recipe.id) %>
-          <%= form_with(model: current_user.meals.day(day).menus.build, local: true) do |f| %>
+          <%= form_with(model: current_user.meals.day(day).menus.build, local: true, class: "border-top") do |f| %>
             <%= hidden_field_tag :recipe_id, recipe.id %>
             <%= hidden_field_tag :day, day %>
-            <%= f.submit wday_jp(day), class: 'btn btn-sm btn-outline-secondary' %>
+            <%= f.submit "#{wday_jp(day)}の献立に追加", class: 'font-orange font-sm bg-white px-3 py-1 border-0' %>
           <% end %>
         <% end %>
       <% end %>
     </div>
-  </div>  
+  </div>
 <% end %>

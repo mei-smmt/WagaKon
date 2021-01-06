@@ -9,6 +9,6 @@
 <% else %>
   <%= form_with(model: current_user.relationships.build, local: true) do |f| %>
     <%= hidden_field_tag :user_id, user.id %>
-    <%= f.submit '友だちリクエストを送る', class: 'btn btn-sm btn-outline-secondary' %>
+    <%= f.submit '友だちリクエストを送る', class: 'btn btn-sm button' %>
   <% end %>
 <% end %>

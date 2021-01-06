@@ -1,21 +1,41 @@
-<%= stylesheet_link_tag "users/show", :media => "all" %>
-
-<div class="row">
-  <div class="col-sm-4 offset-sm-4">
-    <h1><%= @user.name %></h1>
-    <% if current_user == @user %>
-    <h3>(ID: <%= @user.personal_id %>)</h3>
-    <% end %>
-    <%= cl_image_tag(@user.image.to_s, alt: @user.name) %>
+<div class="row mx-0">
+  <!--レシピ検索フォーム-->
+  <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
+  <div class="col-sm-7 pr-3">
+    <div class="bg-gray p-3 mx-2 my-0">
+      <div class="row mx-2 mt-4">
+        <div class="col-sm-4">
+          <%= cl_image_tag(@user.image.to_s, alt: @user.name, class: 'rounded-pill') %>
+        </div>
+        <div class="col-sm-7 d-flex">
+          <div class="align-self-center">
+            <h1 class="d-inline"><%= @user.name %></h1>
+            <% if current_user == @user %>
+              <h3 class="d-inline">(ID: <%= @user.personal_id %>)</h3>
+              <div class="mt-2 mx-1">
+                <!--編集、削除ボタン-->
+                <%= link_to "編集", edit_user_path(@user), class: 'button pr-2 border-right' %>
+                <%= link_to "アカウント削除", @user, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'button' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 d-flex justify-content-end">
+          <% if current_user == @user %>
+            <%= link_to '>>友だち', friends_user_path(current_user), class: 'font-orange align-self-end' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!--投稿レシピ一覧-->
+    <h2 class="my-4 mx-2">作成したレシピ</h2>
     <div>
-      <% if current_user == @user %>
-        <!--編集ボタン-->
-        <%= link_to "編集", edit_user_path(@user), class: 'border-bottom', id: 'edit-button' %>
-        <%= link_to "アカウント削除", @user, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'button' %>
-      <% end %>
+      <%= render 'recipes/recipes', recipes: @recipes %>
     </div>
   </div>
+  <!--献立一覧-->
+  <%= render 'meals/index', recipes: @recipes %>
 </div>
-<!--投稿レシピ一覧-->
-<h2 class="mt-4">投稿したレシピ</h2>
-<%= render 'recipes/recipes', recipes: @recipes %>
+  

@@ -1,26 +1,24 @@
-<%= stylesheet_link_tag "recipes/recipe_upper", :media => "all" %>
-
-<div class="row">
-  <div class="col-sm-4 offset-sm-1">
-    <h1><%= recipe.title %></h1>
-  </div>
+<div class="mt-2">
+  <h1><%= recipe.title %></h1>
 </div>
-<div class="row mb-2">
-  <div class="col-sm-4 offset-sm-1">
+<div class="row mb-4">
+  <div class="col-sm-5">
     <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
   </div>
-  <div class="col-sm-5">
-    <div>
-      <p><%= recipe.explanation %></p>
+  <div class="col-sm-7">
+    <h3><%= recipe.explanation %></h3>
+    <div class="d-flex justify-content-end"> 
+      <%= link_to "by #{recipe.user.name}", user_path(recipe.user), class: "font-orange font-sm" %>
     </div>
-    <h4>by <%= link_to recipe.user.name, user_path(recipe.user) %></h4>
     <% if @recipe.ingredients.present? %>
-      <table class="table table-sm">
-        <h2>材料</h2>
-        <% @recipe.ingredients.each do |ingredient| %> 
-          <tr><td><%= ingredient.name %></td><td><%= ingredient.quantity %></td></tr>
-        <% end %>
-      </table>
+      <div class="font-sm mt-4">
+        <table class="table table-sm">
+          <h2>材料</h2>
+          <% @recipe.ingredients.each do |ingredient| %> 
+            <tr><td><%= ingredient.name %></td><td><div class="text-right"><%= ingredient.quantity %></div></td></tr>
+          <% end %>
+        </table>
+      </div>
     <% end %>
   </div>
 </div>

@@ -14,70 +14,151 @@
  *= require_self
  */
  
- body {
-   font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
-   letter-spacing: 0.15em;
- }
- 
- input {
-   font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
-   letter-spacing: 0.15em;
- }
- 
- h1 {
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: #998a8a ;
+body {
+ font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", "sans-serif";
 }
-
+a{
+ color: #666666;
+}
+input {
+ font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", "sans-serif";
+ font-weight: 500;
+ }
+h1 {
+ font-size: 1.3rem;
+ color: #332d2d ;
+}
 h2 {
-  font-weight: bold;
-  font-size: 1rem;
-  color: #a9a9a9 ;
+ font-size: 1rem;
+ color: #666666 ;
 }
-
- h3 {
-   font-size: 0.8rem;
- }
-
- h4 {
-   font-size: 0.6rem;
- }
-
- h5 {
-   font-size: 0.4rem;
- }
-
- h6 {
-   font-size: 0.2rem;
- }
- 
- p {
-   font-size: .8rem;
- }
- 
- label {
-  margin-bottom: 0.1rem;
-  font-size: 0.8rem;
- }
- 
- td {
-  font-size: 0.8rem;
- }
- 
- .btn-light {
-  color: #fff;
-  background-color: #e67147;
-  border-color: #e67147;
+h3 {
+ font-size: 0.9rem;
+ color: #666666;
 }
-
- .btn-light:hover {
-  color: #fff;
-  background-color: #ff8f66;
-  border-color: #e67147;
+h4 {
+ font-size: 0.8rem;
+ color: #666666;
 }
-
+h5 {
+ font-size: 0.7rem;
+}
+h6 {
+ font-size: 0.4rem;
+}
+p {
+ font-size: .8rem;
+}
+label {
+ margin-bottom: 0.1rem;
+ font-size: 0.8rem;
+}
 img {
 max-width: 100%;
 height: auto;
+}
+.font-sm {
+ font-size: .75rem;
+}
+.font-orange {
+ color: #cc5800;
+}
+.bg-gray {
+ background-color: #f7f6f5;
+}
+.bg-darkgray {
+ background-color: #d3cbc6;
+}
+.bg-orange {
+ background-color: #cc5800;
+}
+.border-gray {
+ border-bottom-width: 1px;
+ border-bottom-style: solid;
+ border-color: #666666;
+}
+.navbar-brand {
+ font-weight: bold;
+ font-size: 2rem;
+ letter-spacing: 0.22em;
+}
+.nav-icon {
+ font-size: 1.4rem;
+ background-color: transparent;
+ border: none;
+ margin-left: .4rem;
+}
+.form-control {
+ height: calc(2.25rem + 2px);
+ padding: .375rem .75rem;
+ font-size: 0.8rem;
+ color: #495057;
+ background-color: #F5F5F5;
+ border: 0px;
+ border-radius: 0rem;
+ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.bg_skew_dot{
+  border-radius: 0;
+  background-color: #fff4e6;
+  background-image:
+    radial-gradient(#e6d1b8 20%, transparent 30%),
+    radial-gradient(#e6d1b8 20%, transparent 30%);
+  background-size: 4px 4px;
+  background-position: 0 0, 2px 2px;
+}
+.search-box {
+ height: calc(1.7rem);
+ padding: .2rem .4rem;
+ font-size: .8rem;
+ color: #495057;
+ background-color: #fff;
+ border: 1px solid #ced4da;
+ border-radius: .2rem;
+}
+.search-box:focus {
+ border: 2px solid #8b9eb3;
+ box-shadow: 0 0 0 0;
+}
+.search-btn {
+ height: calc(1.7rem);
+ font-size: .8rem;
+ color: white;
+ background-color: #cc5800;
+}
+.search-btn:hover {
+ color: white;
+ background-color: #d2691e;
+}
+.header-btn {
+  font-size: 0.7rem;
+  padding: .15rem .5rem;
+}
+.submit-btn {
+ color: white;
+ background-color: #b3aba8;
+}
+.submit-btn:hover {
+ color: white;
+ background-color: #665d59;
+}
+.button {
+ font-size: 0.8rem;
+ color: #999694;
+}
+#unlike-btn {
+  background-color: #eb9b6f;
+  border: 1px solid;
+  border-color: #eb9b6f;
+}
+
+#like-btn:hover {
+  background-color: #eb9b6f;
+  border: 1px solid;
+  border-color: #eb9b6f;
+}
+#remove-menu-btn {
+ color: #999491;
+ font-size: .8rem;
+ padding: 0;
 }
