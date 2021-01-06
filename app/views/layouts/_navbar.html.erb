@@ -9,10 +9,39 @@
       <ul class="navbar-nav">
         <!--ログイン済み-->
         <% if logged_in? %>
-          <li class="nav-item"><%= link_to 'マイページ', user_path(current_user), class: 'nav-link' %></li>
-          <li class="nav-item"><%= link_to "お気に入りレシピ", favorite_recipes_user_path(current_user), class: 'nav-link' %>
-          <li class="nav-item"><%= link_to "レシピを追加する", new_recipe_path, class: 'nav-link' %>
-          <li class="nav-item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link' %></li>
+          <li class="nav-item">
+            <%= link_to favorite_recipes_user_path(current_user), class: 'nav-link' do %>
+              <i class="fas fa-heart"></i>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to new_recipe_path, class: 'nav-link' do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+          </li>
+          <li>
+            <div class="dropdown">
+              <!-- 切替ボタンの設定 -->
+              <%= button_tag type: "button", class: "nav-item nav-link", id: "dropdownMenuButton", 'data-toggle': :dropdown, 'aria-haspopup': :true, 'aria-expanded': :false do %>
+                <i class="fas fa-cog"></i>
+              <% end %>
+              <!-- ドロップメニューの設定 -->
+              <div class="dropdown-menu dropdown-menu-right py-2" aria-labelledby="dropdownMenuButton">
+                <%= link_to user_path(current_user), class: 'dropdown-item font-orange px-4 py-2' do %>
+                  <div class="">
+                    <i class="fas fa-user-circle"></i><p class="d-inline"> マイページ</p>
+                    <div class="mt-1">
+                      <h2 class="d-inline"><%= current_user.name %></h2><h4 class="d-inline">さん</h4>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="dropdown-divider my-2"></div>
+                <%= link_to '友だち', friends_user_path(current_user), class: 'dropdown-item px-4 py-2' %>
+                <div class="dropdown-divider my-2"></div>
+                <%= link_to 'ログアウト', logout_path, method: :delete, class: 'dropdown-item px-4 py-2' %>
+              </div>
+            </div>  
+          </li>
         <!--ログインなし-->
         <% else %>
           <li class="nav-item"><%= link_to '新規登録', signup_path, class: 'nav-link' %></li>

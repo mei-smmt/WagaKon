@@ -7,7 +7,10 @@
       </div>
       <div class="col-12 col-sm-7">
         <h3><%= recipe.explanation %></h3>
-        <div class="row">
+        <div class="d-flex justify-content-end"> 
+          <h4 class="font-orange"><%= "by #{recipe.user.name}" %></h4>
+        </div>
+        <div class="row mt-4">
           <div class="col-sm-8 col-8">
             <h2>材料</h2>
           </div>
@@ -29,7 +32,7 @@
               </div>
             <% end %>
           <% end %>
-          <%= form.submit '保存して次へ', class: 'btn btn-light btn-block' %>
+          <%= form.submit '保存して次へ', class: 'btn btn-sm submit-btn btn-block' %>
         <% end %>
       </div>  
     </div>
