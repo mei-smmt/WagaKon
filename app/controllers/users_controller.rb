@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes]
   
   def show
-    @recipes = @user.recipes.published
+    @recipes = @user.recipes
   end
 
   def new
