@@ -2,7 +2,7 @@
   <!--レシピ検索フォーム-->
   <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
   <div class="col-sm-7 pr-3">
-    <div class="row">
+    <div class="row m-0">
       <div class="col-sm-12 px-2">
         <div class="bg-gray px-3 py-2 mb-2 mx-0">
           <h4 class="m-0">検索結果：<%= @recipes.count %>件</h4>
