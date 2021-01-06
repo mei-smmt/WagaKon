@@ -15,13 +15,14 @@
  */
  
 body {
- font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
+ font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", "sans-serif";
 }
 a{
- color: black;
+ color: #666666;
 }
 input {
- font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
+ font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", "sans-serif";
+ font-weight: 500;
  }
 h1 {
  font-size: 1.3rem;
@@ -29,7 +30,7 @@ h1 {
 }
 h2 {
  font-size: 1rem;
- color: #a9a9a9 ;
+ color: #666666 ;
 }
 h3 {
  font-size: 0.9rem;
@@ -56,25 +57,25 @@ img {
 max-width: 100%;
 height: auto;
 }
-.sm-font {
+.font-sm {
  font-size: .75rem;
 }
-.ash-blue {
- color: #1285b3;
+.font-orange {
+ color: #cc5800;
 }
 .bg-gray {
  background-color: #f7f6f5;
 }
 .bg-darkgray {
- background-color: #b3afad;
+ background-color: #d3cbc6;
 }
 .bg-orange {
- background-color: #e67e00;
+ background-color: #cc5800;
 }
-.button {
- font-size: 0.8rem;
- color: #999694;
- font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
+.border-gray {
+ border-bottom-width: 1px;
+ border-bottom-style: solid;
+ border-color: #666666;
 }
 .navbar-brand {
  font-weight: bold;
@@ -82,8 +83,10 @@ height: auto;
  letter-spacing: 0.22em;
 }
 .nav-item {
- font-size: .8rem;
- letter-spacing: .15rem
+ font-size: 1.4rem;
+ background-color: transparent;
+ border: none;
+ margin-left: .4rem;
 }
 .form-control {
  height: calc(2.25rem + 2px);
@@ -121,7 +124,7 @@ height: auto;
  height: calc(1.7rem);
  font-size: .8rem;
  color: white;
- background-color: #e67e00;
+ background-color: #cc5800;
 }
 .search-btn:hover {
  color: white;
@@ -131,21 +134,31 @@ height: auto;
   font-size: 0.7rem;
   padding: .15rem .5rem;
 }
-
+.submit-btn {
+ color: white;
+ background-color: #b3aba8;
+}
+.submit-btn:hover {
+ color: white;
+ background-color: #665d59;
+}
+.button {
+ font-size: 0.8rem;
+ color: #999694;
+}
 #unlike-btn {
-  background-color: #e6b8be;
+  background-color: #eb9b6f;
   border: 1px solid;
-  border-color: #e6b8be;
+  border-color: #eb9b6f;
 }
 
 #like-btn:hover {
-  background-color: #e6b8be;
+  background-color: #eb9b6f;
   border: 1px solid;
-  border-color: #e6b8be;
+  border-color: #eb9b6f;
 }
 #remove-menu-btn {
  color: #999491;
  font-size: .8rem;
- height: 1.2rem;
  padding: 0;
 }

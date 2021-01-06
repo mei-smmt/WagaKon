@@ -3,7 +3,7 @@
     <%= form_with(model: recipe, local: true, authenticity_token: true) do |f| %>
       <%= render 'layouts/error_messages', model: f.object %>
       <div class="form-row">
-        <div class="col-sm-6">
+        <div class="col-sm-5 pr-3">
           <div class="form-group">
             <%= f.label :title, "タイトル" %>
             <%= f.text_field :title, class: 'form-control' %>
@@ -16,7 +16,7 @@
             <%= f.file_field :image, class: "image", id: "book_img" %>      
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-7 pl-3">
           <div class="form-group">
             <%= f.label :explanation, "説明" %>
             <%= f.text_area :explanation, class: 'form-control'%>
@@ -64,8 +64,8 @@
         <% end %>
       </div>
         <div class="col-sm-6 offset-sm-3">
-          <%= f.submit '完了する', formaction: easy_path, class: 'btn btn-sm btn-light btn-block' %>
-          <%= f.submit '保存して材料入力に進む',　name: "", class: 'btn btn-sm btn-light btn-block' %>
+          <%= f.submit '完了する', formaction: easy_path, class: 'btn btn-sm submit-btn btn-block' %>
+          <%= f.submit '保存して材料入力に進む',　name: "", class: 'btn btn-sm submit-btn btn-block' %>
           <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
         </div>
     <% end %>

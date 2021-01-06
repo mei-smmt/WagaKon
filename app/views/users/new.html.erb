@@ -1,31 +1,40 @@
-<div class="text-center">
-  <h1>新規登録</h1>
-</div>
-<div class="row">
-  <div class="col-sm-6 offset-sm-3">
-    <%= form_with(model: @user, local: true) do |f| %>
-      <%= render 'layouts/error_messages', model: f.object %>
-      <div class="form-group">
-        <%= f.label :name, '名前' %>
-        <%= f.text_field :name, class: 'form-control' %>
+<div class="row mx-0">
+  <!--レシピ検索フォーム-->
+  <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
+  <div class="col-sm-7 pr-3">
+    <div class="text-center">
+      <h1>新規登録</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <%= form_with(model: @user, local: true) do |f| %>
+          <%= render 'layouts/error_messages', model: f.object %>
+          <div class="form-group">
+            <%= f.label :name, '名前' %>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :personal_id, 'ID' %>
+            <%= f.text_field :personal_id, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :email, 'Email' %>
+            <%= f.email_field :email, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password, 'Password' %>
+            <%= f.password_field :password, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password_confirmation, 'Password（確認）' %>
+            <%= f.password_field :password_confirmation, class: 'form-control' %>
+          </div>
+          <%= f.submit '登録', class: 'btn submit-btn btn-block' %>
+        <% end %>
       </div>
-      <div class="form-group">
-        <%= f.label :personal_id, 'ID' %>
-        <%= f.text_field :personal_id, class: 'form-control' %>
-      </div>
-      <div class="form-group">
-        <%= f.label :email, 'Email' %>
-        <%= f.email_field :email, class: 'form-control' %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password, 'Password' %>
-        <%= f.password_field :password, class: 'form-control' %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password_confirmation, 'Password（確認）' %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
-      </div>
-      <%= f.submit '登録', class: 'btn btn-light btn-block' %>
-    <% end %>
+    </div>
   </div>
+  <!--献立一覧-->
+  <%= render 'meals/index', recipes: @recipes %>
 </div>
+
