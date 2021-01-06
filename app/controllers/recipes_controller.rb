@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   before_action :require_user_logged_in
-  before_action :prepare_search, only: [:show, :new, :edit, :keyword_search, :feature_search]
-  before_action :set_meals, only: [:show, :new, :edit, :keyword_search, :feature_search]
+  before_action :prepare_search
+  before_action :set_meals
   before_action -> {accessable_recipe_check(params[:id])}, only: :show
   before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :easy_update, :destroy, :publish, :stop_publish]
 
