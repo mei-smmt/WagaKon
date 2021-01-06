@@ -9,12 +9,12 @@
       <ul class="navbar-nav">
         <!--ログイン済み-->
         <% if logged_in? %>
-          <li class="nav-item">
+          <li class="nav-item nav-icon">
             <%= link_to favorite_recipes_user_path(current_user), class: 'nav-link' do %>
               <i class="fas fa-heart"></i>
             <% end %>
           </li>
-          <li class="nav-item">
+          <li class="nav-item nav-icon">
             <%= link_to new_recipe_path, class: 'nav-link' do %>
               <i class="fas fa-edit"></i>
             <% end %>
@@ -22,7 +22,7 @@
           <li>
             <div class="dropdown">
               <!-- 切替ボタンの設定 -->
-              <%= button_tag type: "button", class: "nav-item nav-link", id: "dropdownMenuButton", 'data-toggle': :dropdown, 'aria-haspopup': :true, 'aria-expanded': :false do %>
+              <%= button_tag type: "button", class: "nav-item nav-icon nav-link", id: "dropdownMenuButton", 'data-toggle': :dropdown, 'aria-haspopup': :true, 'aria-expanded': :false do %>
                 <i class="fas fa-cog"></i>
               <% end %>
               <!-- ドロップメニューの設定 -->
@@ -35,8 +35,6 @@
                     </div>
                   </div>
                 <% end %>
-                <div class="dropdown-divider my-2"></div>
-                <%= link_to '友だち', friends_user_path(current_user), class: 'dropdown-item px-4 py-2' %>
                 <div class="dropdown-divider my-2"></div>
                 <%= link_to 'ログアウト', logout_path, method: :delete, class: 'dropdown-item px-4 py-2' %>
               </div>
