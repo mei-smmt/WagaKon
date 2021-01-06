@@ -6,7 +6,11 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes]
   
   def show
-    @recipes = @user.recipes
+    if @user == current_user
+      @recipes = @user.recipes
+    else
+      @recipes = @user.recipes.published
+    end
   end
 
   def new
