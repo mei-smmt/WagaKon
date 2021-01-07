@@ -77,14 +77,14 @@ class RecipesController < ApplicationController
   
   def feature_search
     prepare_submit_btn
+    @search_feature = feature_params
     if session[:keyword].present?
       @search_keyword = session[:keyword]
       recipes = current_user.accessable_recipes.keyword_search(@search_keyword)
-      @recipes = recipes.feature_search(feature_params)
+      @recipes = recipes.feature_search(@search_feature)
     else
-      @recipes = current_user.accessable_recipes.feature_search(feature_params)
+      @recipes = current_user.accessable_recipes.feature_search(@search_feature)
     end
-    @search_feature = feature_params
   end
 
   private

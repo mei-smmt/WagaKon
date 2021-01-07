@@ -4,14 +4,6 @@ class ToppagesController < ApplicationController
   before_action :prepare_meals
 
   def index
-    session_clear
     @recipes = current_user.accessable_recipes
-  end
-  
-  private
-  
-  def session_clear
-    session[:keyword].clear if session[:keyword]
-    session[:feature].clear if session[:feature]
   end
 end
