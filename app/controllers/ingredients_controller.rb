@@ -1,7 +1,7 @@
 class IngredientsController < ApplicationController
   before_action :require_user_logged_in
-  before_action :prepare_search, only: [:new, :edit]
-  before_action :set_meals, only: [:new, :edit]
+  before_action :prepare_search
+  before_action :prepare_meals
   before_action -> {user_author_match(params[:recipe_id])}
 
   def new

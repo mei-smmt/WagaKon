@@ -29,15 +29,29 @@ class Recipe < ApplicationRecord
   def draft?
     self.status == "draft"
   end
-
+  
+  # レシピを古い順に並べ替え
+  def self.sort_old
+    Recipe.order(created_at: :desc)
+  end
+  
+  # レシピをお気に入りの多い順に並べ替え
+  def self.sort_likes
+    Recipe.includes(:bookmarks).sort {|a,b| b.bookmarks.size <=> a.bookmarks.size}
+  end
+  
   # レシピキーワード検索
-  def self.keyword_search(search)   
+  def self.keyword_search(search)
     keywords = search.split(/[[:blank:]]+/)
-    recipes = Recipe
-    keywords.each do |keyword|
-      recipes = recipes.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])
+    if keywords.empty?
+      false
+    else
+      recipes = Recipe
+      keywords.each do |keyword|
+        recipes = recipes.where(['title LIKE ? OR explanation LIKE ?', "%#{keyword}%", "%#{keyword}%"])
+      end
+      recipes
     end
-    recipes
   end
   
   # レシピ特徴検索

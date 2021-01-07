@@ -113,7 +113,7 @@ height: auto;
  font-size: .8rem;
  color: #495057;
  background-color: #fff;
- border: 1px solid #ced4da;
+ border: 1px solid #666666;
  border-radius: .2rem;
 }
 .search-box:focus {
@@ -141,6 +141,18 @@ height: auto;
 .submit-btn:hover {
  color: white;
  background-color: #665d59;
+}
+.sort-btn {
+ font-size: 0.7rem;
+ color: #cc5800;
+}
+.sort-btn:hover {
+ color: #cc5800;
+ text-decoration: underline;
+}
+.sort-btn.disabled, .sort-btn.disabled:hover {
+ color: black;
+ text-decoration: none;
 }
 .button {
  font-size: 0.8rem;
