@@ -86,7 +86,7 @@ class UsersController < ApplicationController
   end
   
   def favorite_recipes
-    @favorite_recipes = @user.favorite_recipes
+    @favorite_recipes = @user.favorite_recipes & @user.accessable_recipes
   end
 
   private
