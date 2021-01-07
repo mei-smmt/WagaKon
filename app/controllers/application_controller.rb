@@ -38,13 +38,14 @@ class ApplicationController < ActionController::Base
   end
   
   def prepare_search
+    session[:keyword].clear
     @search_keyword = nil
     @search_feature = {}
     @k_submit = "検索"
     @f_submit = "検索"
   end
   
-  def set_meals
+  def prepare_meals
     @meals = current_user.meals
   end
 end
