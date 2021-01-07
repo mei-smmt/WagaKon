@@ -1,13 +1,13 @@
 <div class="mb-2">
-  <%= form_with(url: root_path, method: :get, local: true, class: 'd-inline border-right') do |f| %>
-    <%= f.submit "新しい順", disabled: (@select_new ? true : false), class: "btn btn-sm sort-btn #{"disabled" if @select_new}" %>
+  <%= form_with(url: path, method: :get, local: true, class: 'd-inline border-right') do |f| %>
+    <%= f.submit "新しい順", disabled: (@sort.nil? ? true : false), class: "btn btn-sm sort-btn #{"disabled" if @sort.nil?} pl-0" %>
   <% end %>
-  <%= form_with(url: root_path, method: :get, local: true, class: 'd-inline border-right') do |f| %>
+  <%= form_with(url: path, method: :get, local: true, class: 'd-inline border-right') do |f| %>
     <%= hidden_field_tag :sort_order, 'old' %>
-    <%= f.submit "古い順", disabled: (@select_old ? true : false), class: "btn btn-sm sort-btn #{"disabled" if @select_old}" %>
+    <%= f.submit "古い順", disabled: (@sort == "old" ? true : false), class: "btn btn-sm sort-btn #{"disabled" if @sort == "old"}" %>
   <% end %>
-  <%= form_with(url: root_path, method: :get, local: true, class: 'd-inline') do |f| %>
+  <%= form_with(url: path, method: :get, local: true, class: 'd-inline') do |f| %>
     <%= hidden_field_tag :sort_order, 'likes' %>
-    <%= f.submit "お気に入りの多い順", disabled: (@select_likes ? true : false), class: "btn btn-sm sort-btn #{"disabled" if @select_likes}" %>
+    <%= f.submit "お気に入りの多い順", disabled: (@sort == "likes" ? true : false), class: "btn btn-sm sort-btn #{"disabled" if @sort == "likes"}" %>
   <% end %>
-</div>  
+</div>

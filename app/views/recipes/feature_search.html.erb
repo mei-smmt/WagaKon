@@ -7,6 +7,8 @@
         <div class="bg-gray px-3 py-2 mb-2 mx-0">
           <h4 class="m-0">検索結果：<%= @recipes.count %>件</h4>
         </div>
+        <!--レシピ並べ替え-->
+        <%= render 'recipes/sort', path: sort_recipes_path %>
       </div> 
     </div>
     <% if @recipes.empty? %>

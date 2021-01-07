@@ -1,4 +1,6 @@
 class RecipesController < ApplicationController
+  include Common
+  
   before_action :require_user_logged_in
   before_action :prepare_search, only: [:show, :new, :create, :easy_create, :edit, :update, :easy_update, :destroy, :publish, :stop_publish]
   before_action :prepare_meals
@@ -65,9 +67,17 @@ class RecipesController < ApplicationController
     @recipe.drafting
     redirect_to recipe_url(@recipe)
   end
+  
+  def sort
+    unless session[:sort] = params[:sort_order]
+      session[:sort].clear if session[:sort]
+    end
+    redirect_to request.referer
+  end
     
   def keyword_search
     if @recipes = current_user.accessable_recipes.keyword_search(params[:search])
+      recipe_sort(@recipes)
       prepare_submit_btn
       @search_feature = {}
       @search_keyword = session[:keyword] = params[:search]
@@ -86,6 +96,7 @@ class RecipesController < ApplicationController
     else
       @recipes = current_user.accessable_recipes.feature_search(@search_feature)
     end
+    recipe_sort(@recipes)
   end
 
   private

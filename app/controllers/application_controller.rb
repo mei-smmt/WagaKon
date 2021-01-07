@@ -38,7 +38,8 @@ class ApplicationController < ActionController::Base
   end
   
   def prepare_search
-    session[:keyword].clear
+    session[:sort].clear if session[:sort]
+    session[:keyword].clear if session[:keyword]
     @search_keyword = nil
     @search_feature = {}
     @k_submit = "検索"
