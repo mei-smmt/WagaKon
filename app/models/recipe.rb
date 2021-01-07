@@ -29,7 +29,7 @@ class Recipe < ApplicationRecord
   def draft?
     self.status == "draft"
   end
-
+  
   # レシピキーワード検索
   def self.keyword_search(search)   
     keywords = search.split(/[[:blank:]]+/)
