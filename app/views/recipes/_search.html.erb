@@ -29,7 +29,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <%= f.label :amount, "ボリュームは？", class: 'font-orange' %>
+                    <%= f.label :amount, "ボリュームは？", class: 'font-weight-bold' %>
                     <%= f.select :amount,
                         Feature.amounts.keys.map {|k| [I18n.t("enums.feature.amount.#{k}"), k]},
                         { include_blank: '指定しない', selected: feature[:amount] },
@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <%= f.label :dish_type, "何系料理？", class: 'font-orange' %>
+                    <%= f.label :dish_type, "何系料理？", class: 'font-weight-bold' %>
                     <%= f.select :dish_type,
                         Feature.dish_types.keys.map {|k| [I18n.t("enums.feature.dish_type.#{k}"), k]},
                         { include_blank: '指定しない', selected: feature[:dish_type]},
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <%= f.label :main_food, "メインの食材は？", class: 'font-orange' %>
+                    <%= f.label :main_food, "メインの食材は？", class: 'font-weight-bold' %>
                     <%= f.select :main_food,
                         Feature.main_foods.keys.map {|k| [I18n.t("enums.feature.main_food.#{k}"), k]},
                         { include_blank: '指定しない', selected: feature[:main_food]},
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <%= f.label :cooking_method, "調理法は？", class: 'font-orange' %>
+                    <%= f.label :cooking_method, "調理法は？", class: 'font-weight-bold' %>
                     <%= f.select :cooking_method,
                         Feature.cooking_methods.keys.map {|k| [I18n.t("enums.feature.cooking_method.#{k}"), k]},
                         { include_blank: '指定しない', selected: feature[:cooking_method]},
