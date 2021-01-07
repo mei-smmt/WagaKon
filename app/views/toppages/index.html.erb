@@ -2,6 +2,7 @@
   <!--レシピ検索フォーム-->
   <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
   <div class="col-sm-7 pr-3">
+    <%= render 'recipes/sort' %>
     <!--投稿レシピ一覧-->
     <%= render 'recipes/recipes', recipes: @recipes %>
   </div>

@@ -30,6 +30,16 @@ class Recipe < ApplicationRecord
     self.status == "draft"
   end
   
+  # レシピを古い順に並べ替え
+  def self.sort_old
+    Recipe.order(created_at: :desc)
+  end
+  
+  # レシピをお気に入りの多い順に並べ替え
+  def self.sort_likes
+    Recipe.includes(:bookmarks).sort {|a,b| b.bookmarks.size <=> a.bookmarks.size}
+  end
+  
   # レシピキーワード検索
   def self.keyword_search(search)
     keywords = search.split(/[[:blank:]]+/)

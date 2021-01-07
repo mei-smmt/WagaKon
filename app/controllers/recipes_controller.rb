@@ -67,10 +67,11 @@ class RecipesController < ApplicationController
   end
     
   def keyword_search
-    prepare_submit_btn
-    @search_feature = {}
-    @search_keyword = session[:keyword] = params[:search]
-    unless @recipes = current_user.accessable_recipes.keyword_search(@search_keyword)
+    if @recipes = current_user.accessable_recipes.keyword_search(params[:search])
+      prepare_submit_btn
+      @search_feature = {}
+      @search_keyword = session[:keyword] = params[:search]
+    else
       redirect_to root_url
     end
   end
