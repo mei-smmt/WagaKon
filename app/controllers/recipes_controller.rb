@@ -5,7 +5,7 @@ class RecipesController < ApplicationController
   before_action :prepare_search, only: [:show, :new, :create, :easy_create, :edit, :update, :easy_update, :destroy, :publish, :stop_publish]
   before_action :prepare_meals
   before_action -> {accessable_recipe_check(params[:id])}, only: :show
-  before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :easy_update, :destroy, :publish, :stop_publish]
+  before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :easy_update, :size_update, :destroy, :publish, :stop_publish]
 
   def show
   end
@@ -49,6 +49,14 @@ class RecipesController < ApplicationController
       redirect_to recipe_url(@recipe)
     else
       render :edit
+    end
+  end
+  
+  def size_update
+    if @recipe.update(size_params)
+      @status = "success"
+    else
+      @status = "fail"
     end
   end
   
@@ -115,6 +123,10 @@ class RecipesController < ApplicationController
   
   def feature_params
     params.permit(:amount, :dish_type, :main_food, :cooking_method)
+  end
+  
+  def size_params
+    params.permit(:size)
   end
   
   def prepare_submit_btn

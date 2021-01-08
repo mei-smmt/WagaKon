@@ -32,8 +32,9 @@ Rails.application.routes.draw do
     end
     member do
       patch :easy_update
+      patch :size_update
       patch :publish
-      patch :stop_publish 
+      patch :stop_publish
     end
     resources :ingredients, :steps, only: [:new, :create] do
       collection do

@@ -1,0 +1,29 @@
+<button type="button" class="btn btn-sm btn-outline-dark p-1" data-toggle="modal" data-target="#size-modal" data-backdrop="static">
+  何人分のレシピか登録する
+</button>
+<div class="modal fade" id="size-modal" tabindex="-1"
+      role="dialog" aria-labelledby="label1" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label1">このレシピは何人分ですか？ (例 2人分)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_with(url: size_update_recipe_path(recipe), method: :patch) do |f| %>
+        <div class="modal-body">
+          <!--エラーメッセージ-->
+          <div id="size-validation-error"></div>
+          <div class="form-group">
+            <%= f.text_field :size, class: 'form-control', value: recipe.size %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">キャンセル</button>
+          <%= f.submit '登録',　name: "", class: 'btn btn-sm submit-btn' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
