@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
   # タイトル、画像、説明文必須
   validates :title, presence: true, length: { maximum: 20 }
   validates :explanation, presence: true, length: { maximum: 400 }
+  validates :size, length: {maximum: 10}
   validates :status, presence: true
   
   # statusカラム設定
