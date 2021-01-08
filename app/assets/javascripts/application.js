@@ -16,8 +16,8 @@
 //= require turbolinks
 //= require_tree .
 
-// 画像プレビュー表示
 /* global $*/
+// 画像プレビュー表示
 $( document ).on('turbolinks:load', function() {
   function readURL(input) {
     if (input.files && input.files[0]) {
@@ -30,5 +30,12 @@ $( document ).on('turbolinks:load', function() {
   }
   $("#book_img").change(function(){
     readURL(this);
+  });
+});
+
+// レシピ材料の人数設定モーダル内エラーメッセージリセット
+$( document ).on('turbolinks:load', function() {
+  $('[data-dismiss="modal"]').click(function() {
+    $('#size-validation-error').html("");
   });
 });

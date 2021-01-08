@@ -1,0 +1,16 @@
+<% if @status == "success" %>
+  <!--エラーメッセージを削除-->
+  $('#size-validation-error').html("");
+  <!--モーダルを閉じる-->
+  $('body').removeClass('modal-open');
+  $('.modal-backdrop').remove();
+  $('#size-modal').modal('hide');
+  <!--登録した人数を表示-->
+  <% if @recipe.size.present? %>
+    $('#recipe-size').html("<h3>(<%= @recipe.size %>)</h3>");
+  <% else %>
+    $('#recipe-size').html("");
+  <% end %>
+<% elsif @status == "fail" %>
+  $('#size-validation-error').html("<%= j(render partial: 'layouts/error_messages', locals: {model: @recipe}) %>");
+<% end %>
