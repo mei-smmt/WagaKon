@@ -10,7 +10,16 @@
         <div class="d-flex justify-content-end"> 
           <h4 class="font-orange"><%= "by #{recipe.user.name}" %></h4>
         </div>
-        <div class="row mt-4">
+        <!--何人分？追加ボタン-->
+        <div class="mt-3">
+          <%= render 'recipes/set_size_button', recipe: recipe %>
+        </div>
+        <div class="mt-2", id="recipe-size">
+          <% if recipe.size.present? %>
+            <h3>(<%= recipe.size %>)</h3>
+          <% end %>
+        </div>
+        <div class="row mt-2">
           <div class="col-sm-8 col-8">
             <h2>材料</h2>
           </div>
@@ -32,7 +41,7 @@
               </div>
             <% end %>
           <% end %>
-          <%= form.submit '保存して次へ', class: 'btn btn-sm submit-btn btn-block' %>
+          <%= form.submit '保存して手順入力に進む', class: 'btn btn-sm submit-btn btn-block' %>
         <% end %>
       </div>  
     </div>
