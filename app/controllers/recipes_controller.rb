@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   include Common
-  
+
   before_action :require_user_logged_in
   before_action :prepare_search, only: [:show, :new, :create, :easy_create, :edit, :update, :easy_update, :destroy, :publish, :stop_publish]
   before_action :prepare_meals
@@ -133,5 +133,5 @@ class RecipesController < ApplicationController
   def prepare_submit_btn
     @k_submit = "再検索"
     @f_submit = "絞込み"
-  end  
+  end
 end

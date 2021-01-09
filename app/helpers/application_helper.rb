@@ -17,4 +17,28 @@ module ApplicationHelper
       return week[index]
     end
   end
+  
+  def homepage_title(recipe)
+    agent = Mechanize.new
+    page = agent.get(recipe.homepage)
+    if page.at('meta[property="og:title"]').present?
+      page.at('meta[property="og:title"]')[:content]
+    else
+      recipe.homepage
+    end
+  end
+  
+  def homepage_image(recipe)
+    if recipe.homepage.blank?
+      false
+    else
+      agent = Mechanize.new
+      page = agent.get(recipe.homepage)
+      if page.at('meta[property="og:image"]').present?
+        page.at('meta[property="og:image"]')[:content]
+      else
+        false
+      end
+    end
+  end
 end

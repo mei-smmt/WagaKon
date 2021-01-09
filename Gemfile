@@ -49,6 +49,8 @@ gem 'cloudinary' , '1.11.1'
 gem 'mini_magick'
 # Library for validating urls in Rails
 gem 'validate_url'
+#スクレイピングgem
+gem 'mechanize'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
