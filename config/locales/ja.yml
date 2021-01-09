@@ -28,6 +28,8 @@ ja:
         title: 料理名
         image: 画像
         explanation: 説明
+        size: レシピの人数
+        homepage: 参考サイト
         status: 公開ステータス
       step:
         number: ステップNo.
