@@ -114,6 +114,7 @@ class RecipesController < ApplicationController
       :title, 
       :image, 
       :explanation,
+      :homepage,
       feature_attributes: [ :id,
                             :amount,
                             :dish_type,
