@@ -2,7 +2,15 @@
   <% recipes.each do |recipe| %>
     <div class="col-sm-3 col-6 px-2 pt-0 pb-3">
       <a href="/recipes/<%= recipe.id %>" class="card border-0">
-        <%= cl_image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
+        <div class="img-square">
+          <% if recipe.image.present? %>
+            <%= cl_image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
+          <% elsif homepage_image(recipe) %>
+            <%= image_tag(homepage_image(recipe), class: "card-img-top rounded-0", alt: homepage_title(recipe)) %>
+          <% else %>
+            <%= cl_image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
+          <% end %>
+        </div>
         <div class="card-img-overlay p-1">
           <h2 class="fa-2x">      
             <span class="fa-layers fa-fw">
