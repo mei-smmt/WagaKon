@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :prepare_search, except: [:new]
   before_action :prepare_meals, except: [:new]
   before_action :accessable_user, only: :show
-  before_action :correct_user, except: [:show, :new, :create]
+  before_action :correct_user, except: [:show, :new, :create, :edit, :update]
   
   def show
     if @user == current_user
@@ -34,9 +34,11 @@ class UsersController < ApplicationController
   end
   
   def edit
+    @user = current_user
   end
   
   def update
+    @user = current_user
     if @user.authenticate(user_params[:password])
       if @user.update(user_params)
         flash[:success] = 'ユーザー情報が更新されました'
