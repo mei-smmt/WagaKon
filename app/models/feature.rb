@@ -1,4 +1,6 @@
 class Feature < ApplicationRecord
+  belongs_to :recipe
+
   with_options presence: true do
     validates :amount
     validates :dish_type
@@ -14,6 +16,4 @@ class Feature < ApplicationRecord
   enum cooking_method: { fry: 0, boil: 1, deep_fry: 2, steam: 3, unheated: 4, other: 5 }, _prefix: true
   # メインの食材は？　肉、魚、野菜、その他
   enum main_food: { meat: 0, fish: 1, vegetable: 2, other: 3 }, _prefix: true
-  
-  belongs_to :recipe
 end

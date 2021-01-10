@@ -8,29 +8,24 @@ class Step < ApplicationRecord
 
   # 空フォーム除外
   def self.remove_empty_form(form_steps)
-    array = []
-    form_steps.each do |form_step|
-      if form_step[:content].present?
-        array << form_step
-      end
+    form_steps.each_with_object([]) do |form_step, array|
+      array << form_step if form_step[:content].present?
     end
-    array
   end
 
-  # 材料の一括保存処理
-  def self.bulk_create(recipe, steps, form_steps)
+  # 手順の一括保存処理
+  def self.bulk_create(recipe, form_steps)
     # 空フォーム除外
     new_steps = Step.remove_empty_form(form_steps)
     # 新規インスタンスを作成
-    new_steps.each do |new_step|
-      steps << recipe.steps.build(new_step)
+    steps = new_steps.each_with_object([]) do |new_step, array|
+      array << recipe.steps.build(new_step)
     end
     all_valid = true
     # 以下、失敗したらロールバック
     Step.transaction do
       # 保存処理
-      step_number = 1
-      steps.each do |step|
+      steps.each_with_object(1) do |step, step_number|
         step[:number] = step_number
         all_valid &= step.save
         step_number += 1
@@ -38,16 +33,14 @@ class Step < ApplicationRecord
       unless all_valid
       # render後のフォームを補充  
         missing_forms_size = 10 - new_steps.size
-        missing_forms_size.times do
-          steps << recipe.steps.build
-        end
+        missing_forms_size.times { steps << recipe.steps.build }
         raise ActiveRecord::Rollback
       end
     end
     all_valid
   end
 
-  # 材料の一括更新処理
+  # 手順の一括更新処理
   def self.bulk_update(recipe, form_steps)
     # 空フォーム除外
     new_steps = Step.remove_empty_form(form_steps)
