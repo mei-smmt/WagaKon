@@ -11,7 +11,7 @@
             <h3 class="d-inline">(ID: <%= @user.personal_id %>)</h3>
             <div class="mt-2 mx-1">
               <!--編集、削除ボタン-->
-              <%= link_to "編集", edit_user_path(@user), class: 'button pr-2 border-right' %>
+              <%#= link_to "編集", edit_users_path, class: 'button pr-2 border-right' %>
               <%= link_to "アカウント削除", @user, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'button' %>
             </div>
           <% end %>

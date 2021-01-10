@@ -1,7 +1,7 @@
 <%= render "layouts/side_bar" do %>    
   <h2>プロフィール編集</h2>
-  <%= form_with(model: @user, local: true) do |f| %>
-    <%= render 'layouts/error_messages', model: f.object %>
+  <%= form_with(url: users_path, model: @user, method: :patch, local: true) do |f| %>
+    <%= render 'layouts/error_messages', model: @user %>
     <div class="form-row mt-4">
       <div class="form-group col-sm-6">
         <div class="mb-3">
