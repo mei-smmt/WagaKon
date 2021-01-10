@@ -11,10 +11,9 @@ class IngredientsController < ApplicationController
   end
   
   def create
-    @ingredients = []
     @form_ingredients = ingredients_params
     # 一括保存処理呼び出し
-    if Ingredient.bulk_create(@recipe, @ingredients, @form_ingredients)
+    if Ingredient.bulk_create(@recipe, @form_ingredients)
       redirect_to new_recipe_step_path(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
