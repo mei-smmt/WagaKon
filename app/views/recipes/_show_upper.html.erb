@@ -1,0 +1,5 @@
+<%= render "recipes/show_upper_parts", recipe: recipe do %> 
+  <% if recipe.ingredients.present? %>
+    <%= render "ingredients/show", recipe: recipe %>
+  <% end %>
+<% end %>
