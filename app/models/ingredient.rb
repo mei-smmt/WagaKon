@@ -15,12 +15,12 @@ class Ingredient < ApplicationRecord
   end
 
   # 材料の一括保存処理
-  def self.bulk_create(recipe, ingredients, form_ingredients)
+  def self.bulk_create(recipe, form_ingredients)
     # 空フォーム除外
     new_ingredients = Ingredient.remove_empty_form(form_ingredients)
     # 新規インスタンスを作成
-    new_ingredients.each do |new_ingredient|
-      ingredients << recipe.ingredients.build(new_ingredient)
+    ingredients = new_ingredients.each_with_object([]) do |new_ingredient, array|
+      array << recipe.ingredients.build(new_ingredient)
     end
     all_valid = true
     # 以下、失敗したらロールバック
