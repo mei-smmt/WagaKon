@@ -1,16 +1,12 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, except: [:new, :create]
-  before_action :prepare_search, except: [:new]
-  before_action :prepare_meals, except: [:new]
-  before_action :accessable_user, only: :show
-  before_action :correct_user, except: [:show, :new, :create, :edit, :update, :password_edit, :password_update]
-  
+  before_action :prepare_search, except: [:new, :create]
+  before_action :prepare_meals, except: [:new, :create]
+  before_action :set_current_user, except: [:show, :new, :create]
+
   def show
-    if @user == current_user
-      @recipes = @user.recipes
-    else
-      @recipes = @user.recipes.published
-    end
+    accessable_user_check
+    @recipes = @user == current_user ? @user.recipes : @user.recipes.published 
   end
 
   def new
@@ -20,9 +16,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      (0..6).each do |index|
-        @user.meals.create(day_of_week: index)
-      end
+      (0..6).each { |index| @user.meals.create(day_of_week: index) }
       login(@user.email, @user.password)
       flash[:success] = '登録しました'
       redirect_to root_url
@@ -33,11 +27,9 @@ class UsersController < ApplicationController
   end
   
   def edit
-    @user = current_user
   end
   
   def update
-    @user = current_user
     if @user.authenticate(user_params[:password])
       if @user.update(user_params)
         flash[:success] = 'ユーザー情報が更新されました'
@@ -59,11 +51,9 @@ class UsersController < ApplicationController
   end
   
   def password_edit
-    @user = current_user
   end
   
   def password_update
-    @user = current_user
     if @user.authenticate(password_params[:current_password])
       if @user.update(password_params.except(:current_password))
         flash[:success] = 'パスワードが更新されました'
@@ -81,9 +71,7 @@ class UsersController < ApplicationController
   end
   
   def search
-    unless params[:search] == ""
-      @result_user = User.search(params[:search])
-    end
+    @result_user = User.search(params[:search]) unless params[:search] == ""
     render :friends
   end
   
@@ -101,18 +89,14 @@ class UsersController < ApplicationController
     params.permit(:current_password, :password, :password_confirmation)
   end
   
-  def correct_user
-    @user = User.find(params[:id])
-    unless @user == current_user
-      redirect_to root_url
-    end
+  def set_current_user
+    @user = current_user
   end
   
-  def accessable_user
+  def accessable_user_check
     @user = User.find(params[:id])
     unless (@user == current_user) || current_user.approved_friends.include?(@user)
       redirect_to root_url
     end
   end
-  
 end

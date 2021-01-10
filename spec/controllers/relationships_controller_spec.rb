@@ -28,7 +28,7 @@ RSpec.describe RelationshipsController, type: :controller do
         end
         it "友達ページにリダイレクトする" do
           post :create, params:{user_id: @friend.id}
-          expect(response).to redirect_to friends_user_path(@user)
+          expect(response).to redirect_to friends_users_path(@user)
         end
       end
       context "既に同じ条件のリレーションが存在する" do
@@ -52,7 +52,7 @@ RSpec.describe RelationshipsController, type: :controller do
         end
         it "友達ページにリダイレクトする" do
           post :create, params:{user_id: @friend.id}
-          expect(response).to redirect_to friends_user_path(@user)
+          expect(response).to redirect_to friends_users_path(@user)
         end
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe RelationshipsController, type: :controller do
         expect([@user_relationship.reload.status, @friend_relationship.reload.status]).to eq ['approved', 'approved']
       end
       it "友達ページにリダイレクトする" do
-        expect(response).to redirect_to friends_user_path(@user)
+        expect(response).to redirect_to friends_users_path(@user)
       end
     end
     context "ログインなし" do
@@ -132,7 +132,7 @@ RSpec.describe RelationshipsController, type: :controller do
       end
       it "友達ページにリダイレクトする" do
         delete :destroy, params:{id: @relationship.id, user_id: @friend.id}
-        expect(response).to redirect_to friends_user_path(@user)
+        expect(response).to redirect_to friends_users_path(@user)
       end
     end
     context "ログインなし" do
