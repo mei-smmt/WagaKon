@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
-  
   resource :users, only: [:edit, :update, :destroy] do
     member do
       get :password_edit
@@ -18,10 +17,10 @@ Rails.application.routes.draw do
   end
   resources :users, only: [:show, :create]
 
-  resources :relationships, only: [:create, :update, :destroy]
-  resources :bookmarks, only: [:create, :destroy]
-  resources :meals, only: [:index, :show]
-  resources :menus, only: [:create, :destroy]
+  resource :relationships, only: [:create, :update, :destroy]
+  resource :bookmarks, only: [:create, :destroy]
+  resource :meals, only: [:index, :show]
+  resource :menus, only: [:create, :destroy]
 
   resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy] do
     collection do
