@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :prepare_search, except: [:new]
   before_action :prepare_meals, except: [:new]
   before_action :accessable_user, only: :show
-  before_action :correct_user, except: [:show, :new, :create, :edit, :update]
+  before_action :correct_user, except: [:show, :new, :create, :edit, :update, :password_edit, :password_update]
   
   def show
     if @user == current_user
@@ -19,7 +19,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       (0..6).each do |index|
         @user.meals.create(day_of_week: index)
@@ -60,9 +59,11 @@ class UsersController < ApplicationController
   end
   
   def password_edit
+    @user = current_user
   end
   
   def password_update
+    @user = current_user
     if @user.authenticate(password_params[:current_password])
       if @user.update(password_params.except(:current_password))
         flash[:success] = 'パスワードが更新されました'
