@@ -7,10 +7,8 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   resources :users, only: [:show, :create, :edit, :update, :destroy] do
-    collection do
-      get :search
-    end
     member do
+      get :search
       get :password_edit
       patch :password_update
       get :favorite_recipes
