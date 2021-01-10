@@ -1,4 +1,11 @@
-<%= render "layouts/side_bar" do %>    
-  <h2>レシピの編集</h2>
-  <%= render 'steps/form', method: :patch, button_message: "完了" %>
+<%= render "layouts/side_bar" do %>
+  <div class="card">
+    <div class="card-body p-4">
+      <h2 class="heading">手順を入力</h2>
+      <%= render 'recipes/show_upper', recipe: @recipe %>
+      <%= render 'steps/form', method: :patch, button_message: "完了" %>
+      <!--レシピ特徴-->
+      <%= render 'features/index', recipe: @recipe %>
+    </div>
+  </div>
 <% end %>
