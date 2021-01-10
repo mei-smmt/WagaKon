@@ -51,16 +51,16 @@ class User < ApplicationRecord
   
   def friend_approve(friend)
     own_rel = self.relationships.find_by(friend_id: friend.id)
-    own_rel.update(status: 'approved') if relationship
+    own_rel.update(status: 'approved') if own_rel
     friend_rel = friend.relationships.find_by(friend_id: self.id)
-    friend_rel.update(status: 'approved') if relationship
+    friend_rel.update(status: 'approved') if friend_rel
   end
   
   def friend_delete(friend)
     own_rel = self.relationships.find_by(friend_id: friend.id)
-    own_rel.destroy if relationship
+    own_rel.destroy if own_rel
     friend_rel = friend.relationships.find_by(friend_id: self.id)
-    friend_rel.destroy if relationship
+    friend_rel.destroy if friend_rel
   end
   
   def requesting_friend?(friend)
