@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
     email = params[:session][:email].downcase
     password = params[:session][:password]
     if login(email, password)
-      flash[:success] = 'ログインしました'
       redirect_to root_url
     else
       flash.now[:danger] = 'ログインに失敗しました'
@@ -18,7 +17,4 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to root_url
   end
-  
-  private
-
 end

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:show, :edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes]
-  before_action :prepare_search, only: [:show, :create, :edit, :update, :destroy, :password_edit, :password_update, :friends, :search, :favorite_recipes]
-  before_action :prepare_meals, only: [:show, :create, :edit, :update, :destroy, :password_edit, :password_update, :friends, :search, :favorite_recipes]
+  before_action :require_user_logged_in, except: [:new, :create]
+  before_action :prepare_search, except: [:new]
+  before_action :prepare_meals, except: [:new]
   before_action :accessable_user, only: :show
   before_action :correct_user, only: [:edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes]
   
