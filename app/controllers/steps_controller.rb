@@ -11,7 +11,6 @@ class StepsController < ApplicationController
   end
 
   def create
-    @steps = []
     @form_steps = steps_params
     # 一括保存処理呼び出し
     if Step.bulk_create(@recipe, @steps, @form_steps)

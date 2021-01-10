@@ -8,6 +8,7 @@ class Meal < ApplicationRecord
   has_many :menus, dependent: :destroy
   has_many :menu_recipes, through: :menus, source: :recipe
   
+  # 指定した曜日のmealを取得
   scope :day, -> (wday) { find_by(day_of_week: (wday)) }
 
   def add_to_meal(recipe)
