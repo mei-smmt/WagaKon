@@ -1,6 +1,6 @@
 <div class="col-sm-2 p-0">
-      <h3><i class="fas fa-dot-circle"></i> 献立List</h3>
-      <div class="border-gray mb-3"></div>
+  <h3><i class="fas fa-dot-circle"></i> 献立List</h3>
+    <div class="border-gray mb-3"></div>
       <% week_loop.each do |day| %>
         <% if @meals.day(day).menu_recipes.present? %>
           <div class="card mb-2 p-1 rounded-0 border-0 bg-darkgray">

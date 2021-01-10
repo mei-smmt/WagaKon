@@ -1,5 +1,9 @@
 <!--レシピ公開ボタン-->
-<%= link_to "レシピを友だちに公開する", publish_recipe_path(recipe), 
-                                        method: :patch, 
-                                        data: { confirm: '本当に公開してよろしいですか？' }, 
-                                        class: 'btn btn-sm btn-block submit-btn' %>
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+    <%= link_to "レシピを友だちに公開する", publish_recipe_path(recipe), 
+                                            method: :patch, 
+                                            data: { confirm: '本当に公開してよろしいですか？' }, 
+                                            class: 'btn btn-sm btn-block submit-btn' %>
+  </div>
+</div>
