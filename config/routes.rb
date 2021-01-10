@@ -35,7 +35,6 @@ Rails.application.routes.draw do
       patch :publish
       patch :stop_publish
     end
-    resource :ingredients, :steps, only: [:edit, :update] do
-    end
+    resource :ingredients, :steps, only: [:edit, :update]
   end
 end
