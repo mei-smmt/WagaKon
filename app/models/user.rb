@@ -50,17 +50,17 @@ class User < ApplicationRecord
   end
   
   def friend_approve(friend)
-    relationship = self.relationships.find_by(friend_id: friend.id)
-    relationship.update(status: 'approved') if relationship
-    relationship = friend.relationships.find_by(friend_id: self.id)
-    relationship.update(status: 'approved') if relationship
+    own_rel = self.relationships.find_by(friend_id: friend.id)
+    own_rel.update(status: 'approved') if own_rel
+    friend_rel = friend.relationships.find_by(friend_id: self.id)
+    friend_rel.update(status: 'approved') if friend_rel
   end
   
   def friend_delete(friend)
-    relationship = self.relationships.find_by(friend_id: friend.id)
-    relationship.destroy if relationship
-    relationship = friend.relationships.find_by(friend_id: self.id)
-    relationship.destroy if relationship
+    own_rel = self.relationships.find_by(friend_id: friend.id)
+    own_rel.destroy if own_rel
+    friend_rel = friend.relationships.find_by(friend_id: self.id)
+    friend_rel.destroy if friend_rel
   end
   
   def requesting_friend?(friend)
@@ -76,26 +76,18 @@ class User < ApplicationRecord
   end
   
   def accessable_recipes
-    recipes = []
-    self.approved_friends.each do |friend|
-      recipes << friend.recipes.published
+    recipes = self.approved_friends.each_with_object([]) do |friend, array|
+      array  << friend.recipes.published
     end
     recipes << self.recipes
     recipes.flatten!
-    accessable_id_list = []
-    recipes.each do |recipe|
-      accessable_id_list << recipe.id
-    end
-    Recipe.where(id: accessable_id_list)
+    id_list = recipes.pluck(:id)
+    Recipe.where(id: id_list)
   end
 
   # ユーザー検索
   def self.search(search)
     user = User.find_by(personal_id: search)
-    if user.present?
-      user
-    else
-      ""
-    end
+    user.present? ? user : ""
   end
 end

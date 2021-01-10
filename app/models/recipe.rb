@@ -60,10 +60,7 @@ class Recipe < ApplicationRecord
   def self.feature_search(search)
     requirement = search.select!{|k, v| v.present?}
     features = Feature.where(requirement)
-    recipe_id_list = []
-    features.each do |feature|
-      recipe_id_list << feature.recipe_id
-    end
-    Recipe.where(id: recipe_id_list)
+    id_list = features.pluck(:recipe_id)
+    Recipe.where(id: id_list)
   end  
 end

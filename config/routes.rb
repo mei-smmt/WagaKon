@@ -6,22 +6,21 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
-  resources :users, only: [:show, :create, :edit, :update, :destroy] do
-    collection do
-      get :search
-    end
+  resource :users, only: [:edit, :update, :destroy] do
     member do
       get :password_edit
       patch :password_update
+      get :search
       get :favorite_recipes
       get :friends
     end
   end
-  
-  resources :relationships, only: [:create, :update, :destroy]
-  resources :bookmarks, only: [:create, :destroy]
-  resources :meals, only: [:index, :show]
-  resources :menus, only: [:create, :destroy]
+  resources :users, only: [:show, :create]
+
+  resource :relationships, only: [:create, :update, :destroy]
+  resource :bookmarks, only: [:create, :destroy]
+  resource :meals, only: [:index, :show]
+  resource :menus, only: [:create, :destroy]
 
   resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy] do
     collection do
@@ -36,11 +35,6 @@ Rails.application.routes.draw do
       patch :publish
       patch :stop_publish
     end
-    resources :ingredients, :steps, only: [:new, :create] do
-      collection do
-        get :edit
-        patch :update
-      end
-    end
+    resource :ingredients, :steps, only: [:edit, :update]
   end
 end

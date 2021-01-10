@@ -70,7 +70,7 @@ RSpec.describe IngredientsController, type: :controller do
         end
         it 'ステップ入力画面にリダイレクトする' do
           post :create, params:{ingredients: @ingredients, recipe_id: @recipe.id}
-          expect(response).to redirect_to new_recipe_step_path(@recipe)
+          expect(response).to redirect_to new_recipe_steps_path(@recipe)
         end
       end
       context '１つでも無効なパラメータを含む場合' do

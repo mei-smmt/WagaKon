@@ -1,21 +1,25 @@
 class RelationshipsController < ApplicationController
 before_action :require_user_logged_in
+before_action :set_friend
 
   def create
-    @friend = User.find(params[:user_id])
     current_user.friend_request(@friend)
-    redirect_to friends_user_url(current_user)
+    redirect_to friends_users_url
   end
 
   def update
-    @friend = User.find(params[:user_id])
     current_user.friend_approve(@friend)
-    redirect_to friends_user_url(current_user)
+    redirect_to friends_users_url
   end
 
   def destroy
-    @friend = User.find(params[:user_id])
     current_user.friend_delete(@friend)
-    redirect_to friends_user_url(current_user)
+    redirect_to friends_users_url
+  end
+  
+  private
+  
+  def set_friend
+    @friend = User.find(params[:user_id])
   end
 end

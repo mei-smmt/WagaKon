@@ -1,0 +1,13 @@
+<div class="mt-4">
+  <div class="border-gray pb-1">
+    <h2 class="d-inline">材料</h2>
+    <% if recipe.size.present? %>
+      <h4 class="d-inline">(<%= recipe.size %>)</h4>
+    <% end %>
+  </div>
+  <table class="table table-sm table-striped table-borderless font-sm">
+    <% recipe.ingredients.each do |ingredient| %>
+      <tr><td><%= ingredient.name %></td><td><div class="text-right"><%= ingredient.quantity %></div></td></tr>
+    <% end %>
+  </table>
+</div>

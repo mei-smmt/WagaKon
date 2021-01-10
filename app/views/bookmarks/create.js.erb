@@ -1,1 +1,1 @@
-$('#likes_buttons_<%= @recipe.id %>').html("<%= j(render partial: 'bookmarks/bookmark_button', locals: {recipe: @recipe}) %>");
+$('#likes_buttons').html("<%= j(render partial: 'bookmarks/bookmark_button', locals: {recipe: @recipe}) %>");

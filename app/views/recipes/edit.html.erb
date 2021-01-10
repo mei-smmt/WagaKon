@@ -1,10 +1,8 @@
-<div class="row mx-0">
-  <!--レシピ検索フォーム-->
-  <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
-  <div class="col-sm-7 pr-3">
-    <h2>レシピの編集</h2>
-    <%= render 'recipes/recipe_form', recipe: @recipe, easy_path: easy_update_recipe_path %>
+<%= render "layouts/side_bar" do %>    
+  <div class="card">
+    <div class="card-body p-4">
+      <h2 class="heading">レシピ概要を入力</h2>
+      <%= render 'recipes/form', recipe: @recipe, easy_path: easy_update_recipe_path %>
+    </div>
   </div>
-  <!--献立一覧-->
-  <%= render 'meals/index', recipes: @recipes %>
-</div>
+<% end %>

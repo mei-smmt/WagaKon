@@ -4,24 +4,6 @@ class IngredientsController < ApplicationController
   before_action :prepare_meals
   before_action -> {user_author_match(params[:recipe_id])}
 
-  def new
-    @ingredients = (1..10).map do
-      @recipe.ingredients.build
-    end
-  end
-  
-  def create
-    @ingredients = []
-    @form_ingredients = ingredients_params
-    # 一括保存処理呼び出し
-    if Ingredient.bulk_create(@recipe, @ingredients, @form_ingredients)
-      redirect_to new_recipe_step_path(@recipe)
-    else
-      flash.now[:danger] = '内容に誤りがあります'
-      render :new
-    end
-  end
-  
   def edit
     @ingredients = @recipe.ingredients
     start = 1 + (@ingredients.present? ? @ingredients.last.id : 0)

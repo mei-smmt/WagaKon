@@ -7,7 +7,7 @@
 <% elsif current_user == user %>
   <h3>自身を友だちに追加することはできません。</h3>
 <% else %>
-  <%= form_with(model: current_user.relationships.build, local: true) do |f| %>
+  <%= form_with(url: relationships_path, local: true) do |f| %>
     <%= hidden_field_tag :user_id, user.id %>
     <%= f.submit '友だちリクエストを送る', class: 'btn btn-sm button' %>
   <% end %>

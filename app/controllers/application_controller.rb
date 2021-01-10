@@ -3,12 +3,14 @@ class ApplicationController < ActionController::Base
   
   private
 
+  # ログイン要求
   def require_user_logged_in
     unless logged_in?
       redirect_to login_url
     end
   end
   
+  # ログイン処理
   def login(email, password)
     @user = User.find_by(email: email)
     if @user && @user.authenticate(password)
@@ -21,6 +23,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # レシピ作成者本人であることの確認
   def user_author_match(recipe_id)
     @recipe = Recipe.find(recipe_id)
     @user = @recipe.user
@@ -29,6 +32,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # レシピへのアクセス権確認（本人or友だち？）
   def accessable_recipe_check(recipe_id)
     @recipe = Recipe.find(recipe_id)
     unless current_user.accessable_recipes.include?(@recipe)
@@ -36,6 +40,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # レシピ検索サイドバー表示の準備
   def prepare_search
     session[:sort].clear if session[:sort]
     session[:keyword].clear if session[:keyword]
@@ -45,6 +50,7 @@ class ApplicationController < ActionController::Base
     @f_submit = "検索"
   end
   
+  # 献立Listサイドバー表示の準備
   def prepare_meals
     @meals = current_user.meals
   end

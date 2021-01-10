@@ -1,21 +1,13 @@
 module ApplicationHelper
+  # スタートが今日の曜日になるループ
   def week_loop
-    week = []
-    day = Time.now.wday
-    7.times do
-      week << day
-      day = (day == 6) ? 0 : (day + 1)
+    (0..6).each_with_object([]) do |n, week|
+      week << Time.now.since(n.days).wday
     end
-    week
   end
   
   def wday_jp(index)
-    week = ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"]
-    if index == Time.now.wday
-      return "今日"
-    else
-      return week[index]
-    end
+    index == Time.now.wday ? "今日" : I18n.t('date.day_names')[index]
   end
   
   def homepage_title(recipe)

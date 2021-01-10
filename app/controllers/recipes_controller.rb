@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   include Common
 
   before_action :require_user_logged_in
-  before_action :prepare_search, only: [:show, :new, :create, :easy_create, :edit, :update, :easy_update, :destroy, :publish, :stop_publish]
+  before_action :prepare_search, except: [:sort, :keyword_search, :feature_search]
   before_action :prepare_meals
   before_action -> {accessable_recipe_check(params[:id])}, only: :show
   before_action -> {user_author_match(params[:id])}, only: [:edit, :update, :easy_update, :size_update, :destroy, :publish, :stop_publish]
@@ -18,7 +18,7 @@ class RecipesController < ApplicationController
   def create
     @recipe = current_user.recipes.build(recipe_params)
     if @recipe.save
-      redirect_to new_recipe_ingredient_url(@recipe)
+      redirect_to edit_recipe_ingredients_url(@recipe)
     else
       render :new
     end
@@ -53,11 +53,7 @@ class RecipesController < ApplicationController
   end
   
   def size_update
-    if @recipe.update(size_params)
-      @status = "success"
-    else
-      @status = "fail"
-    end
+    @status = @recipe.update(size_params) ? "success" : "fail"
   end
   
   def destroy
@@ -95,7 +91,6 @@ class RecipesController < ApplicationController
   end
   
   def feature_search
-    prepare_submit_btn
     @search_feature = feature_params
     if session[:keyword].present?
       @search_keyword = session[:keyword]
@@ -105,6 +100,7 @@ class RecipesController < ApplicationController
       @recipes = current_user.accessable_recipes.feature_search(@search_feature)
     end
     recipe_sort(@recipes)
+    prepare_submit_btn
   end
 
   private
