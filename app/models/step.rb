@@ -13,33 +13,6 @@ class Step < ApplicationRecord
     end
   end
 
-  # 手順の一括保存処理
-  def self.bulk_create(recipe, form_steps)
-    # 空フォーム除外
-    new_steps = Step.remove_empty_form(form_steps)
-    # 新規インスタンスを作成
-    steps = new_steps.each_with_object([]) do |new_step, array|
-      array << recipe.steps.build(new_step)
-    end
-    all_valid = true
-    # 以下、失敗したらロールバック
-    Step.transaction do
-      # 保存処理
-      steps.each_with_object(1) do |step, step_number|
-        step[:number] = step_number
-        all_valid &= step.save
-        step_number += 1
-      end
-      unless all_valid
-      # render後のフォームを補充  
-        missing_forms_size = 10 - new_steps.size
-        missing_forms_size.times { steps << recipe.steps.build }
-        raise ActiveRecord::Rollback
-      end
-    end
-    all_valid
-  end
-
   # 手順の一括更新処理
   def self.bulk_update(recipe, form_steps)
     # 空フォーム除外
@@ -51,8 +24,8 @@ class Step < ApplicationRecord
     if diff > 0
       new_steps.last(diff).each do |new_step|
         new_step.merge!(id: temp_id)
-        temp_id += 1
         recipe.steps.build(new_step)
+        temp_id += 1
       end
     end
     all_valid = true
@@ -60,9 +33,7 @@ class Step < ApplicationRecord
     Step.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
       if diff < 0
-        recipe.steps.last(-diff).each do |step|
-          step.destroy
-        end
+        recipe.steps.last(-diff).each { |step| step.destroy }
       end
       # 更新処理
       step_number = 1

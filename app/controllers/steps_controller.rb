@@ -4,23 +4,6 @@ class StepsController < ApplicationController
   before_action :prepare_meals
   before_action -> {user_author_match(params[:recipe_id])}
   
-  def new
-    @steps = (1..10).map do
-      @recipe.steps.build
-    end
-  end
-
-  def create
-    @form_steps = steps_params
-    # 一括保存処理呼び出し
-    if Step.bulk_create(@recipe, @form_steps)
-      redirect_to recipe_url(@recipe)
-    else
-      flash.now[:danger] = '内容に誤りがあります'
-      render :new
-    end
-  end
-
   def edit
     @steps = @recipe.steps
     start = 1 + (@steps.present? ? @steps.last.id : 0)
