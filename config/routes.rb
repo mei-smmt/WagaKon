@@ -36,11 +36,7 @@ Rails.application.routes.draw do
       patch :publish
       patch :stop_publish
     end
-    resources :ingredients, :steps, only: [:new, :create] do
-      collection do
-        get :edit
-        patch :update
-      end
+    resource :ingredients, :steps, only: [:edit, :update] do
     end
   end
 end

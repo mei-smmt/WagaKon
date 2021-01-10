@@ -93,7 +93,7 @@ RSpec.describe RecipesController, type: :controller do
       end
       it '材料入力画面にリダイレクトする' do
         post :create, params:{recipe: @recipe}
-        expect(response).to redirect_to new_recipe_ingredient_path(@user.recipes.last)
+        expect(response).to redirect_to new_recipe_ingredients_path(@user.recipes.last)
       end
     end
     context '無効なパラメータの場合' do

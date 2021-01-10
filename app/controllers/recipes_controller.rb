@@ -18,7 +18,7 @@ class RecipesController < ApplicationController
   def create
     @recipe = current_user.recipes.build(recipe_params)
     if @recipe.save
-      redirect_to new_recipe_ingredient_url(@recipe)
+      redirect_to edit_recipe_ingredients_url(@recipe)
     else
       render :new
     end
