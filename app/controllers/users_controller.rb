@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :prepare_search, except: [:new]
   before_action :prepare_meals, except: [:new]
   before_action :accessable_user, only: :show
-  before_action :correct_user, only: [:edit, :update, :destroy, :password_edit, :password_update, :friends, :favorite_recipes]
+  before_action :correct_user, except: [:show, :new, :create]
   
   def show
     if @user == current_user
@@ -78,7 +78,6 @@ class UsersController < ApplicationController
   end
   
   def search
-    @user = current_user
     unless params[:search] == ""
       @result_user = User.search(params[:search])
     end

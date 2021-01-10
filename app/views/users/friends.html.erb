@@ -23,7 +23,7 @@
         <h2>友達追加++</h2>
         <div class="border-gray mb-3"></div>
         <!--ユーザー検索フォーム-->
-        <%= form_with(url: search_users_path, method: :get, local: true) do |f| %>
+        <%= form_with(url: search_user_path, method: :get, local: true) do |f| %>
           <div class="form-row">
             <div class="col-sm-5">
               <%= f.text_field :search, placeholder: '友達のIDで検索', class: 'form-control' %>
