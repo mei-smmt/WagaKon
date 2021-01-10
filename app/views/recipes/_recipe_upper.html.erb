@@ -3,20 +3,36 @@
 </div>
 <div class="row mb-4">
   <div class="col-sm-5">
-    <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
+    <div class="img-square">
+      <% if recipe.image.present? %>
+        <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
+      <% elsif homepage_image(recipe) %>
+        <%= image_tag(homepage_image(recipe), alt: homepage_title(recipe)) %>
+      <% else %>
+        <%= cl_image_tag(recipe.image.to_s, alt: recipe.title) %>
+      <% end %>
+    </div>
   </div>
   <div class="col-sm-7">
     <h3><%= recipe.explanation %></h3>
     <div class="d-flex justify-content-end"> 
       <%= link_to "by #{recipe.user.name}", user_path(recipe.user), class: "font-orange font-sm" %>
     </div>
-    <% if @recipe.ingredients.present? %>
+    <% if recipe.homepage.present? %>
       <div class="font-sm mt-4">
-        <table class="table table-sm">
+        <h2 class="border-gray pb-1">参考ホームページ</h2>
+        <h5><%= link_to homepage_title(recipe), recipe.homepage, target: :_blank, class: "font-orange" %></h5>
+      </div>
+    <% end %>
+    <% if @recipe.ingredients.present? %>
+      <div class="mt-4">
+        <div class="border-gray pb-1">
           <h2 class="d-inline">材料</h2>
           <% if recipe.size.present? %>
-            <h4 class="d-inline ml-2">(<%= recipe.size %>)</h4>
+            <h4 class="d-inline">(<%= recipe.size %>)</h4>
           <% end %>
+        </div>
+        <table class="table table-sm table-striped table-borderless font-sm">
           <% @recipe.ingredients.each do |ingredient| %>
             <tr><td><%= ingredient.name %></td><td><div class="text-right"><%= ingredient.quantity %></div></td></tr>
           <% end %>

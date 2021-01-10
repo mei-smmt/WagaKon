@@ -35,10 +35,22 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-
+# JQuery
 gem 'jquery-rails'
-
+# enum日本語化
 gem 'enum_help'
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+#ページネーション
+gem 'kaminari'
+#画像アップロード
+gem 'carrierwave', '~> 1.3', '>= 1.3.1'
+gem 'cloudinary' , '1.11.1'
+gem 'mini_magick'
+# Library for validating urls in Rails
+gem 'validate_url'
+#スクレイピングgem
+gem 'mechanize'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -61,15 +73,6 @@ group :test do
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-#ページネーション
-gem 'kaminari'
-#画像アップロード
-gem 'carrierwave', '~> 1.3', '>= 1.3.1'
-gem 'cloudinary' , '1.11.1'
-gem 'mini_magick'
 
 group :production do
   gem 'pg', '>= 0.18', '< 2.0'

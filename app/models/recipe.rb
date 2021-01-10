@@ -5,6 +5,7 @@ class Recipe < ApplicationRecord
   validates :title, presence: true, length: { maximum: 20 }
   validates :explanation, presence: true, length: { maximum: 140 }
   validates :size, length: { maximum: 10 }
+  validates :homepage, url: { allow_nil: true, allow_blank: true }
   validates :status, presence: true
   
   # statusカラム設定
