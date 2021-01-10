@@ -1,4 +1,8 @@
 <%= render "layouts/side_bar" do %>    
-  <h2>レシピ概要の入力</h2>
-  <%= render 'recipes/form', recipe: @recipe, easy_path: easy_create_recipes_path %>
+  <div class="card">
+    <div class="card-body p-4">
+      <h2 class="heading">レシピ概要を入力</h2>
+      <%= render 'recipes/form', recipe: @recipe, easy_path: easy_create_recipes_path %>
+    </div>
+  </div>
 <% end %>
