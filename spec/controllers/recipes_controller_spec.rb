@@ -37,7 +37,7 @@ RSpec.describe RecipesController, type: :controller do
         expect(assigns(:recipe)).to eq(@recipe)
       end
       it ':showにリダイレクトする' do
-        expect(response).to redirect_to recipe_path(@recipe)
+        expect(response).to redirect_to recipe_url(@recipe)
       end
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe RecipesController, type: :controller do
         expect(response.status).to eq(302)
       end
       it '#loginにリダイレクトする' do
-        expect(response).to redirect_to login_path
+        expect(response).to redirect_to login_url
       end
     end
   end
@@ -93,7 +93,7 @@ RSpec.describe RecipesController, type: :controller do
       end
       it '材料入力画面にリダイレクトする' do
         post :create, params:{recipe: @recipe}
-        expect(response).to redirect_to new_recipe_ingredients_path(@user.recipes.last)
+        expect(response).to redirect_to new_recipe_ingredients_url(@user.recipes.last)
       end
     end
     context '無効なパラメータの場合' do
@@ -145,7 +145,7 @@ RSpec.describe RecipesController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -170,7 +170,7 @@ RSpec.describe RecipesController, type: :controller do
           expect(@recipe.title).to eq 'new_title'
         end
         it '材料編集画面にリダイレクトする' do
-          expect(response).to redirect_to edit_recipe_ingredients_path(@recipe)
+          expect(response).to redirect_to edit_recipe_ingredients_url(@recipe)
         end
       end
       context '無効なパラメータの場合' do
@@ -200,7 +200,7 @@ RSpec.describe RecipesController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -223,7 +223,7 @@ RSpec.describe RecipesController, type: :controller do
       end
       it 'rootにリダイレクトする' do
         delete :destroy, params: {id: @recipe.id}
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
     context 'レシピ作者とログインユーザーが一致しない' do
@@ -243,7 +243,7 @@ RSpec.describe RecipesController, type: :controller do
       end
       it 'rootにリダイレクトする' do
         delete :destroy, params: {id: @recipe.id}
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -282,7 +282,7 @@ RSpec.describe RecipesController, type: :controller do
         expect(@recipe.status).to eq "draft"
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -321,7 +321,7 @@ RSpec.describe RecipesController, type: :controller do
         expect(@recipe.status).to eq "published"
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -373,7 +373,7 @@ RSpec.describe RecipesController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end

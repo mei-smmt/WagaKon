@@ -49,7 +49,7 @@ RSpec.describe MenusController, type: :controller do
       end
       it '#loginにリダイレクトする' do
         post :create, params:{day: 'sun', recipe_id: @recipe.id}
-        expect(response).to redirect_to login_path
+        expect(response).to redirect_to login_url
       end
     end
   end
@@ -89,7 +89,7 @@ RSpec.describe MenusController, type: :controller do
       end
       it '#loginにリダイレクトする' do
         delete :destroy, params:{id: @menu.id, recipe_id: @recipe.id}
-        expect(response).to redirect_to login_path
+        expect(response).to redirect_to login_url
       end
     end
   end

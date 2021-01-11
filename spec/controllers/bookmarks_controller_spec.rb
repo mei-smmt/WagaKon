@@ -48,7 +48,7 @@ RSpec.describe BookmarksController, type: :controller do
       end
       it '#loginにリダイレクトする' do
         post :create, params:{recipe_id: @recipe.id}
-        expect(response).to redirect_to login_path
+        expect(response).to redirect_to login_url
       end
     end
   end
@@ -87,7 +87,7 @@ RSpec.describe BookmarksController, type: :controller do
       end
       it '#loginにリダイレクトする' do
         delete :destroy, params:{id: @bookmark.id, recipe_id: @recipe.id}
-        expect(response).to redirect_to login_path
+        expect(response).to redirect_to login_url
       end
     end
   end

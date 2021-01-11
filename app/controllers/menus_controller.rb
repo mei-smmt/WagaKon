@@ -5,7 +5,7 @@ class MenusController < ApplicationController
   def create
     meal = current_user.meals.day(params[:day])
     meal.add_to_meal(@recipe)
-    redirect_to recipe_path(@recipe)
+    redirect_to recipe_url(@recipe)
   end
 
   def destroy

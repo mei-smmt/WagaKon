@@ -31,7 +31,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -67,7 +67,7 @@ RSpec.describe UsersController, type: :controller do
       end
       it 'rootにリダイレクトする' do
         post :create, params:{user: @user}
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
     context '無効なパラメータの場合' do
@@ -117,7 +117,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -140,7 +140,7 @@ RSpec.describe UsersController, type: :controller do
           expect([@user.name, @user.email]).to eq ['new_name', 'new@example.com']
         end
         it 'users#showにリダイレクトする' do
-          expect(response).to redirect_to user_path(@user)
+          expect(response).to redirect_to user_url(@user)
         end
       end
       context 'パスワードが間違っている場合' do
@@ -184,7 +184,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -216,7 +216,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -240,7 +240,7 @@ RSpec.describe UsersController, type: :controller do
           expect(@user.password).to eq 'new_pass'
         end
         it 'users#showにリダイレクトする' do
-          expect(response).to redirect_to user_path(@user)
+          expect(response).to redirect_to user_url(@user)
         end
       end
       context '現在のパスワードが間違っている場合' do
@@ -284,7 +284,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -323,7 +323,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
