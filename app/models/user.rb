@@ -40,7 +40,9 @@ class User < ApplicationRecord
   def self.safe_update(user, user_params)
     valid = !!user.authenticate(user_params[:password])
     User.transaction do
-      valid &= user.update(user_params)
+      user.assign_attributes(user_params.except(:remove_img))
+      user.remove_image! if user_params[:remove_img] == "1"
+      valid &= user.save
       unless valid
         raise ActiveRecord::Rollback
       end
