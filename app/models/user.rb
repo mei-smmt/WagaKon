@@ -1,17 +1,26 @@
 class User < ApplicationRecord
   mount_uploader :image, ImageUploader
   
-  before_save { self.email.downcase! }
+  with_options presence: true do
+    validates :name
+    validates :personal_id
+    validates :email
+    validates :password
+  end
+  validates :name, presence: true, length: { maximum: 10 }, unless: -> { name.blank? }
   validates :personal_id, presence: true,
                           length: { in: 4..12 },
                           format: { with: /\A[a-z0-9]+\z/ },#半角英数字限定
-                          uniqueness: true
-  validates :name, presence: true, length: { maximum: 20 }
-  validates :email, presence: true, length: { maximum: 100 },
+                          uniqueness: true,
+                          unless: -> { personal_id.blank? }
+  before_save { self.email.downcase! }
+  validates :email, presence: true,
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
-                    uniqueness: { case_sensitive: false }
+                    uniqueness: { case_sensitive: false },
+                    unless: -> { email.blank? }
   has_secure_password
-  validates :password, presence: true, length: { in: 4..12 }
+  validates :password, presence: true
+  validates :password, length: { in: 4..12 }, unless: -> { password.blank? }
   
   has_many :recipes, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
@@ -27,6 +36,30 @@ class User < ApplicationRecord
   has_many :receiving_friends, through: :receiving_relationships, source: :friend
   has_many :approved_relationships, -> { approved }, class_name: 'Relationship'
   has_many :approved_friends, through: :approved_relationships, source: :friend
+  
+  def self.safe_update(user, user_params)
+    valid = !!user.authenticate(user_params[:password])
+    User.transaction do
+      user.assign_attributes(user_params.except(:remove_img))
+      user.remove_image! if user_params[:remove_img] == "1"
+      valid &= user.save
+      unless valid
+        raise ActiveRecord::Rollback
+      end
+    end
+    valid
+  end
+  
+  def self.safe_password_update(user, password_params)
+    valid = !!user.authenticate(password_params[:current_password])
+    User.transaction do
+      valid &= user.update(password_params.except(:current_password))
+      unless valid
+        raise ActiveRecord::Rollback
+      end
+    end
+    valid
+  end
   
   def bookmark(recipe)
     self.bookmarks.find_or_create_by(recipe_id: recipe.id)
