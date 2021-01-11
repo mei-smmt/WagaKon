@@ -1,5 +1,5 @@
-<%= form_with(model: recipe, local: true, authenticity_token: true) do |f| %>
-  <%= render 'layouts/error_messages', model: f.object %>
+<%= form_with(url: path, model: recipe, local: true, authenticity_token: true) do |f| %>
+  <%= render 'layouts/error_messages', model: recipe %>
   <div class="form-row">
     <div class="col-sm-5 pr-3">
       <div class="form-group">

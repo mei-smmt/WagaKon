@@ -3,8 +3,8 @@
 </div>
 <div class="row">
   <div class="col-sm-4 offset-sm-4">
-    <%= form_with(model: @user, local: true) do |f| %>
-      <%= render 'layouts/error_messages', model: f.object %>
+    <%= form_with(url: users_path, model: @user, local: true) do |f| %>
+      <%= render 'layouts/error_messages', model: @user %>
       <div class="form-group">
         <%= f.label :name, '名前' %>
         <%= f.text_field :name, class: 'form-control' %>
