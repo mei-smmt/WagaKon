@@ -22,14 +22,15 @@ Rails.application.routes.draw do
   resource :meals, only: [:index, :show]
   resource :menus, only: [:create, :destroy]
   
-  resource :recipes, only: [:new, :create]
-  resources :recipes, only: [:show,  :edit, :update, :destroy] do
+  resource :recipes, only: [:new, :create] do
     collection do
       post :easy_create
       get :sort
       get :keyword_search
       get :feature_search
     end
+  end
+  resources :recipes, only: [:show,  :edit, :update, :destroy] do
     member do
       patch :easy_update
       patch :size_update
