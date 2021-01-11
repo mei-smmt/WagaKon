@@ -36,7 +36,7 @@ RSpec.describe IngredientsController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -70,7 +70,7 @@ RSpec.describe IngredientsController, type: :controller do
         end
         it 'ステップ入力画面にリダイレクトする' do
           post :create, params:{ingredients: @ingredients, recipe_id: @recipe.id}
-          expect(response).to redirect_to new_recipe_steps_path(@recipe)
+          expect(response).to redirect_to new_recipe_steps_url(@recipe)
         end
       end
       context '１つでも無効なパラメータを含む場合' do
@@ -103,7 +103,7 @@ RSpec.describe IngredientsController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -144,7 +144,7 @@ RSpec.describe IngredientsController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -179,7 +179,7 @@ RSpec.describe IngredientsController, type: :controller do
         end
         it 'ステップ編集画面にリダイレクトする' do
           patch :update, params:{ingredients: @ingredients, recipe_id: @recipe.id}
-          expect(response).to redirect_to edit_recipe_steps_path(@recipe)
+          expect(response).to redirect_to edit_recipe_steps_url(@recipe)
         end
       end
       context '１つでも無効なパラメータを含む場合' do
@@ -212,7 +212,7 @@ RSpec.describe IngredientsController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end

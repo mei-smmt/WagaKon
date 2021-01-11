@@ -18,7 +18,7 @@ class IngredientsController < ApplicationController
     @form_ingredients = ingredients_params.is_a?(Array) ? ingredients_params : ingredients_params.values
     # 一括更新処理呼び出し
     if Ingredient.bulk_update(@recipe, @form_ingredients)
-      redirect_to edit_recipe_steps_path(@recipe)
+      redirect_to edit_recipe_steps_url(@recipe)
     else
       flash.now[:danger] = '内容に誤りがあります'
       render :edit

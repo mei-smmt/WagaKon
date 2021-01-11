@@ -36,7 +36,7 @@ RSpec.describe StepsController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -104,7 +104,7 @@ RSpec.describe StepsController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -145,7 +145,7 @@ RSpec.describe StepsController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -214,7 +214,7 @@ RSpec.describe StepsController, type: :controller do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
     end
   end

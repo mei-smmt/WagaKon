@@ -29,7 +29,7 @@ RSpec.describe SessionsController, type: :controller do
           expect(session[:user_id]).to eq(@user.id)
         end
         it 'rootにリダイレクトする' do
-          expect(response).to redirect_to root_path
+          expect(response).to redirect_to root_url
         end
       end
       context 'パスワードが正しくない場合' do
@@ -76,7 +76,7 @@ RSpec.describe SessionsController, type: :controller do
       expect(session[:user_id]).to eq(nil)
     end
     it 'rootにリダイレクトする' do
-      expect(response).to redirect_to root_path
+      expect(response).to redirect_to root_url
     end
   end
 end
