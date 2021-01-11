@@ -48,6 +48,17 @@ class User < ApplicationRecord
     valid
   end
   
+  def self.safe_password_update(user, password_params)
+    valid = !!user.authenticate(password_params[:current_password])
+    User.transaction do
+      valid &= user.update(password_params.except(:current_password))
+      unless valid
+        raise ActiveRecord::Rollback
+      end
+    end
+    valid
+  end
+  
   def bookmark(recipe)
     self.bookmarks.find_or_create_by(recipe_id: recipe.id)
   end

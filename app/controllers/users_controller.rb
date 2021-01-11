@@ -49,15 +49,11 @@ class UsersController < ApplicationController
   end
   
   def password_update
-    if @user.authenticate(password_params[:current_password])
-      if @user.update(password_params.except(:current_password))
-        flash[:success] = 'パスワードが更新されました'
-        redirect_to @user
-      else
-        render :password_edit
-      end
+    if User.safe_password_update(@user, password_params)
+      flash[:success] = 'ユーザー情報が更新されました'
+      redirect_to @user
     else
-      flash.now[:danger] = 'パスワードが間違っています'
+      @user.errors.add(:base, "現在のパスワードが間違っています") if @user.errors.blank?
       render :password_edit
     end
   end
