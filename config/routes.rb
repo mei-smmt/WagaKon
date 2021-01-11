@@ -21,8 +21,9 @@ Rails.application.routes.draw do
   resource :bookmarks, only: [:create, :destroy]
   resource :meals, only: [:index, :show]
   resource :menus, only: [:create, :destroy]
-
-  resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy] do
+  
+  resource :recipes, only: [:new, :create]
+  resources :recipes, only: [:show,  :edit, :update, :destroy] do
     collection do
       post :easy_create
       get :sort
