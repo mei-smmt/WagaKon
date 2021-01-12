@@ -19,6 +19,12 @@ class Recipe < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :menus, dependent: :destroy
   
+  #レシピの変更後属性を割り当て
+  def replace_attributes(recipe_params)
+    self.assign_attributes(recipe_params.except(:remove_img))
+    self.remove_image! if recipe_params[:remove_img] == "1"
+  end
+  
   # レシピの公開、非公開
   def publishing
     self.update_attribute(:status, 1)

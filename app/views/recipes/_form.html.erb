@@ -9,7 +9,10 @@
       <div class="form-group">
         <%= f.label :image, "画像" %>
         <div class="mb-3">
-          <%= cl_image_tag(@recipe.image.to_s, alt: "レシピ画像", id: :img_prev) %>
+          <div class="img-square">
+            <%= cl_image_tag(@recipe.image.to_s, alt: "レシピ画像", id: :img_prev) %>
+          </div>
+          <%= yield f %>
         </div>
         <%= f.file_field :image, class: "image", id: "book_img" %>      
       </div>
