@@ -1,3 +1,5 @@
+<% breadcrumb :recipe, @recipe %>
+<%= render "layouts/breadcrumbs" %>
 <%= render "layouts/side_bar" do %>    
   <% if @recipe.draft? %>
     <h2>非公開</h2>

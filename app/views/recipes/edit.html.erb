@@ -1,7 +1,9 @@
+<% breadcrumb :recipe_edit, @recipe %>
+<%= render "layouts/breadcrumbs" %>
 <%= render "layouts/side_bar" do %>    
   <div class="card">
     <div class="card-body p-4">
-      <h2 class="heading">レシピ概要を入力</h2>
+      <h2 class="heading">レシピ概要を入力する</h2>
       <%= render 'recipes/form', recipe: @recipe, path: recipe_path, easy_path: easy_update_recipe_path do |f| %>
         <div class="form-check mb-2">
           <%= f.check_box :remove_img, class: "form-check-input", type: "checkbox", checked_value: "1", unchecked_value: "0", id: "defaultCheck1" %>
