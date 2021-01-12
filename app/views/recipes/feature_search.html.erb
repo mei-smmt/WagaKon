@@ -9,7 +9,7 @@
     </div> 
   </div>
   <% if @recipes.empty? %>
-    <div class="alert alert-warning">条件に一致するレシピがありません</div>
+    <h3 class="pl-2">キーワードに一致するレシピがありません</h3>
   <% else %>
     <%= render 'recipes/index', recipes: @recipes %>
   <% end %>
