@@ -180,6 +180,12 @@ height: auto;
  font-size: 0.8rem;
  color: #999694;
 }
+.breadcrumbs {
+ font-size: 0.8rem;
+}
+.breadcrumbs a {
+ color: #cc5800;
+}
 #unlike-btn {
   background-color: #eb9b6f;
   border: 1px solid;
