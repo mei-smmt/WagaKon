@@ -1,3 +1,5 @@
+<% breadcrumb :friends %>
+<%= render "layouts/breadcrumbs" %>
 <%= render "layouts/side_bar" do %>    
   <% if @user.approved_friends.present? %>
     <div class="bg-gray px-4 pt-4 pb-2 mb-3">
