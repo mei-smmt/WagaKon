@@ -7,7 +7,7 @@ class User < ApplicationRecord
     validates :email
     validates :password
   end
-  validates :name, presence: true, length: { maximum: 10 }, unless: -> { name.blank? }
+  validates :name, presence: true, length: { maximum: 9 }, unless: -> { name.blank? }
   validates :personal_id, presence: true,
                           length: { in: 4..12 },
                           format: { with: /\A[a-z0-9]+\z/ },#半角英数字限定

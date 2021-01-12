@@ -4,7 +4,7 @@ class Step < ApplicationRecord
   
   # 手順番号、手順説明文必須
   validates :number, presence: true
-  validates :content, presence: true, length: { maximum: 140 }
+  validates :content, presence: true, length: { maximum: 60 }
 
   # 空フォーム除外
   def self.remove_empty_form(form_steps)

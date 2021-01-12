@@ -4,12 +4,12 @@
     <% @steps.each.with_index(1) do |step, index|%>
       <%= form.fields_for 'steps[]', step do |f| %>
         <div class="col-sm-3">
-          <%= render 'layouts/error_messages', model: f.object %>
           <h2 class="mb-1"><%= index %></h2>
           <%= f.hidden_field :number, :value => index %>
           <div class="form-group mb-2">
             <%= f.text_area :content, class: "form-control" %>
           </div>
+          <%= render 'layouts/error_messages', model: f.object %>
         </div>  
       <% end %>
     <% end %>

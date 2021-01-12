@@ -3,7 +3,7 @@ class Ingredient < ApplicationRecord
 
   # 材料名必須
   validates :name, presence: true, length: { maximum: 15 }
-  validates :name, length: { maximum: 15 }
+  validates :quantity, length: { maximum: 10 }
 
   # 空フォーム除外
   def self.remove_empty_form(form_ingredients)
