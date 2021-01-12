@@ -3,8 +3,8 @@
   <div class="form-row">
     <div class="col-sm-5 pr-3">
       <div class="form-group">
-        <%= f.label :title, "料理名" %>
-        <%= f.text_field :title, class: 'form-control' %>
+        <%= f.label :title, "レシピのタイトル (必須)" %>
+        <%= f.text_field :title, placeholder: "例: ほうれん草の胡麻和え", class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :image, "画像" %>
@@ -19,12 +19,12 @@
     </div>
     <div class="col-sm-7 pl-3">
       <div class="form-group">
-        <%= f.label :explanation, "説明" %>
-        <%= f.text_area :explanation, class: 'form-control'%>
+        <%= f.label :explanation, "説明 (必須)" %>
+        <%= f.text_area :explanation, placeholder: "例: 朝のワイドショーで紹介されていたレシピ。", class: 'form-control'%>
       </div>
       <div class="form-group">
         <%= f.label :homepage, "参考ホームページ" %>
-        <%= f.text_field :homepage, class: 'form-control'%>
+        <%= f.text_field :homepage, placeholder: "URL", class: 'form-control'%>
       </div>
     </div>
   </div>
