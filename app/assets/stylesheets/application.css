@@ -129,6 +129,16 @@ height: auto;
  top: 0;
  object-fit: cover;
 }
+.attention {
+ position: relative;
+ padding-bottom: 1rem;
+}
+.attention-success {
+ color: #155724;
+}
+.attention-danger {
+ color: #b7282e;
+}
 .search-box {
  height: calc(1.7rem);
  padding: .2rem .4rem;
