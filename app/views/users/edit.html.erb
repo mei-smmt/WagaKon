@@ -21,19 +21,19 @@
         <div class="col-sm-6">
           <div class="form-group">
             <%= f.label :name, '名前' %>
-            <%= f.text_field :name, class: 'form-control' %>
+            <%= f.text_field :name, required: :true, class: 'form-control' %>
           </div>
           <div class="form-group">
             <%= f.label :personal_id, 'ID' %>
-            <%= f.text_field :personal_id, class: 'form-control' %>
+            <%= f.text_field :personal_id, required: :true, class: 'form-control' %>
           </div>
           <div class="form-group">
             <%= f.label :email, 'Email' %>
-            <%= f.email_field :email, class: 'form-control' %>
+            <%= f.email_field :email, required: :true, class: 'form-control' %>
           </div>
           <div class="form-group">
             <%= f.label :password, '現在のパスワード' %>
-            <%= f.password_field :password, class: 'form-control' %>
+            <%= f.password_field :password, required: :true, class: 'form-control' %>
           </div>
           <p><%= link_to 'パスワードを変更する', password_edit_users_path, class: "font-orange" %></p>
         </div>
