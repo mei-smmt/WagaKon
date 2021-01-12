@@ -16,7 +16,7 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = current_user.recipes.build(recipe_params)
+    @recipe = current_user.recipes.build(recipe_params.except(:remove_img))
     if @recipe.save
       redirect_to edit_recipe_ingredients_url(@recipe)
     else
@@ -25,7 +25,7 @@ class RecipesController < ApplicationController
   end
 
   def easy_create
-    @recipe = current_user.recipes.build(recipe_params)
+    @recipe = current_user.recipes.build(recipe_params.except(:remove_img))
     if @recipe.save
         redirect_to recipe_url(@recipe)
     else
@@ -37,7 +37,8 @@ class RecipesController < ApplicationController
   end
   
   def update
-    if @recipe.update(recipe_params)
+    @recipe.replace_attributes(recipe_params)
+    if @recipe.save
       redirect_to edit_recipe_ingredients_url(@recipe)
     else
       render :edit
@@ -45,7 +46,8 @@ class RecipesController < ApplicationController
   end
   
   def easy_update
-    if @recipe.update(recipe_params)
+    @recipe.replace_attributes(recipe_params)
+    if @recipe.save
       redirect_to recipe_url(@recipe)
     else
       render :edit
@@ -108,7 +110,8 @@ class RecipesController < ApplicationController
   def recipe_params
     params.require(:recipe).permit(
       :title, 
-      :image, 
+      :image,
+      :remove_img,
       :explanation,
       :homepage,
       feature_attributes: [ :id,
