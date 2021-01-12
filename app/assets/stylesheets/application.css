@@ -139,6 +139,21 @@ height: auto;
 .attention-danger {
  color: #b7282e;
 }
+.error-messages {
+ position: relative;
+ padding: .4rem .8rem;
+ margin-bottom: 1rem;
+ font-size: .8rem;
+ border: solid 1px #b7282e;
+}
+.error-messages ul {
+ padding: 0rem;
+}
+.error-messages li {
+ color: #b7282e;
+ padding: .2rem 0rem;
+ list-style: none;
+}
 .search-box {
  height: calc(1.7rem);
  padding: .2rem .4rem;
