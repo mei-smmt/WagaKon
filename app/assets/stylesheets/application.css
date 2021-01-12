@@ -76,7 +76,7 @@ height: auto;
 .bg-darkgray {
  background-color: #d3cbc6;
 }
-.bg-orange {
+.search-header {
  background-color: #cc5800;
 }
 .border-gray {
@@ -179,6 +179,10 @@ height: auto;
 .button {
  font-size: 0.8rem;
  color: #999694;
+}
+.bookmark-heart {
+ font-size: 1.5em;
+ color: #808080;
 }
 .breadcrumbs {
  font-size: 0.8rem;
