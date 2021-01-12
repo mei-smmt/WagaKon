@@ -68,7 +68,7 @@ RSpec.describe IngredientsController, type: :controller do
             post :create, params:{ingredients: @ingredients, recipe_id: @recipe.id}
           }.to change(@recipe.ingredients, :count).by(2)
         end
-        it 'ステップ入力画面にリダイレクトする' do
+        it '手順入力画面にリダイレクトする' do
           post :create, params:{ingredients: @ingredients, recipe_id: @recipe.id}
           expect(response).to redirect_to new_recipe_steps_url(@recipe)
         end
@@ -177,7 +177,7 @@ RSpec.describe IngredientsController, type: :controller do
             patch :update, params:{ingredients: @ingredients, recipe_id: @recipe.id}
           }.to change(@recipe.ingredients, :count).by(@new_ingredients.size - @original_ingredients.size)
         end
-        it 'ステップ編集画面にリダイレクトする' do
+        it '手順編集画面にリダイレクトする' do
           patch :update, params:{ingredients: @ingredients, recipe_id: @recipe.id}
           expect(response).to redirect_to edit_recipe_steps_url(@recipe)
         end

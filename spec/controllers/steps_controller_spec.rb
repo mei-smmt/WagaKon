@@ -12,7 +12,7 @@ RSpec.describe StepsController, type: :controller do
       it "200レスポンスが返る" do
         expect(response.status).to eq(200)
       end
-      it "@stepsにステップを割り当てる" do
+      it "@stepsに手順を割り当てる" do
         expect(assigns(:steps)).to all(be_a_new(Step))
       end
       it "@stepsのrecipe_idには@recipeのidが登録される" do
@@ -178,7 +178,7 @@ RSpec.describe StepsController, type: :controller do
             patch :update, params:{steps: @steps, recipe_id: @recipe.id}
           }.to change(@recipe.steps, :count).by(@new_steps.size - @original_steps.size)
         end
-        it 'ステップ編集画面にリダイレクトする' do
+        it '手順編集画面にリダイレクトする' do
           patch :update, params:{steps: @steps, recipe_id: @recipe.id}
           expect(response).to redirect_to recipe_url(@recipe)
         end
