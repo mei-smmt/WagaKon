@@ -11,7 +11,6 @@
     <%= form_with(url: recipe_ingredients_path, method: method, local: true) do |form| %>
       <% @ingredients.first(5).each do |ingredient|%>
         <%= form.fields_for 'ingredients[]', ingredient do |f| %>
-          <%= render 'layouts/error_messages', model: f.object %>
           <div class="form-row">
             <div class="form-group col-8 col-sm-8 mb-2">
               <%= f.text_field :name, class: "form-control" %>
@@ -20,12 +19,12 @@
               <%= f.text_field :quantity, class: "form-control" %>
             </div>
           </div>
+          <%= render 'layouts/error_messages', model: f.object %>
         <% end %>
       <% end %>
       <div class="collapse" id="example-1">
         <% @ingredients.last(5).each do |ingredient|%>
           <%= form.fields_for 'ingredients[]', ingredient do |f| %>
-            <%= render 'layouts/error_messages', model: f.object %>
             <div class="form-row">
               <div class="form-group col-8 col-sm-8 mb-2">
                 <%= f.text_field :name, class: "form-control" %>
@@ -34,6 +33,7 @@
                 <%= f.text_field :quantity, class: "form-control" %>
               </div>
             </div>
+            <%= render 'layouts/error_messages', model: f.object %>
           <% end %>
         <% end %>
       </div>
