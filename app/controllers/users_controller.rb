@@ -21,7 +21,6 @@ class UsersController < ApplicationController
       flash[:success] = '登録しました'
       redirect_to root_url
     else
-      flash.now[:danger] = '内容に誤りがあります'
       render :new
     end
   end
@@ -31,7 +30,7 @@ class UsersController < ApplicationController
   
   def update
     if User.safe_update(@user, user_params)
-      flash[:success] = 'ユーザー情報が更新されました'
+      flash[:success] = 'プロフィールが更新されました'
       redirect_to @user
     else
       @user.errors.add(:base, "パスワードが間違っています") if @user.errors.blank?
@@ -50,7 +49,7 @@ class UsersController < ApplicationController
   
   def password_update
     if User.safe_password_update(@user, password_params)
-      flash[:success] = 'ユーザー情報が更新されました'
+      flash[:success] = 'パスワードが更新されました'
       redirect_to @user
     else
       @user.errors.add(:base, "現在のパスワードが間違っています") if @user.errors.blank?

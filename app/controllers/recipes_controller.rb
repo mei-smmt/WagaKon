@@ -60,7 +60,7 @@ class RecipesController < ApplicationController
   
   def destroy
     @recipe.destroy
-    flash[:success] = '正常に削除されました'
+    flash[:success] = 'レシピが削除されました'
     redirect_to root_url
   end
 

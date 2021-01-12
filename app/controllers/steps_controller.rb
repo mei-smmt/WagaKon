@@ -20,7 +20,6 @@ class StepsController < ApplicationController
     if Step.bulk_update(@recipe, @form_steps)
       redirect_to recipe_url(@recipe)
     else
-      flash.now[:danger] = '内容に誤りがあります'
       render :edit
     end
   end
