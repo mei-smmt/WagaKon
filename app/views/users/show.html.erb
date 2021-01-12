@@ -1,3 +1,4 @@
+<% content_for(:html_title) { "#{@user.name}さんのマイページ | Wagakon" } %>
 <% current_user == @user ? (breadcrumb :mypage, @user) : (breadcrumb :user, @user) %>
 <%= render "layouts/breadcrumbs" %>
 <%= render "layouts/side_bar" do %>    
