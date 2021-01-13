@@ -5,12 +5,12 @@ module Common
     @sort = session[:sort]
     if @sort == "old"
       recipes = recipes.sort_old
-      @recipes = Kaminari.paginate_array(recipes).page(params[:page]).per(3)
+      @recipes = Kaminari.paginate_array(recipes).page(params[:page])
     elsif @sort == "likes"
       recipes = recipes.sort_likes
-      @recipes = Kaminari.paginate_array(recipes).page(params[:page]).per(3)
+      @recipes = Kaminari.paginate_array(recipes).page(params[:page])
     else
-      @recipes = recipes.page(params[:page]).per(3)
+      @recipes = recipes.page(params[:page])
     end
   end
 end
