@@ -1,9 +1,9 @@
 class Recipe < ApplicationRecord
   mount_uploader :image, ImageUploader
 
-  # タイトル、画像、説明文必須
+  # レシピのタイトル、説明文必須
   validates :title, presence: true, length: { maximum: 20 }
-  validates :explanation, presence: true, length: { maximum: 140 }
+  validates :explanation, presence: true, length: { maximum: 60 }
   validates :size, length: { maximum: 10 }
   validates :homepage, url: { allow_nil: true, allow_blank: true }
   validates :status, presence: true

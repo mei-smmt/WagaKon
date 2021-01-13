@@ -1,3 +1,4 @@
+<% content_for(:html_title) { "#{@user.name}さんのマイページ | Wagakon" } %>
 <% current_user == @user ? (breadcrumb :mypage, @user) : (breadcrumb :user, @user) %>
 <%= render "layouts/breadcrumbs" %>
 <%= render "layouts/side_bar" do %>    
@@ -23,8 +24,10 @@
     <div class="row">
       <div class="col-sm-12 d-flex justify-content-end">
         <% if current_user == @user %>
-          <%= link_to '>>友だち', friends_users_path, class: 'font-orange align-self-end' %>
-        <% end %>
+          <h3><%= link_to ">>友だち", friends_users_path, class: 'font-orange align-self-end' %></h3>
+        <% else %>
+          <h3>&nbsp;</h3>
+        <% end %>  
       </div>
     </div>
   </div>

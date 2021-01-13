@@ -1,3 +1,4 @@
+<% content_for(:html_title) { "新規会員登録 | Wagakon" } %>
 <div class="text-center">
   <h1>新規登録</h1>
 </div>
@@ -7,23 +8,23 @@
       <%= render 'layouts/error_messages', model: @user %>
       <div class="form-group">
         <%= f.label :name, '名前' %>
-        <%= f.text_field :name, class: 'form-control' %>
+        <%= f.text_field :name, required: :true, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :personal_id, 'ID' %>
-        <%= f.text_field :personal_id, class: 'form-control' %>
+        <%= f.text_field :personal_id, required: :true, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :email, 'Email' %>
-        <%= f.email_field :email, class: 'form-control' %>
+        <%= f.email_field :email, required: :true, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :password, 'パスワード' %>
-        <%= f.password_field :password, class: 'form-control' %>
+        <%= f.password_field :password, required: :true, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :password_confirmation, 'パスワード（確認）' %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
+        <%= f.password_field :password_confirmation, required: :true, class: 'form-control' %>
       </div>
       <%= f.submit '登録', class: 'btn submit-btn btn-block' %>
     <% end %>

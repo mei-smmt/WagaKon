@@ -7,7 +7,7 @@ class User < ApplicationRecord
     validates :email
     validates :password
   end
-  validates :name, presence: true, length: { maximum: 10 }, unless: -> { name.blank? }
+  validates :name, presence: true, length: { maximum: 9 }, unless: -> { name.blank? }
   validates :personal_id, presence: true,
                           length: { in: 4..12 },
                           format: { with: /\A[a-z0-9]+\z/ },#半角英数字限定
@@ -61,19 +61,6 @@ class User < ApplicationRecord
     valid
   end
   
-  def bookmark(recipe)
-    self.bookmarks.find_or_create_by(recipe_id: recipe.id)
-  end
-
-  def unbookmark(recipe)
-    bookmark = self.bookmarks.find_by(recipe_id: recipe.id)
-    bookmark.destroy if bookmark
-  end
-
-  def favorite?(recipe)
-    self.favorite_recipes.include?(recipe)
-  end
-
   def friend_request(friend)
     unless self == friend
       self.relationships.find_or_create_by(friend_id: friend.id)
@@ -108,6 +95,19 @@ class User < ApplicationRecord
     self.approved_friends.include?(friend)
   end
   
+  def bookmark(recipe)
+    self.bookmarks.find_or_create_by(recipe_id: recipe.id)
+  end
+
+  def unbookmark(recipe)
+    bookmark = self.bookmarks.find_by(recipe_id: recipe.id)
+    bookmark.destroy if bookmark
+  end
+
+  def favorite?(recipe)
+    self.favorite_recipes.include?(recipe)
+  end
+
   def accessable_recipes
     recipes = self.approved_friends.each_with_object([]) do |friend, array|
       array  << friend.recipes.published

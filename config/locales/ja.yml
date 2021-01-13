@@ -11,7 +11,7 @@ ja:
       ingredient: 材料
       meal: 献立
       recipe: レシピ
-      step: ステップ
+      step: 手順
       user: ユーザー
     attributes:
       feature:
@@ -25,14 +25,14 @@ ja:
       meal:
         day_of_week: 曜日
       recipe:
-        title: 料理名
+        title: レシピのタイトル
         image: 画像
         explanation: 説明
         size: レシピの人数
         homepage: 参考サイト
         status: 公開ステータス
       step:
-        number: ステップNo.
+        number: 手順No.
         content: 内容
       user:
         name: 名前
@@ -41,6 +41,13 @@ ja:
         image: ユーザー画像
         password: パスワード
         password_confirmation: パスワード(確認)
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "〈 前へ"
+      next: "次へ 〉"
+      truncate: "..."
   date:
     abbr_day_names:
     - 日

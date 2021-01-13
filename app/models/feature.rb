@@ -1,13 +1,6 @@
 class Feature < ApplicationRecord
   belongs_to :recipe
 
-  with_options presence: true do
-    validates :amount
-    validates :dish_type
-    validates :cooking_method
-    validates :main_food
-  end
-  
   # ボリュームは？　一品もの、メイン、副菜、小鉢・おつまみ、その他
   enum amount: { one_dish: 0, main: 1, side: 2, small_side: 3, other: 4 }, _prefix: true
   # 何系料理？　和食、洋食、中華、エスニック、その他

@@ -1,6 +1,7 @@
+<% content_for(:html_title) { "#{@user.name}さんのお気に入りレシピ | Wagakon" } %>
 <% breadcrumb :favorite_recipes %>
 <%= render "layouts/breadcrumbs" %>
 <%= render "layouts/side_bar" do %>    
   <h2 class="ml-2 mb-4">お気に入りのレシピ</h2>
-  <%= render 'recipes/index', recipes: @favorite_recipes %>
+  <%= render 'recipes/index', recipes: @recipes %>
 <% end %>

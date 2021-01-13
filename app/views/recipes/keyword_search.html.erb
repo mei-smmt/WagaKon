@@ -1,15 +1,16 @@
+<% content_for(:html_title) { "レシピ検索結果一覧 | Wagakon" } %>
 <%= render "layouts/side_bar" do %>    
   <div class="row m-0">
     <div class="col-sm-12 px-2">
       <div class="bg-gray px-3 py-2 mb-2 mx-0">
-        <h4 class="m-0">検索結果：<%= @recipes.count %>件</h4>
+        <h4 class="m-0">検索結果：<%= @count %>件</h4>
       </div>
       <!--レシピ並べ替え-->
       <%= render 'recipes/sort_list', path: sort_recipes_path %>
     </div> 
   </div>
   <% if @recipes.empty? %>
-    <div class="alert alert-warning">キーワードに一致するレシピがありません</div>
+    <h3 class="pl-2">キーワードに一致するレシピがありません</h3>
   <% else %>
     <%= render 'recipes/index', recipes: @recipes %>
   <% end %>

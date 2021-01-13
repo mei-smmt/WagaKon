@@ -6,7 +6,8 @@ class UsersController < ApplicationController
 
   def show
     accessable_user_check
-    @recipes = @user == current_user ? @user.recipes : @user.recipes.published 
+    recipes = @user == current_user ? @user.recipes : @user.recipes.published
+    @recipes = recipes.page(params[:page])
   end
 
   def new
@@ -21,7 +22,6 @@ class UsersController < ApplicationController
       flash[:success] = '登録しました'
       redirect_to root_url
     else
-      flash.now[:danger] = '内容に誤りがあります'
       render :new
     end
   end
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   
   def update
     if User.safe_update(@user, user_params)
-      flash[:success] = 'ユーザー情報が更新されました'
+      flash[:success] = 'プロフィールが更新されました'
       redirect_to @user
     else
       @user.errors.add(:base, "パスワードが間違っています") if @user.errors.blank?
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   
   def password_update
     if User.safe_password_update(@user, password_params)
-      flash[:success] = 'ユーザー情報が更新されました'
+      flash[:success] = 'パスワードが更新されました'
       redirect_to @user
     else
       @user.errors.add(:base, "現在のパスワードが間違っています") if @user.errors.blank?
@@ -67,8 +67,9 @@ class UsersController < ApplicationController
   end
   
   def favorite_recipes
-    @favorite_recipes = @user.favorite_recipes & @user.accessable_recipes
-  end
+    recipes = @user.favorite_recipes & @user.accessable_recipes
+    @recipes = Kaminari.paginate_array(recipes).page(params[:page])
+  end 
 
   private
 
@@ -86,7 +87,7 @@ class UsersController < ApplicationController
   
   def accessable_user_check
     @user = User.find(params[:id])
-    unless (@user == current_user) || current_user.approved_friends.include?(@user)
+    unless @user == current_user || current_user.approved_friends.include?(@user)
       redirect_to root_url
     end
   end
