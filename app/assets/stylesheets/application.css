@@ -15,13 +15,13 @@
  */
  
 body {
- font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", "sans-serif";
+ font-family: Helvetica, Arial, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "ＭＳ Ｐゴシック", sans-serif;
 }
 a{
  color: #666666;
 }
 input {
- font-family: "游ゴシック", "ヒラギノ角ゴ Pro W3", "メイリオ", "sans-serif";
+ font-family: Helvetica, Arial, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "ＭＳ Ｐゴシック", sans-serif;
  font-weight: 500;
  }
 h1 {
@@ -214,6 +214,25 @@ height: auto;
 }
 .breadcrumbs a {
  color: #cc5800;
+}
+.pagination {
+ justify-content: center;
+ align-items: center;
+}
+.page-link {
+ position: relative;
+ display: block;
+ padding: .6rem;
+ margin-left: -1px;
+ line-height: 1.25;
+ color: #cc5800;
+ border: none;
+ font-size: 1rem;
+ font-weight: 900;
+}
+.page-item.active .page-link {
+ color: #666666;
+ background-color: #fff;
 }
 #unlike-btn {
   background-color: #eb9b6f;
