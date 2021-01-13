@@ -82,9 +82,10 @@ class RecipesController < ApplicationController
   end
     
   def keyword_search
-    if @recipes = current_user.accessable_recipes.keyword_search(params[:search])
-      recipe_sort(@recipes)
+    if recipes = current_user.accessable_recipes.keyword_search(params[:search])
+      recipe_sort(recipes)
       prepare_submit_btn
+      @count = recipes.count
       @search_feature = {}
       @search_keyword = session[:keyword] = params[:search]
     else
@@ -96,13 +97,14 @@ class RecipesController < ApplicationController
     @search_feature = feature_params
     if session[:keyword].present?
       @search_keyword = session[:keyword]
-      recipes = current_user.accessable_recipes.keyword_search(@search_keyword)
-      @recipes = recipes.feature_search(@search_feature)
+      pre_recipes = current_user.accessable_recipes.keyword_search(@search_keyword)
+      recipes = pre_recipes.feature_search(@search_feature)
     else
-      @recipes = current_user.accessable_recipes.feature_search(@search_feature)
+      recipes = current_user.accessable_recipes.feature_search(@search_feature)
     end
-    recipe_sort(@recipes)
+    recipe_sort(recipes)
     prepare_submit_btn
+    @count = recipes.count
   end
 
   private

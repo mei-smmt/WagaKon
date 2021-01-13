@@ -6,7 +6,8 @@ class UsersController < ApplicationController
 
   def show
     accessable_user_check
-    @recipes = @user == current_user ? @user.recipes : @user.recipes.published 
+    recipes = @user == current_user ? @user.recipes : @user.recipes.published
+    @recipes = recipes.page(params[:page]).per(3)
   end
 
   def new
@@ -66,8 +67,9 @@ class UsersController < ApplicationController
   end
   
   def favorite_recipes
-    @favorite_recipes = @user.favorite_recipes & @user.accessable_recipes
-  end
+    recipes = @user.favorite_recipes & @user.accessable_recipes
+    @recipes = Kaminari.paginate_array(recipes).page(params[:page]).per(3)
+  end 
 
   private
 
@@ -85,7 +87,7 @@ class UsersController < ApplicationController
   
   def accessable_user_check
     @user = User.find(params[:id])
-    unless (@user == current_user) || current_user.approved_friends.include?(@user)
+    unless @user == current_user || current_user.approved_friends.include?(@user)
       redirect_to root_url
     end
   end

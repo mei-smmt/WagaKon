@@ -3,7 +3,7 @@
   <div class="row m-0">
     <div class="col-sm-12 px-2">
       <div class="bg-gray px-3 py-2 mb-2 mx-0">
-        <h4 class="m-0">検索結果：<%= @recipes.count %>件</h4>
+        <h4 class="m-0">検索結果：<%= @count %>件</h4>
       </div>
       <!--レシピ並べ替え-->
       <%= render 'recipes/sort_list', path: sort_recipes_path %>
