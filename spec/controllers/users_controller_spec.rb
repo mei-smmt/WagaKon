@@ -183,15 +183,15 @@ RSpec.describe UsersController, type: :controller do
     end
     context '現在のパスワードが正しく、有効な新パスワード(４文字以上)の場合' do
       before do
-        patch :password_update, params:{current_password: 'orig_pass', password: 'new_pass', password_confirmation: 'new_pass'}
+        patch :password_update, params:{user: {current_password: "orig_pass", password: "new_pass", password_confirmation: "new_pass"}}
       end
       it '302レスポンスが返る' do
         expect(response.status).to eq 302
       end
       it 'データベースのユーザーが更新される' do
-        pending
         @user.reload
-        expect(@user.password).to eq 'new_pass'
+        expect(!!@user.authenticate("orig_pass")).to eq(false)
+        expect(!!@user.authenticate("new_pass")).to eq(true)
       end
       it 'users#showにリダイレクトする' do
         expect(response).to redirect_to user_url(@user)
@@ -199,14 +199,15 @@ RSpec.describe UsersController, type: :controller do
     end
     context '現在のパスワードが間違っている場合' do
       before do
-        patch :password_update, params:{current_password: 'incorrect_pass', password: 'new_pass', password_confirmation: 'new_pass'}
+        patch :password_update, params:{user: {current_password: "fake_pass", password: "new_pass", password_confirmation: "new_pass"}}
       end
       it '200レスポンスが返る' do
         expect(response.status).to eq 200
       end
       it 'データベースのユーザーは更新されない' do
         @user.reload
-        expect(@user.password).to eq 'orig_pass'
+        expect(!!@user.authenticate("orig_pass")).to eq(true)
+        expect(!!@user.authenticate("new_pass")).to eq(false)
       end
       it ':password_editテンプレートを再表示する' do
         expect(response).to render_template :password_edit
@@ -214,14 +215,15 @@ RSpec.describe UsersController, type: :controller do
     end
     context '無効なパスワードの場合' do
       before do
-        patch :password_update, params:{current_password: 'orig_pass', password: 'p', password_confirmation: 'p'}
+        patch :password_update, params:{user: {current_password: "orig_pass", password: "p", password_confirmation: "p"}}
       end
       it '200レスポンスが返る' do
         expect(response.status).to eq 200
       end
       it 'データベースのユーザーは更新されない' do
         @user.reload
-        expect(@user.password).to eq 'orig_pass'
+        expect(!!@user.authenticate("orig_pass")).to eq(true)
+        expect(!!@user.authenticate("p")).to eq(false)
       end
       it ':password_editテンプレートを再表示する' do
         expect(response).to render_template :password_edit
