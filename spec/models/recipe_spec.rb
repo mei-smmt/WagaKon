@@ -6,7 +6,7 @@ RSpec.describe Recipe, type: :model do
   end
   
   describe 'バリデーション' do
-    it 'title, image, explanation, statusが入力されていればOK' do
+    it 'title, explanation, statusが入力されていればOK' do
       expect(@recipe.valid?).to eq(true)
     end
     
@@ -15,11 +15,6 @@ RSpec.describe Recipe, type: :model do
       expect(@recipe.valid?).to eq(false)
     end
 
-    it 'imageが空だとNG' do
-      @recipe.image = nil
-      expect(@recipe.valid?).to eq(false)
-    end
-    
     it 'explanationが空だとNG' do
       @recipe.explanation = nil
       expect(@recipe.valid?).to eq(false)
