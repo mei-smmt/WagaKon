@@ -10,13 +10,13 @@ RSpec.describe Step, type: :model do
       end
     end
     context 'numberが空の場合' do
-      let(:params) { { number: nil, content: "野菜を切る" } }
+      let(:params) { { number: nil } }
       it 'NG' do
         expect(step.valid?).to eq(false)
       end
     end
     context 'contentが空の場合' do
-      let(:params) { { number: "1", content: nil } }
+      let(:params) { { content: nil } }
       it 'NG' do
         expect(step.valid?).to eq(false)
       end
