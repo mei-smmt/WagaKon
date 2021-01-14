@@ -4,7 +4,7 @@ RSpec.describe Ingredient, type: :model do
   describe 'バリデーション' do
     let(:ingredient) { build(:ingredient, params) }
     context 'nameが入力されている場合' do
-      let(:params) { { name: "オクラ", quantity: nil } }
+      let(:params) {}
       it 'OK' do
         expect(ingredient.valid?).to eq(true)
       end
