@@ -78,7 +78,7 @@ class UsersController < ApplicationController
   end
 
   def password_params
-    params.permit(:current_password, :password, :password_confirmation)
+    params.require(:user).permit(:current_password, :password, :password_confirmation)
   end
   
   def set_current_user
