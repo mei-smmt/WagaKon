@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe BookmarksController, type: :controller do
   before do
-    include SessionsHelper
     @user = create(:user)
     @friend = create(:user)
     @recipe = create(:recipe, status: "published", user_id: @friend.id)
