@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
   describe "#new" do
-    before do
-      get :new
-    end
+    before { get :new }
     it "200レスポンスが返る" do
       expect(response.status).to eq(200)
     end
@@ -12,11 +10,8 @@ RSpec.describe SessionsController, type: :controller do
       expect(response).to render_template :new
     end
   end
-  
   describe "Post #create" do
-    before do
-      @user = create(:user)
-    end
+    before { @user = create(:user) }
     context 'リクエストしたユーザーが存在する場合' do
       context 'パスワードが正しい場合' do
         before do
@@ -62,7 +57,6 @@ RSpec.describe SessionsController, type: :controller do
       end
     end
   end
-  
   describe "Delete #destroy" do
     before do
       @user = create(:user)
