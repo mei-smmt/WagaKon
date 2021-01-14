@@ -11,6 +11,6 @@ class MenusController < ApplicationController
   def destroy
     meal = current_user.meals.day(params[:day])
     meal.remove_from_meal(@recipe)
-    redirect_to request.referer
+    redirect_back(fallback_location: root_path)
   end
 end
