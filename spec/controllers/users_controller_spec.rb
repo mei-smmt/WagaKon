@@ -6,7 +6,7 @@ RSpec.describe UsersController, type: :controller do
       @user = create(:user)
       @friend = create(:user)
     end
-    context '閲覧者がログインユーザーの友達である' do
+    context '閲覧者がログインユーザーの友達である場合' do
       before do
         session[:user_id] = @user.id
         create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to render_template :show
       end
     end
-    context '閲覧者がログインユーザーの友達でない' do
+    context '閲覧者がログインユーザーの友達でない場合' do
       before do
         session[:user_id] = @user.id
         get :show, params: {id: @friend.id}
@@ -35,7 +35,6 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
-  
   describe "#new" do
     before do
       get :new
@@ -50,7 +49,6 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to render_template :new
     end
   end
-  
   describe 'Post #create' do
     context '有効なパラメータの場合' do
       before do
@@ -89,7 +87,6 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
-  
   describe "#edit" do
     before do
       @user = create(:user)
@@ -99,14 +96,13 @@ RSpec.describe UsersController, type: :controller do
     it "200レスポンスが返る" do
       expect(response.status).to eq(200)
     end
-    it "@userにリクエストされたユーザーを割り当てる" do
+    it "@userにログインユーザーを割り当てる" do
       expect(assigns(:user)).to eq(@user)
     end
     it ':editテンプレートを表示する' do
       expect(response).to render_template :edit
     end
   end
-
   describe 'Patch #update' do
     before do
       @user = create(:user, name: "orig_name", email: "orig@example.com")
@@ -158,7 +154,6 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
-
   describe "#password_edit" do
     before do
       @user = create(:user)
@@ -175,7 +170,6 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to render_template :password_edit
     end
   end
-
   describe 'Patch #password_update' do
     before do
       @user = create(:user, password: 'orig_pass', password_confirmation: 'orig_pass')
@@ -230,7 +224,6 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
-
   describe "#favorite_recipes" do
     before do
       @user = create(:user)
@@ -242,9 +235,7 @@ RSpec.describe UsersController, type: :controller do
       create(:bookmark, user_id: @user.id, recipe_id: @recipe1.id)
       create(:bookmark, user_id: @user.id, recipe_id: @recipe2.id)
     end
-    before do
-      get :favorite_recipes
-    end
+    before { get :favorite_recipes }
     it "200レスポンスが返る" do
       expect(response.status).to eq(200)
     end
