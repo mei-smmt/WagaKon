@@ -1,19 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe BookmarksController, type: :controller do
+  before do
+    include SessionsHelper
+    @user = create(:user)
+    @friend = create(:user)
+    @recipe = create(:recipe, status: "published", user_id: @friend.id)
+    create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
+  end
   describe "Post #create" do
-    before do
-      include SessionsHelper
-      @user = create(:user)
-      @friend = create(:user)
-      @recipe = create(:recipe, status: "published", user_id: @friend.id)
-      create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
-    end
-    context "ログイン済み" do
-      before do
-        session[:user_id] = @user.id
-      end
-      context "同じ条件のブックマークが存在しない" do
+    context "ログイン済みの場合" do
+      before { session[:user_id] = @user.id }
+      context "同じ条件のブックマークが存在しない場合" do
         it 'データベースにユーザーの新しいブックマークが登録される' do
           expect{
             post :create, params:{recipe_id: @recipe.id}, xhr: true
@@ -25,10 +23,8 @@ RSpec.describe BookmarksController, type: :controller do
           }.to change(@recipe.bookmarks, :count).by(1)
         end
       end
-      context "既に同じ条件のブックマークが存在する" do
-        before do 
-          create(:bookmark, user_id: @user.id, recipe_id: @recipe.id)
-        end
+      context "既に同じ条件のブックマークが存在する場合" do
+        before { create(:bookmark, user_id: @user.id, recipe_id: @recipe.id) }
         it 'データベースにユーザーの新しいブックマークが登録されない' do
           expect{
             post :create, params:{recipe_id: @recipe.id}, xhr: true
@@ -41,7 +37,7 @@ RSpec.describe BookmarksController, type: :controller do
         end
       end
     end
-    context "ログインなし" do
+    context "未ログインの場合" do
       it "302レスポンスが返る" do
         post :create, params:{recipe_id: @recipe.id}
         expect(response.status).to eq(302)
@@ -52,17 +48,11 @@ RSpec.describe BookmarksController, type: :controller do
       end
     end
   end
-  
   describe "Delete #destroy" do
     before do
-      include SessionsHelper
-      @user = create(:user)
-      @friend = create(:user)
-      @recipe = create(:recipe, status: "published", user_id: @friend.id)
-      create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
       @bookmark = create(:bookmark, user_id: @user.id, recipe_id: @recipe.id)
     end
-    context "ログイン済み" do
+    context "ログイン済みの場合" do
       before do
         session[:user_id] = @user.id
       end
@@ -77,10 +67,7 @@ RSpec.describe BookmarksController, type: :controller do
         }.to change(@recipe.bookmarks, :count).by(-1)
       end
     end
-    context "ログインなし" do
-      before do
-        create(:bookmark, user_id: @user.id, recipe_id: @recipe.id)
-      end
+    context "未ログインの場合" do
       it "302レスポンスが返る" do
         delete :destroy, params:{id: @bookmark.id, recipe_id: @recipe.id}
         expect(response.status).to eq(302)
