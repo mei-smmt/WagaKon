@@ -1,23 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Step, type: :model do
-  before do
-    @step = build(:step)
-  end
-  
   describe 'バリデーション' do
-    it 'number, contentが入力されていればOK' do
-      expect(@step.valid?).to eq(true)
+    let(:step) { build(:step, params) }
+    context 'number, contentが入力されている場合' do
+      let(:params) { { number: "1", content: "野菜を切る" } }
+      it 'OK' do
+        expect(step.valid?).to eq(true)
+      end
     end
-    
-    it 'numberが空だとNG' do
-      @step.number = nil
-      expect(@step.valid?).to eq(false)
+    context 'numberが空の場合' do
+      let(:params) { { number: nil, content: "野菜を切る" } }
+      it 'NG' do
+        expect(step.valid?).to eq(false)
+      end
     end
-
-    it 'contentが空だとNG' do
-      @step.content = nil
-      expect(@step.valid?).to eq(false)
+    context 'contentが空の場合' do
+      let(:params) { { number: "1", content: nil } }
+      it 'NG' do
+        expect(step.valid?).to eq(false)
+      end
     end
   end
 end
