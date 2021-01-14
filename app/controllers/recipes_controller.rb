@@ -78,7 +78,7 @@ class RecipesController < ApplicationController
     unless session[:sort] = params[:sort_order]
       session[:sort].clear if session[:sort]
     end
-    redirect_to request.referer
+    redirect_back(fallback_location: root_path)
   end
     
   def keyword_search

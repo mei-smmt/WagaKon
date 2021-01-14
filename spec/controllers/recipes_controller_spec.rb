@@ -27,17 +27,14 @@ RSpec.describe RecipesController, type: :controller do
         @friend = create(:user)
         @recipe = create(:recipe, status: "draft", user_id: @friend.id)
         create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
-        session[:user_id] = @recipe.user_id
+        session[:user_id] = @user.id
         get :show, params: {id: @recipe.id}
       end
       it "302レスポンスが返る" do
         expect(response.status).to eq(302)
       end
-      it "@recipeにリクエストされたレシピを割り当てる" do
-        expect(assigns(:recipe)).to eq(@recipe)
-      end
-      it ':showにリダイレクトする' do
-        expect(response).to redirect_to recipe_url(@recipe)
+      it ':rootにリダイレクトする' do
+        expect(response).to redirect_to root_path
       end
     end
   end
@@ -93,7 +90,7 @@ RSpec.describe RecipesController, type: :controller do
       end
       it '材料入力画面にリダイレクトする' do
         post :create, params:{recipe: @recipe}
-        expect(response).to redirect_to new_recipe_ingredients_url(@user.recipes.last)
+        expect(response).to redirect_to edit_recipe_ingredients_url(@user.recipes.last)
       end
     end
     context '無効なパラメータの場合' do
@@ -303,7 +300,7 @@ RSpec.describe RecipesController, type: :controller do
         expect(@recipe.status).to eq 'draft'
       end
       it ':showにリダイレクトする' do
-        expect(response).to redirect_to recipe_url(@user)
+        expect(response).to redirect_to recipe_url(@recipe)
       end
     end
     context 'レシピ作者とログインユーザーが一致しない' do
@@ -331,28 +328,28 @@ RSpec.describe RecipesController, type: :controller do
       @user = create(:user)
       @friend = create(:user)
       create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
-      @recipe_published = create(:recipe, status: "published", title: "本棚の作成", explanation: "木材を用いて本棚を作る", user_id: @friend.id)
-      @recipe_draft = create(:recipe, status: "draft", title: "本棚の作成", explanation: "木材を用いて本棚を作る", user_id: @friend.id)
+      @recipe_published = create(:recipe, status: "published", title: "オクラの胡麻和え", explanation: "とてもおいしいです。", user_id: @friend.id)
+      @recipe_draft = create(:recipe, status: "draft", title: "ほうれん草のお浸し", explanation: "おいしいよ。", user_id: @friend.id)
       session[:user_id] = @user.id
     end
     context '検索ワードが入力されている場合' do
-      context '検索ワードのいずれか一つでも"title" または "explanation"に含まれている場合' do
+      context '検索ワードの全てが"title" または "explanation"に含まれている場合' do
         before do
-          get :keyword_search, params: {search: "本棚　木材 猫"}
+          get :keyword_search, params: {search: "オクラ　おいしい"}
         end
         it "200レスポンスが返る" do
           expect(response.status).to eq(200)
         end
-        it "@recipesに同じレシピが重複して登録されない, 下書きレシピは登録されない" do
+        it "@recipesに下書きレシピは登録されない" do
           expect(assigns(:recipes)).to eq([@recipe_published])
         end
         it ':keyword_searchテンプレートを表示する' do
           expect(response).to render_template :keyword_search
         end
       end
-      context '検索ワードが"title"と"explanation"どちらにも含まれていない場合' do
+      context '検索ワードが一つでも"title"か"explanation"に含まれていない場合' do
         before do
-          get :keyword_search, params: {search: "test example"}
+          get :keyword_search, params: {search: "オクラ　炒める"}
         end
         it "200レスポンスが返る" do
           expect(response.status).to eq(200)
