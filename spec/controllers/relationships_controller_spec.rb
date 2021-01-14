@@ -1,16 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe RelationshipsController, type: :controller do
+  before do
+    @user = create(:user)
+    @friend = create(:user)
+  end
   describe "Post #create" do
-    before do
-      include SessionsHelper
-      @user = create(:user)
-      @friend = create(:user)
-    end
     context "ログイン済み" do
-      before do
-        session[:user_id] = @user.id
-      end
+      before { session[:user_id] = @user.id }
       context "同じ条件のリレーションが存在しない" do
         it '302レスポンスが返る' do
           post :create, params:{user_id: @friend.id}
@@ -70,9 +67,6 @@ RSpec.describe RelationshipsController, type: :controller do
   
   describe "Patch #update" do
     before do
-      # include SessionsHelper
-      @user = create(:user)
-      @friend = create(:user)
       @user_relationship = create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'receiving')
       @friend_relationship = create(:relationship, user_id: @friend.id, friend_id: @user.id, status: 'requesting')
     end
@@ -106,9 +100,6 @@ RSpec.describe RelationshipsController, type: :controller do
   
   describe "Delete #destroy" do
     before do
-      include SessionsHelper
-      @user = create(:user)
-      @friend = create(:user)
       @relationship = create(:relationship, user_id: @user.id, friend_id: @friend.id)
       create(:relationship, user_id: @friend.id, friend_id: @user.id)
     end
