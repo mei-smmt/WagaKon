@@ -1,20 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe MenusController, type: :controller do
+  before do
+    @user = create(:user)
+    @friend = create(:user)
+    @recipe = create(:recipe, status: "published", user_id: @friend.id)
+    @meal = create(:meal, user_id: @user.id)
+    create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
+  end
   describe "Post #create" do
-    before do
-      include SessionsHelper
-      @user = create(:user)
-      @friend = create(:user)
-      @recipe = create(:recipe, status: "published", user_id: @friend.id)
-      @meal = create(:meal, user_id: @user.id)
-      create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
-    end
-    context "ログイン済み" do
+    context "ログイン済みの場合" do
       before do
         session[:user_id] = @user.id
       end
-      context "同じ条件のメニューが存在しない" do
+      context "同じ条件のメニューが存在しない場合" do
         it 'データベースに献立の新しいメニューが登録される' do
           expect{
             post :create, params:{day: 'sun', recipe_id: @recipe.id}
@@ -26,7 +25,7 @@ RSpec.describe MenusController, type: :controller do
           }.to change(@recipe.menus, :count).by(1)
         end
       end
-      context "既に同じ条件のメニューが存在する" do
+      context "既に同じ条件のメニューが存在する場合" do
         before do 
           create(:menu, meal_id: @meal.id, recipe_id: @recipe.id)
         end
@@ -42,7 +41,7 @@ RSpec.describe MenusController, type: :controller do
         end
       end
     end
-    context "ログインなし" do
+    context "ログインなしの場合" do
       it "302レスポンスが返る" do
         post :create, params:{day: 'sun', recipe_id: @recipe.id}
         expect(response.status).to eq(302)
@@ -53,18 +52,11 @@ RSpec.describe MenusController, type: :controller do
       end
     end
   end
-  
   describe "Delete #destroy" do
     before do
-      include SessionsHelper
-      @user = create(:user)
-      @friend = create(:user)
-      @recipe = create(:recipe, status: "published", user_id: @friend.id)
-      create(:relationship, user_id: @user.id, friend_id: @friend.id, status: 'approved')
-      @meal = create(:meal, user_id: @user.id)
       @menu = create(:menu, meal_id: @meal.id, recipe_id: @recipe.id)
     end
-    context "ログイン済み" do
+    context "ログイン済みの場合" do
       before do
         session[:user_id] = @user.id
       end
@@ -79,7 +71,7 @@ RSpec.describe MenusController, type: :controller do
         }.to change(@recipe.menus, :count).by(-1)
       end
     end
-    context "ログインなし" do
+    context "ログインなしの場合" do
       before do
         create(:menu, meal_id: @meal.id, recipe_id: @recipe.id)
       end
