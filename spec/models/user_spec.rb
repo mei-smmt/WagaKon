@@ -1,63 +1,75 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  before do 
-    @user = build(:user)
-  end
-  
   describe 'バリデーション' do
-    it 'personal_id,name,email,password,password_confirmationが入力されていればOK' do
-      expect(@user.valid?).to eq(true)
+    let(:user) { build(:user, params) }
+    context 'personal_id,name,email,password,password_confirmationが入力されている場合' do
+      let(:params) {}
+      it 'OK' do
+        expect(user.valid?).to eq(true)
+      end
     end
-
-    it 'personal_idが空だとNG' do
-      @user.personal_id = nil
-      expect(@user.valid?).to eq(false)
+    context 'personal_idが空の場合' do
+      let(:params) { { personal_id: nil } }
+      it 'NG' do
+        expect(user.valid?).to eq(false)
+      end
     end
-    
-    it 'personal_idが重複するとNG' do
-      @user.save
-      user2 = build(:user, personal_id: @user.personal_id)
-      expect(user2.valid?).to eq(false)
+    context 'personal_idが他ユーザーと重複する場合' do
+      before{ create(:user, personal_id: "test") }
+      let(:params) { { personal_id: "test" } }
+      it 'NG' do
+        expect(user.valid?).to eq(false)
+      end
     end
-
-    it 'nameが空だとNG' do
-      @user.name = nil
-      expect(@user.valid?).to eq(false)
+    context 'nameが空の場合' do
+      let(:params) { { name: nil } }
+      it 'NG' do
+        expect(user.valid?).to eq(false)
+      end
     end
-
-    it 'emailが空だとNG' do
-      @user.email = nil
-      expect(@user.valid?).to eq(false)
+    context 'emailが空の場合' do
+      let(:params) { { email: nil } }
+      it 'NG' do
+        expect(user.valid?).to eq(false)
+      end
     end
-    
-    it 'emailが重複するとNG' do
-      @user.save
-      user2 = build(:user, email: @user.email)
-      expect(user2.valid?).to eq(false)
+    context 'emailが他ユーザーと重複する場合' do
+      before{ create(:user, email: "test@example.com") }
+      let(:params) { { email: "test@example.com" } }
+      it 'NG' do
+        expect(user.valid?).to eq(false)
+      end
     end
-    
-    it 'passwordが空だとNG' do
-      @user.password, @user.password_confirmation = nil, nil
-      expect(@user.valid?).to eq(false)
+    context 'passwordが空の場合' do
+      let(:params) { { password: nil } }
+      it 'NG' do
+        expect(user.valid?).to eq(false)
+      end
     end
-    
-    it 'passwordとpassword_confirmationが一致しなければNG' do
-      @user.password_confirmation = "passwood"
-      expect(@user.valid?).to eq(false)
+    context 'passwordとpassword_confirmationが一致しない場合' do
+      let(:params) { { password: "password", password_confirmation: "ppppdddd"} }
+      it 'NG' do
+        expect(user.valid?).to eq(false)
+      end
     end
-    
     describe "passwordの長さ" do
-      context "パスワードが4桁の時" do
+      context "パスワードが4桁の場合" do
+        let(:params) { { password: "p" * 4, password_confirmation: "p" * 4 } }
         it "OK" do
-          @user.password, @user.password_confirmation = "a" * 4, "a" * 4
-          expect(@user.valid?).to eq(true)
+          expect(user.valid?).to eq(true)
         end
       end
-      context "passwordが3桁の時" do
+      context "passwordが3桁の場合" do
+        let(:params) { { password: "p" * 4, password_confirmation: "p" * 3 } }
         it "NG" do
-          @user.password, @user.password_confirmation = "a" * 3, "a" * 3
-          expect(@user.valid?).to eq(false)
+          expect(user.valid?).to eq(false)
+        end
+      end
+      context "passwordが13桁の場合" do
+        let(:params) { { password: "p" * 4, password_confirmation: "p" * 13 } }
+        it "NG" do
+          expect(user.valid?).to eq(false)
         end
       end
     end
