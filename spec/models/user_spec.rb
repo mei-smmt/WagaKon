@@ -53,7 +53,6 @@ RSpec.describe User, type: :model do
         expect(user.valid?).to eq(false)
       end
     end
-
     describe "passwordの長さ" do
       context "パスワードが4桁の場合" do
         let(:params) { { password: "p" * 4, password_confirmation: "p" * 4 } }
