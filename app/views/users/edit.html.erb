@@ -10,7 +10,7 @@
         <div class="form-group col-sm-6">
           <%= f.label :image, "プロフィール画像" %><br>
           <div class="img-square">
-            <%= cl_image_tag(@user.image.to_s, alt: @user.name, id: :img_prev) %>
+            <%= image_tag(@user.image.to_s, alt: @user.name, id: :img_prev) %>
           </div>
           <div class="form-check mb-2">
             <%= f.check_box :remove_img, class: "form-check-input", type: "checkbox", checked_value: "1", unchecked_value: "0", id: "defaultCheck1" %>

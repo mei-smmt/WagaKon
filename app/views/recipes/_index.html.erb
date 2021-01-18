@@ -4,11 +4,11 @@
       <a href="/recipes/<%= recipe.id %>" class="card border-0">
         <div class="img-square">
           <% if recipe.image.present? %>
-            <%= cl_image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
+            <%= image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
           <% elsif homepage_image(recipe) %>
             <%= image_tag(homepage_image(recipe), class: "card-img-top rounded-0", alt: homepage_title(recipe)) %>
           <% else %>
-            <%= cl_image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
+            <%= image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
           <% end %>
         </div>
         <div class="card-img-overlay p-1">

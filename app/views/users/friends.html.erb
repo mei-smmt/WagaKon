@@ -8,7 +8,7 @@
       <div class="row m-0">
         <% @user.approved_friends.each do |friend| %>
           <div class="col-sm-3 my-0 mt-2">
-            <%= cl_image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
+            <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= link_to friend.name, user_path(friend), class: "font-orange" %></h3>
             </div>
@@ -49,7 +49,7 @@
       <div class="row m-0">
         <% @user.receiving_friends.each do |friend| %>
           <div class="col-sm-3 my-0 mt-2">
-            <%= cl_image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
+            <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= friend.name %></h3>
             </div>
@@ -68,7 +68,7 @@
       <div class="row m-0">
         <% @user.requesting_friends.each do |friend| %>
           <div class="col-sm-3">
-            <%= cl_image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
+            <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= friend.name %></h3>
             </div>

@@ -10,7 +10,7 @@
         <%= f.label :image, "画像" %>
         <div class="mb-3">
           <div class="img-square">
-            <%= cl_image_tag(@recipe.image.to_s, alt: "レシピ画像", id: :img_prev) %>
+            <%= image_tag(@recipe.image.to_s, alt: "レシピ画像", id: :img_prev) %>
           </div>
           <%= yield f %>
         </div>

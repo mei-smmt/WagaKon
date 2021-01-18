@@ -27,11 +27,6 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -45,7 +40,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'kaminari'
 #画像アップロード
 gem 'carrierwave', '~> 1.3', '>= 1.3.1'
-gem 'cloudinary' , '1.11.1'
+gem 'fog-aws'
 gem 'mini_magick'
 # Library for validating urls in Rails
 gem 'validate_url'
@@ -53,12 +48,18 @@ gem 'validate_url'
 gem 'mechanize'
 #パンくずリスト
 gem "gretel"
+# 環境変数の管理をするもの
+gem 'dotenv-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.0'
-end
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
@@ -78,4 +79,8 @@ end
 
 group :production do
   gem 'pg', '>= 0.18', '< 2.0'
+end
+
+group :production, :staging do
+  gem 'unicorn'
 end
