@@ -52,6 +52,10 @@ class UsersController < ApplicationController
   def password_edit
   end
   
+  def render_password_edit
+    render :password_edit
+  end
+  
   def password_update
     if User.safe_password_update(@user, password_params)
       flash[:success] = 'パスワードが更新されました'
