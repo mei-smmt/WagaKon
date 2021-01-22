@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
-  resource :users, only: [:create, :edit, :update, :destroy] do
+  post 'signup', to: 'users#create'
+  resource :users, only: [:edit, :update, :destroy] do
     member do
       get :password_edit
       patch :password_update
