@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
-  get 'users', to: 'users#render_edit'
-  get 'users/password_update', to: 'users#render_password_edit'
   resource :users, only: [:edit, :update, :destroy] do
     member do
       get :password_edit
@@ -19,15 +17,14 @@ Rails.application.routes.draw do
     end
   end
   resources :users, only: [:show]
+  get 'users', to: 'users#render_edit'
+  get 'users/password_update', to: 'users#render_password_edit'
 
   resource :relationships, only: [:create, :update, :destroy]
   resource :bookmarks, only: [:create, :destroy]
   resource :meals, only: [:index, :show]
   resource :menus, only: [:create, :destroy]
   
-  get 'recipes/:id/easy_update', to: 'recipes#redirect_show'
-  get 'recipes', to: 'recipes#redirect_new'
-  get 'recipes/easy_create', to: 'recipes#redirect_new'
   resource :recipes, only: [:new, :create] do
     collection do
       post :easy_create
@@ -45,4 +42,8 @@ Rails.application.routes.draw do
     end
     resource :ingredients, :steps, only: [:edit, :update]
   end
+  get 'recipes/:id/easy_update', to: 'recipes#redirect_show'
+  get 'recipes', to: 'recipes#redirect_new'
+  get 'recipes/easy_create', to: 'recipes#redirect_new'
+  get 'recipes/:id/ingredients', to: 'ingredients#redirect_edit'
 end
