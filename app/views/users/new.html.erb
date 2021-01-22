@@ -4,7 +4,7 @@
 </div>
 <div class="row">
   <div class="col-sm-4 offset-sm-4">
-    <%= form_with(url: users_path, model: @user, local: true) do |f| %>
+    <%= form_with(url: signup_path, model: @user, local: true) do |f| %>
       <%= render 'layouts/error_messages', model: @user %>
       <div class="form-group">
         <%= f.label :name, '名前' %>

@@ -19,7 +19,7 @@ class Ingredient < ApplicationRecord
     # 空フォーム除外
     new_ingredients = Ingredient.remove_empty_form(form_ingredients)
     # 仮idを設定
-    temp_id = Ingredient.last.id + 1
+    temp_id = Ingredient.last.present? ? Ingredient.last.id + 1 : 1
     # 登録したいレコード数が既存レコード数より多い場合、新規インスタンスを作成
     diff = new_ingredients.size - recipe.ingredients.size
     if diff > 0

@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
-  resource :users, only: [:create, :edit, :update, :destroy] do
+  post 'signup', to: 'users#create'
+  resource :users, only: [:edit, :update, :destroy] do
     member do
       get :password_edit
       patch :password_update
@@ -16,6 +17,8 @@ Rails.application.routes.draw do
     end
   end
   resources :users, only: [:show]
+  get 'users', to: 'users#render_edit'
+  get 'users/password_update', to: 'users#render_password_edit'
 
   resource :relationships, only: [:create, :update, :destroy]
   resource :bookmarks, only: [:create, :destroy]
@@ -39,4 +42,9 @@ Rails.application.routes.draw do
     end
     resource :ingredients, :steps, only: [:edit, :update]
   end
+  get 'recipes/:id/easy_update', to: 'recipes#redirect_show'
+  get 'recipes', to: 'recipes#redirect_new'
+  get 'recipes/easy_create', to: 'recipes#redirect_new'
+  get 'recipes/:id/ingredients', to: 'ingredients#redirect_edit'
+  get 'recipes/:id/steps', to: 'steps#redirect_edit'
 end

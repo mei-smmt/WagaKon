@@ -2,7 +2,7 @@ class StepsController < ApplicationController
   before_action :require_user_logged_in
   before_action :prepare_search
   before_action :prepare_meals
-  before_action -> {user_author_match(params[:recipe_id])}
+  before_action -> {user_author_match(params[:recipe_id])}, only: [:edit, :update]
   
   def edit
     @steps = @recipe.steps
@@ -11,6 +11,10 @@ class StepsController < ApplicationController
     (start..finish).each do |i|
       @steps.build(id: i)
     end
+  end
+  
+  def redirect_edit
+    redirect_to edit_recipe_steps_url(recipe_id: params[:id])
   end
   
   def update

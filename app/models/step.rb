@@ -18,7 +18,7 @@ class Step < ApplicationRecord
     # 空フォーム除外
     new_steps = Step.remove_empty_form(form_steps)
     # 仮idを設定
-    temp_id = Step.last.id + 1
+    temp_id = Step.last.present? ? Step.last.id + 1 : 1
     # 登録したいレコード数が既存レコード数より多い場合、新規インスタンスを作成
     diff = new_steps.size - recipe.steps.size
     if diff > 0
