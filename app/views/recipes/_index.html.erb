@@ -6,7 +6,7 @@
           <% if recipe.image.present? %>
             <%= image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
           <% elsif homepage_image(recipe) %>
-            <%= image_tag(homepage_image(recipe), class: "card-img-top rounded-0", alt: homepage_title(recipe)) %>
+            <%= image_tag(homepage_image(recipe), class: "card-img-top rounded-0", alt: recipe.title) %>
           <% else %>
             <%= image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
           <% end %>

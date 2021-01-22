@@ -12,11 +12,15 @@ module ApplicationHelper
   
   def homepage_title(recipe)
     agent = Mechanize.new
-    page = agent.get(recipe.homepage)
-    if page.at('meta[property="og:title"]').present?
-      page.at('meta[property="og:title"]')[:content]
-    else
-      recipe.homepage
+    begin
+      page = agent.get(recipe.homepage)
+      if page.at('meta[property="og:title"]').present?
+        page.at('meta[property="og:title"]')[:content]
+      else
+        truncate(recipe.homepage, length: 80)
+      end
+    rescue Mechanize::ResponseCodeError
+      truncate(recipe.homepage, length: 80)
     end
   end
   
@@ -25,10 +29,14 @@ module ApplicationHelper
       false
     else
       agent = Mechanize.new
-      page = agent.get(recipe.homepage)
-      if page.at('meta[property="og:image"]').present?
-        page.at('meta[property="og:image"]')[:content]
-      else
+      begin
+        page = agent.get(recipe.homepage)
+        if page.at('meta[property="og:image"]').present?
+          page.at('meta[property="og:image"]')[:content]
+        else
+          false
+        end
+      rescue Mechanize::ResponseCodeError
         false
       end
     end
