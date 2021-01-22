@@ -7,7 +7,7 @@ class StepsController < ApplicationController
   def edit
     @steps = @recipe.steps
     start = 1 + (@steps.present? ? @steps.last.id : 0)
-    finish = start + 9 - @steps.size
+    finish = start + STEP_MAX - @steps.size - 1
     (start..finish).each do |i|
       @steps.build(id: i)
     end

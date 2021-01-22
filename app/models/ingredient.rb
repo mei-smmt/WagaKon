@@ -42,7 +42,7 @@ class Ingredient < ApplicationRecord
       end
       unless all_valid
         # render後のフォームを補充  
-        missing_forms_size = 10 - new_ingredients.size
+        missing_forms_size = INGREDIENT_MAX - new_ingredients.size
         missing_forms_size.times do
           recipe.ingredients.build(id: temp_id)
           temp_id += 1

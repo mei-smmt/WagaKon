@@ -7,7 +7,7 @@ class IngredientsController < ApplicationController
   def edit
     @ingredients = @recipe.ingredients
     start = 1 + (@ingredients.present? ? @ingredients.last.id : 0)
-    finish = start + 9 - @ingredients.size
+    finish = start + INGREDIENT_MAX - @ingredients.size - 1
     (start..finish).each do |i|
       @ingredients.build(id: i)
     end

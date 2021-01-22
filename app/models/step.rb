@@ -44,7 +44,7 @@ class Step < ApplicationRecord
       end
       unless all_valid
         # render後のフォームを補充  
-        missing_forms_size = 10 - new_steps.size
+        missing_forms_size = STEP_MAX - new_steps.size
         missing_forms_size.times do
           recipe.steps.build(id: temp_id)
           temp_id += 1
