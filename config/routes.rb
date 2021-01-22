@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
+  get 'users', to: 'users#render_edit'
   resource :users, only: [:edit, :update, :destroy] do
     member do
       get :password_edit

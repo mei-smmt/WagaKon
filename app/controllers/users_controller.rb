@@ -29,6 +29,10 @@ class UsersController < ApplicationController
   def edit
   end
   
+  def render_edit
+    render :edit
+  end
+  
   def update
     if User.safe_update(@user, user_params)
       flash[:success] = 'プロフィールが更新されました'
