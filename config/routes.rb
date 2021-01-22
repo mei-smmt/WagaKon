@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   resource :meals, only: [:index, :show]
   resource :menus, only: [:create, :destroy]
   
+  get 'recipes/:id/easy_update', to: 'recipes#redirect_show'
+  get 'recipes', to: 'recipes#redirect_new'
+  get 'recipes/easy_create', to: 'recipes#redirect_new'
   resource :recipes, only: [:new, :create] do
     collection do
       post :easy_create
