@@ -46,4 +46,5 @@ Rails.application.routes.draw do
   get 'recipes', to: 'recipes#redirect_new'
   get 'recipes/easy_create', to: 'recipes#redirect_new'
   get 'recipes/:id/ingredients', to: 'ingredients#redirect_edit'
+  get 'recipes/:id/steps', to: 'steps#redirect_edit'
 end
