@@ -5,5 +5,9 @@
     <%= yield %>
   </div>
   <!--献立一覧-->
-  <%= render 'meals/index', recipes: @recipes %>
+  <div class="col-sm-2 p-0">
+    <div class="d-none d-sm-block">
+      <%= render 'meals/index', recipes: @recipes %>
+    </div>
+  </div>
 </div>

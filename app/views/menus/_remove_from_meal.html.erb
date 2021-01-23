@@ -1,5 +1,5 @@
 <%= form_with(url: menus_path, method: :delete, local: true) do |f| %>
   <%= hidden_field_tag :recipe_id, recipe.id %>
   <%= hidden_field_tag :day, day %>
-  <%= f.submit 'x', class: 'btn', id: 'remove-menu-btn' %>
+  <%= f.submit ' [x]', class: 'btn', id: 'remove-menu-btn' %>
 <% end %>
