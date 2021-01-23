@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post 'signup', to: 'users#create'
   resource :users, only: [:edit, :update, :destroy] do
     member do
+      post :test_login
       get :password_edit
       patch :password_update
       get :search

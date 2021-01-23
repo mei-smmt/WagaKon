@@ -16,5 +16,10 @@
       <%= f.submit 'ログイン', class: 'btn submit-btn btn-block' %>
     <% end %>
     <p>ユーザー登録がまだの方： <%= link_to '新規登録', signup_path %></p>
+    <div class="d-flex justify-content-center m-4">
+      <h2>または<h2>
+    </div>
+    <%= link_to "テストログイン", test_login_users_path, method: :post, class: 'btn submit-btn btn-block' %>
+    <p>パスワード：testpass</p>
   </div>
 </div>
