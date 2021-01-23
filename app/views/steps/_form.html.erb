@@ -3,7 +3,7 @@
   <div class="form-row">
     <% @steps.each.with_index(1) do |step, index|%>
       <%= form.fields_for 'steps[]', step do |f| %>
-        <div class="col-sm-3">
+        <div class="col-md-3">
           <h2 class="mb-1"><%= index %></h2>
           <%= f.hidden_field :number, :value => index %>
           <div class="form-group mb-2">
@@ -14,7 +14,7 @@
       <% end %>
     <% end %>
 　</div>　  
-  <div class="col-sm-6 offset-sm-3">
+  <div class="col-12 col-md-6 offset-md-3 p-0">
     <%= form.submit button_message, class: 'btn btn-sm submit-btn btn-block' %>
   </div>
 <% end %>

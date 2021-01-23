@@ -7,7 +7,7 @@
       <h2><i class="far fa-user"></i> 友だち</h2>
       <div class="row m-0">
         <% @user.approved_friends.each do |friend| %>
-          <div class="col-sm-3 my-0 mt-2">
+          <div class="col-6 col-md-3 my-0 mt-2">
             <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= link_to friend.name, user_path(friend), class: "font-orange" %></h3>
@@ -22,16 +22,16 @@
   <% end %>
   <div class="mb-4">
     <div class="row mx-0 mb-2">
-      <div class="col-sm-12 px-0">
+      <div class="col-md-12 px-0">
         <h2>友達追加++</h2>
         <div class="border-gray mb-3"></div>
         <!--ユーザー検索フォーム-->
         <%= form_with(url: search_users_path, method: :get, local: true) do |f| %>
           <div class="form-row">
-            <div class="col-sm-5">
+            <div class="col-8 col-md-5">
               <%= f.text_field :search, placeholder: '友達のIDで検索', class: 'form-control' %>
             </div>
-            <div class="col-sm-3">
+            <div class="col-4 col-md-3">
               <%= f.submit '検索', class: 'btn submit-btn' %>
             </div>
           </div>
@@ -48,7 +48,7 @@
       <h2><i class="far fa-arrow-alt-circle-left"></i> 友だちリクエストされているユーザー</h2>
       <div class="row m-0">
         <% @user.receiving_friends.each do |friend| %>
-          <div class="col-sm-3 my-0 mt-2">
+          <div class="col-6 col-md-3 my-0 mt-2">
             <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= friend.name %></h3>
@@ -67,7 +67,7 @@
       <h2><i class="far fa-arrow-alt-circle-right"></i> 友だちリクエスト中のユーザー</h2>
       <div class="row m-0">
         <% @user.requesting_friends.each do |friend| %>
-          <div class="col-sm-3">
+          <div class="col-6 col-md-3">
             <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= friend.name %></h3>

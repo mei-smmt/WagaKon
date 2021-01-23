@@ -15,10 +15,10 @@ ja:
       user: ユーザー
     attributes:
       feature:
-        amount: 料理のボリューム
-        dish_type: 料理の種類
+        amount: ボリューム
+        dish_type: 系統
         cooking_method: 調理法
-        main_food: メインの食材
+        main_food: メイン食材
       ingredient:
         name: 材料名
         quantity: 数量

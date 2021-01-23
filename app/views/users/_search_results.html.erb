@@ -1,6 +1,6 @@
 <div class="row m-0 mb-2">
   <% if user.kind_of?(User) %>
-    <div class="col-sm-4 offset-sm-4">
+    <div class="col-8 offset-2 col-md-4 offset-md-4">
       <%= image_tag(user.image.to_s, alt: user.name, class: 'rounded-pill') %>
       <div class="d-flex justify-content-center">
         <h1 class="mt-2 mb-0"><%= user.name %></h1>

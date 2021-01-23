@@ -1,9 +1,9 @@
 <% content_for(:html_title) { "新規会員登録 | Wagakon" } %>
 <div class="text-center">
-  <h1>新規登録</h1>
+  <h1>新規会員登録</h1>
 </div>
 <div class="row">
-  <div class="col-sm-4 offset-sm-4">
+  <div class="col-md-4 offset-md-4">
     <%= form_with(url: signup_path, model: @user, local: true) do |f| %>
       <%= render 'layouts/error_messages', model: @user %>
       <div class="form-group">
