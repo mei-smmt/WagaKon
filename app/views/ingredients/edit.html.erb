@@ -2,8 +2,8 @@
 <% breadcrumb :ingredients_edit, @recipe %>
 <%= render "layouts/breadcrumbs" %>
 <%= render "layouts/side_bar" do %>
-  <div class="card">
-    <div class="card-body p-4">
+  <div class="card p-sm-2">
+    <div class="card-body px-2 py-3">
       <h2 class="heading">材料を入力する</h2>
       <%= render 'ingredients/form', recipe: @recipe, method: :patch %>
       <!--レシピ特徴-->
