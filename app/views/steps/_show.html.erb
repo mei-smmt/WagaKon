@@ -1,12 +1,12 @@
 <% if recipe.steps.present? %>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <h2>作り方</h2>
     </div>
   </div>
   <div class="row">
     <% recipe.steps.each do |step| %>
-      <div class="col-sm-3">
+      <div class="col-md-3">
         <h2 class="mb-1"><%= step.number %></h2>
         <p><%= step.content %></p>
       </div>

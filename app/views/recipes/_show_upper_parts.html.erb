@@ -1,6 +1,6 @@
 <h1 class="my-2"><%= recipe.title %></h1>
 <div class="row mb-4">
-  <div class="col-sm-5 mb-3">
+  <div class="col-md-5 mb-3">
     <div class="img-square">
       <% if recipe.image.present? %>
         <%= image_tag(recipe.image.to_s, alt: recipe.title) %>
@@ -11,7 +11,7 @@
       <% end %>
     </div>
   </div>
-  <div class="col-sm-7">
+  <div class="col-md-7">
     <h3><%= recipe.explanation %></h3>
     <div class="d-flex justify-content-end"> 
       <%= link_to "by #{recipe.user.name}", user_path(recipe.user), class: "font-orange font-sm" %>

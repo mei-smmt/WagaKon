@@ -6,7 +6,7 @@
     <h2>非公開</h2>
   <% end %>
   <div class="card border-0">
-    <div class="card-header d-flex justify-content-end py-1 bg-darkgray border-0 px-2 px-sm-3">
+    <div class="card-header d-flex justify-content-end py-1 bg-darkgray border-0 px-2 px-md-3">
       <!--献立追加ボタン-->
       <div class="d-inline-block mr-2">
         <%= render 'menus/add_to_meal', recipe: @recipe %>
@@ -16,7 +16,7 @@
         <%= render 'bookmarks/bookmark_button', recipe: @recipe %>
       </div>
     </div>
-    <div class="card-body p-2 px-sm-4 bg-gray">
+    <div class="card-body p-2 px-md-4 bg-gray">
       <!--レシピ上部-->
       <%= render 'recipes/show_upper', recipe: @recipe %>
       <!--レシピ下部(手順)-->

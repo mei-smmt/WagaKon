@@ -4,10 +4,10 @@
 <%= render "layouts/side_bar" do %>    
   <div class="bg-gray p-3 mx-2 my-0">
     <div class="row mx-2 mt-4">
-      <div class="col-sm-4">
+      <div class="col-md-4">
         <%= image_tag(@user.image.to_s, alt: @user.name, class: 'rounded-pill') %>
       </div>
-      <div class="col-sm-7 d-flex">
+      <div class="col-md-7 d-flex">
         <div class="align-self-center">
           <h1 class="d-inline"><%= @user.name %></h1>
           <% if current_user == @user %>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-12 d-flex justify-content-end">
+      <div class="col-md-12 d-flex justify-content-end">
         <% if current_user == @user %>
           <h3><%= link_to ">>友だち", friends_users_path, class: 'font-orange align-self-end' %></h3>
         <% else %>

@@ -1,10 +1,10 @@
-<div class="col-sm-3 px-0 mb-3">
+<div class="col-md-3 px-0 mb-3">
   <div class="card p-2 rouded-0 border-0 bg_skew_dot">
     <div class="card border-0">
       <div class="card-header search-header p-1 border-0 rounded-0">
         <div class="d-flex justify-content-center">
           <h4 class="mb-0 text-white d-inline pt-1"><i class="fas fa-search"></i> レシピを探す</h4>
-          <a class="btn btn-small button p-0 ml-2 text-white d-inline d-sm-none"
+          <a class="btn btn-small button p-0 ml-2 text-white d-inline d-md-none"
               data-toggle="collapse"
               href="#recipe-search"
               role="button"
@@ -14,10 +14,10 @@
         </div>
       </div>
       <div class="card-body p-0">
-        <div class="collapse d-sm-none" id="recipe-search">
+        <div class="collapse d-md-none" id="recipe-search">
           <%= render 'recipes/search_parts', keyword: keyword, feature: feature, keyword_submit: keyword_submit, feature_submit: feature_submit %>
         </div>
-        <div class="d-none d-sm-block">
+        <div class="d-none d-md-block">
           <%= render 'recipes/search_parts', keyword: keyword, feature: feature, keyword_submit: keyword_submit, feature_submit: feature_submit %>
         </div>
       </div>

@@ -1,12 +1,12 @@
 <div class="row mx-0">
   <!--レシピ検索フォーム-->
   <%= render 'recipes/search', keyword: @search_keyword, feature: @search_feature, keyword_submit: @k_submit, feature_submit: @f_submit %>
-  <div class="col-sm-7 px-0 px-sm-3">
+  <div class="col-md-7 px-0 px-md-3">
     <%= yield %>
   </div>
   <!--献立一覧-->
-  <div class="col-sm-2 p-0">
-    <div class="d-none d-sm-block">
+  <div class="col-md-2 p-0">
+    <div class="d-none d-md-block">
       <%= render 'meals/index', recipes: @recipes %>
     </div>
   </div>

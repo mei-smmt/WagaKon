@@ -1,24 +1,24 @@
 <header>
-  <nav class="navbar navbar-expand px-0 py-0 py-sm-3 m-0 navbar-light">
+  <nav class="navbar navbar-expand px-0 py-0 py-md-3 m-0 navbar-light">
     <a class="navbar-brand" href="/">WagaKon</a>
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <!--ログイン済み-->
         <% if logged_in? %>
           <li class="nav-item nav-icon">
-            <%= link_to favorite_recipes_users_path, class: 'nav-link p-0 ml-3 ml-sm-4' do %>
+            <%= link_to favorite_recipes_users_path, class: 'nav-link p-0 ml-3 ml-md-4' do %>
               <i class="fas fa-heart"></i>
             <% end %>
           </li>
           <li class="nav-item nav-icon">
-            <%= link_to new_recipes_path, class: 'nav-link p-0 ml-3 ml-sm-4' do %>
+            <%= link_to new_recipes_path, class: 'nav-link p-0 ml-3 ml-md-4' do %>
               <i class="fas fa-edit"></i>
             <% end %>
           </li>
           <li>
             <!--マイページ-->
             <div class="dropdown">
-              <%= button_tag type: "button", class: "nav-item nav-icon nav-link p-0 ml-3 ml-sm-4", id: "dropdownMenuButton", 'data-toggle': :dropdown, 'aria-haspopup': :true, 'aria-expanded': :false do %>
+              <%= button_tag type: "button", class: "nav-item nav-icon nav-link p-0 ml-3 ml-md-4", id: "dropdownMenuButton", 'data-toggle': :dropdown, 'aria-haspopup': :true, 'aria-expanded': :false do %>
                 <i class="far fa-user-circle"></i>
               <% end %>
               <div class="dropdown-menu dropdown-menu-right py-2" aria-labelledby="dropdownMenuButton">
@@ -35,11 +35,11 @@
               </div>
             </div>  
           </li>
-          <div class="d-sm-none">
+          <div class="d-md-none">
             <li>
               <!--献立List-->
               <div class="dropdown">
-                <%= button_tag type: "button", class: "nav-item nav-icon nav-link p-0 ml-3 ml-sm-4", id: "dropdownMealButton", 'data-toggle': :dropdown, 'aria-haspopup': :true, 'aria-expanded': :false do %>
+                <%= button_tag type: "button", class: "nav-item nav-icon nav-link p-0 ml-3 ml-md-4", id: "dropdownMealButton", 'data-toggle': :dropdown, 'aria-haspopup': :true, 'aria-expanded': :false do %>
                   <i class="fas fa-utensils"></i>
                 <% end %>
                 <div class="dropdown-menu dropdown-menu-right py-2" aria-labelledby="dropdownMealButton">
