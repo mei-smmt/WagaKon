@@ -15,7 +15,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params.except(:remove_img))
+    @user = User.new(new_user_params)
+    @user.personal_id = SecureRandom.hex(5)
+    binding.pry
     if @user.save
       (0..6).each { |index| @user.meals.create(day_of_week: index) }
       login(@user.email, @user.password)
@@ -80,6 +82,10 @@ class UsersController < ApplicationController
   end 
 
   private
+
+  def new_user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
 
   def user_params
     params.require(:user).permit(:name, :personal_id, :email, :image, :remove_img, :password, :password_confirmation)
