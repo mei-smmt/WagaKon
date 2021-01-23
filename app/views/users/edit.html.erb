@@ -25,10 +25,10 @@
           </div>
           <div class="form-group">
             <%= f.label :personal_id, 'ID' %>
-            <%= f.text_field :personal_id, required: :true, class: 'form-control' %>
+            <%= f.text_field :personal_id, required: :true, placeholder: "4〜12文字・半角英数", class: 'form-control' %>
           </div>
           <div class="form-group">
-            <%= f.label :email, 'Email' %>
+            <%= f.label :email, 'メールアドレス' %>
             <%= f.email_field :email, required: :true, class: 'form-control' %>
           </div>
           <div class="form-group">
