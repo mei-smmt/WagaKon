@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 9 }, unless: -> { name.blank? }
   validates :personal_id, presence: true,
                           length: { in: 4..12 },
-                          format: { with: /\A[a-z0-9]+\z/ },#半角英数字限定
+                          format: { with: /\A[a-zA-Z0-9]+\z/ },#半角英数(大文字、小文字、数字)
                           uniqueness: true,
                           unless: -> { personal_id.blank? }
   before_save { self.email.downcase! }
@@ -20,8 +20,10 @@ class User < ApplicationRecord
                     unless: -> { email.blank? }
   has_secure_password
   validates :password, presence: true
-  validates :password, length: { in: 4..12 }, unless: -> { password.blank? }
-  
+  validates :password, length: { in: 4..12 },
+                       format: { with: /\A[a-zA-Z0-9]+\z/ },#半角英数字限定(大文字、小文字、数字)
+                       unless: -> { password.blank? }
+                         
   has_many :recipes, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :favorite_recipes, through: :bookmarks, source: :recipe
@@ -61,6 +63,23 @@ class User < ApplicationRecord
     valid
   end
   
+  def self.test_user
+    random = SecureRandom.hex(5)
+    User.create(name: "テスト太郎",
+                personal_id: random,
+                email: "#{random}@example.com",
+                password: "testpass")
+  end
+
+  def create_default_friends
+    friend1 = User.find(1)
+    friend2 = User.find(2)
+    self.relationships.find_or_create_by(friend_id: 1, status: 'approved')
+    friend1.relationships.find_or_create_by(friend_id: self.id, status: 'approved')
+    self.relationships.find_or_create_by(friend_id: 2, status: 'approved')
+    friend2.relationships.find_or_create_by(friend_id: self.id, status: 'approved')
+  end
+
   def friend_request(friend)
     unless self == friend
       self.relationships.find_or_create_by(friend_id: friend.id)

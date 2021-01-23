@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, except: [:new, :create]
-  before_action :prepare_search, except: [:new, :create]
-  before_action :prepare_meals, except: [:new, :create]
-  before_action :set_current_user, except: [:show, :new, :create]
+  before_action :require_user_logged_in, except: [:new, :create, :test_login]
+  before_action :prepare_search, except: [:new, :create, :test_login]
+  before_action :prepare_meals, except: [:new, :create, :test_login]
+  before_action :set_current_user, except: [:show, :new, :create, :test_login]
 
   def show
     accessable_user_check
@@ -15,7 +15,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params.except(:remove_img))
+    @user = User.new(new_user_params)
+    @user.personal_id = SecureRandom.hex(5)
     if @user.save
       (0..6).each { |index| @user.meals.create(day_of_week: index) }
       login(@user.email, @user.password)
@@ -24,6 +25,15 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+  
+  def test_login
+    @user = User.test_user
+    (0..6).each { |index| @user.meals.create(day_of_week: index) }
+    @user.create_default_friends
+    login(@user.email, @user.password)
+    flash[:success] = 'テストログインしました'
+    redirect_to root_url
   end
   
   def edit
@@ -80,6 +90,10 @@ class UsersController < ApplicationController
   end 
 
   private
+
+  def new_user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
 
   def user_params
     params.require(:user).permit(:name, :personal_id, :email, :image, :remove_img, :password, :password_confirmation)
