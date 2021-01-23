@@ -1,7 +1,7 @@
 <%= form_with(url: path, model: recipe, local: true, authenticity_token: true) do |f| %>
   <%= render 'layouts/error_messages', model: recipe %>
-  <div class="form-row">
-    <div class="col-sm-5 pr-3">
+  <div class="form-row m-0">
+    <div class="col-sm-5 p-0">
       <div class="form-group">
         <%= f.label :title, "レシピのタイトル (必須)" %>
         <%= f.text_field :title, required: :true, placeholder: "例: ほうれん草の胡麻和え", class: 'form-control' %>
@@ -17,7 +17,7 @@
         <%= f.file_field :image, class: "image", id: "book_img" %>      
       </div>
     </div>
-    <div class="col-sm-7 pl-3">
+    <div class="col-sm-7 p-0 pl-sm-3">
       <div class="form-group">
         <%= f.label :explanation, "説明 (必須)" %>
         <%= f.text_area :explanation, required: :true, placeholder: "例: 朝のワイドショーで紹介されていたレシピ。", class: 'form-control'%>
@@ -28,9 +28,9 @@
       </div>
     </div>
   </div>
-  <div class="form-row border-top py-3">
+  <div class="form-row border-top py-3 m-0">
     <%= f.fields_for :feature do |s| %>
-      <div class="col-sm-3">
+      <div class="col-sm-3 px-0">
         <div class="form-group">
           <%= s.label :amount, "ボリュームは？" %>
           <%= s.select :amount,
@@ -39,7 +39,7 @@
               class: 'form-control' %>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 px-0 pl-sm-2">
         <div class="form-group">
           <%= s.label :dish_type, "何系料理？" %>
           <%= s.select :dish_type,
@@ -48,16 +48,16 @@
               class: 'form-control' %>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 px-0 pl-sm-2">
         <div class="form-group">
-          <%= s.label :main_food, "メインの食材は？" %>
+          <%= s.label :main_food, "メイン食材は？" %>
           <%= s.select :main_food,
               Feature.main_foods.keys.map {|k| [I18n.t("enums.feature.main_food.#{k}"), k]},
               { include_blank: '選択してください'},
               class: 'form-control' %>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 px-0 pl-sm-2">
         <div class="form-group">
           <%= s.label :cooking_method, "調理法は？" %>
           <%= s.select :cooking_method,
@@ -68,7 +68,7 @@
       </div>
     <% end %>
   </div>
-    <div class="col-sm-6 offset-sm-3">
+    <div class="col-sm-6 offset-sm-3 p-0">
       <%= f.submit '完了する', formaction: easy_path, class: 'btn btn-sm submit-btn btn-block' %>
       <%= f.submit '保存して材料入力に進む',　name: "", class: 'btn btn-sm submit-btn btn-block' %>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
