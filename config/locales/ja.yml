@@ -35,7 +35,7 @@ ja:
         number: 手順No.
         content: 内容
       user:
-        name: 名前
+        name: ニックネーム
         personal_id: ID
         email: メールアドレス
         image: ユーザー画像
