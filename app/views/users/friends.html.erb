@@ -3,11 +3,11 @@
 <%= render "layouts/breadcrumbs" %>
 <%= render "layouts/side_bar" do %>    
   <% if @user.approved_friends.present? %>
-    <div class="bg-gray px-4 pt-4 pb-2 mb-3">
-      <h2><i class="far fa-user"></i> 友だち</h2>
+    <div class="bg-gray p-2 p-md-3 pb-2 mb-3 mx-2">
+      <h2 class="px-2 pt-2"><i class="far fa-user"></i> 友だち</h2>
       <div class="row m-0">
         <% @user.approved_friends.each do |friend| %>
-          <div class="col-6 col-md-3 my-0 mt-2">
+          <div class="col-4 col-md-3 px-2 my-0 mt-2">
             <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= link_to friend.name, user_path(friend), class: "font-orange" %></h3>
@@ -21,7 +21,7 @@
     </div>  
   <% end %>
   <div class="mb-4">
-    <div class="row mx-0 mb-2">
+    <div class="row px-2 mx-0 mb-2">
       <div class="col-md-12 px-0">
         <h2>友達追加++</h2>
         <div class="border-gray mb-3"></div>
@@ -44,11 +44,11 @@
     <% end %>
   </div>
   <% if @user.receiving_friends.present? %>
-    <div class="bg-gray px-4 pt-4 pb-2 mb-3">
-      <h2><i class="far fa-arrow-alt-circle-left"></i> 友だちリクエストされているユーザー</h2>
+    <div class="bg-gray p-2 p-md-3 pb-2 mb-3 mx-2">
+      <h2 class="px-2 pt-2"><i class="far fa-arrow-alt-circle-left"></i> 友だちリクエストされているユーザー</h2>
       <div class="row m-0">
         <% @user.receiving_friends.each do |friend| %>
-          <div class="col-6 col-md-3 my-0 mt-2">
+          <div class="col-4 col-md-3 px-2 my-0 mt-2">
             <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= friend.name %></h3>
@@ -63,11 +63,11 @@
     </div>
   <% end %>
   <% if @user.requesting_friends.present? %>
-    <div class="bg-gray px-4 pt-4 pb-2 mb-3">
-      <h2><i class="far fa-arrow-alt-circle-right"></i> 友だちリクエスト中のユーザー</h2>
+    <div class="bg-gray p-2 p-md-3 pb-2 mb-3 mx-2">
+      <h2 class="px-2 pt-2"><i class="far fa-arrow-alt-circle-right"></i> 友だちリクエスト中のユーザー</h2>
       <div class="row m-0">
         <% @user.requesting_friends.each do |friend| %>
-          <div class="col-6 col-md-3">
+          <div class="col-4 col-md-3 px-2 my-0 mt-2">
             <%= image_tag(friend.image.to_s, alt: friend.name, class: 'rounded-pill') %>
             <div class="d-flex justify-content-center">
               <h3 class="mt-2 mb-0"><%= friend.name %></h3>
