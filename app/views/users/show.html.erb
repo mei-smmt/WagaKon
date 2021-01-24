@@ -4,10 +4,10 @@
 <%= render "layouts/side_bar" do %>    
   <div class="bg-gray p-3 mx-2 my-0">
     <div class="row mx-2 mt-4">
-      <div class="col-md-4">
+      <div class="col-4 col-md-4 px-0 px-md-2">
         <%= image_tag(@user.image.to_s, alt: @user.name, class: 'rounded-pill') %>
       </div>
-      <div class="col-md-7 d-flex">
+      <div class="col-8 col-md-8 d-flex">
         <div class="align-self-center">
           <h1 class="d-inline"><%= @user.name %></h1>
           <% if current_user == @user %>
