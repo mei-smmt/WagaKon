@@ -1,11 +1,15 @@
 <% content_for(:html_title) { "#{@recipe.title} | Wagakon" } %>
 <% breadcrumb :recipe, @recipe %>
 <%= render "layouts/breadcrumbs" %>
-<%= render "layouts/side_bar" do %>    
+<%= render "layouts/side_bar" do %>
   <% if @recipe.draft? %>
-    <h2>非公開</h2>
+    <div class="mb-1">
+      <h2 class="d-inline px-2 mt-2">非公開</h2>
+      <!--レシピ公開ボタン-->
+      <%= render 'recipes/publish_button', recipe: @recipe %>
+    </div>
   <% end %>
-  <div class="card border-0 px-2">
+  <div class="card border-0 px-2 ">
     <div class="card-header d-flex justify-content-end py-1 bg-darkgray border-0 px-2 px-md-3">
       <!--献立追加ボタン-->
       <div class="d-inline-block mr-2">
@@ -23,15 +27,13 @@
       <%= render 'steps/show', recipe: @recipe %>
       <!--レシピ特徴-->
       <%= render 'features/index', recipe: @recipe %>
-      <% if @recipe.draft? %>
-        <!--レシピ公開ボタン-->
-        <%= render 'recipes/publish_button', recipe: @recipe %>
-      <% end %>
       <!--公開非公開、編集、削除ボタン-->
       <div>
         <% if current_user == @recipe.user %>
-          <%= render 'recipes/stop_publish_button', recipe: @recipe unless @recipe.draft? %>
-          <%= render 'recipes/edit_delete_button', recipe: @recipe %>
+          <div class="py-3">
+            <%= render 'recipes/stop_publish_button', recipe: @recipe unless @recipe.draft? %>
+            <%= render 'recipes/edit_delete_button', recipe: @recipe %>
+          </div>
         <% end %>
       </div>
     </div>
