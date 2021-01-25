@@ -2,8 +2,8 @@ class Ingredient < ApplicationRecord
   belongs_to :recipe
 
   # 材料名必須
-  validates :name, presence: true, length: { maximum: 15 }
-  validates :quantity, length: { maximum: 10 }
+  validates :name, presence: true, length: { maximum: 15 }, lt4bytes: true
+  validates :quantity, length: { maximum: 10 }, lt4bytes: true
 
   # 空フォーム除外
   def self.remove_empty_form(form_ingredients)
