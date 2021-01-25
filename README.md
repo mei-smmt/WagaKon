@@ -23,6 +23,8 @@ https://www.wagakon.com
 * RSpec
 
 # AWS構成
+![AWS構成図画像](https://user-images.githubusercontent.com/69507322/105702288-eccedd80-5f4e-11eb-9383-255700aac195.png)
+
 
 # 機能一覧
 
