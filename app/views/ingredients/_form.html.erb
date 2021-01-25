@@ -1,8 +1,10 @@
 <%= render "recipes/show_upper_parts", recipe: recipe do %> 
   <div class="mt-4">
+    <%= render "recipes/set_size_button", recipe: recipe %>
     <div class="row m-0">
       <div class="col-md-8 col-8 px-0">
-        <h2>材料</h2>
+        <h2 class="d-inline">材料</h2>
+        <h3 class="d-inline" id="recipe-size">(<%= @recipe.size %>)</h3>
       </div>
       <div class="col-md-4 col-4 pl-2">
         <h2>数量</h2>
