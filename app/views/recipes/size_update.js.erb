@@ -7,7 +7,7 @@
   $('#size-modal').modal('hide');
   <!--登録した人数を表示-->
   <% if @recipe.size.present? %>
-    $('#recipe-size').html("<h3>(<%= @recipe.size %>)</h3>");
+    $('#recipe-size').html("(<%= @recipe.size %>)");
   <% else %>
     $('#recipe-size').html("");
   <% end %>
