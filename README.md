@@ -2,6 +2,7 @@
 本やレシピサイトで見たレシピ、オリジナルレシピなどを登録し個人で管理するサイトです。  
 承認済みの友だちとはレシピを共有することが可能です。
 レシピから１週間分の献立を作成できます。  
+<img width="1425" alt="WagaKon_PC" src="https://user-images.githubusercontent.com/69507322/105810293-0115e780-5fee-11eb-936d-380f3bca2d2b.png">
 
 # URL
 https://www.wagakon.com  
