@@ -248,6 +248,9 @@ footer{
  color: #666666;
  background-color: #fff;
 }
+.dropdown-item:active {
+ background-color: white;
+}
 #unlike-btn {
   background-color: #eb9b6f;
   border: 1px solid;
