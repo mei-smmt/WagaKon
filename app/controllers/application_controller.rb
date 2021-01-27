@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   # ログイン処理
   def login(email, password)
     @user = User.find_by(email: email)
-    if @user && @user.authenticate(password)
+    if @user&.authenticate(password)
       # ログイン成功
       session[:user_id] = @user.id
       true
@@ -36,8 +36,8 @@ class ApplicationController < ActionController::Base
 
   # レシピ検索サイドバー表示の準備
   def prepare_search
-    session[:sort].clear if session[:sort]
-    session[:keyword].clear if session[:keyword]
+    session[:sort]&.clear
+    session[:keyword]&.clear
     @search_keyword = nil
     @search_feature = {}
     @k_submit = '検索'
