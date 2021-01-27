@@ -20,7 +20,7 @@ class Ingredient < ApplicationRecord
     temp_id = Ingredient.last.present? ? Ingredient.last.id + 1 : 1
     # 登録したいレコード数が既存レコード数より多い場合、新規インスタンスを作成
     diff = new_ingredients.size - recipe.ingredients.size
-    if diff > 0
+    if diff.positive?
       new_ingredients.last(diff).each do |new_ingredient|
         new_ingredient.merge!(id: temp_id)
         recipe.ingredients.build(new_ingredient)
@@ -31,7 +31,7 @@ class Ingredient < ApplicationRecord
     # 以下、失敗したらロールバック
     Ingredient.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
-      recipe.ingredients.last(-diff).each { |ingredient| ingredient.destroy } if diff < 0
+      recipe.ingredients.last(-diff).each(&:destroy) if diff.negative?
       # 更新処理
       recipe.ingredients.zip(new_ingredients) do |prev_ingredient, new_ingredient|
         all_valid &= prev_ingredient.update(new_ingredient)

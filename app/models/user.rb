@@ -78,7 +78,7 @@ class User < ApplicationRecord
 
   def friend_request(friend)
     return if self == friend
-    
+
     relationships.find_or_create_by(friend_id: friend.id)
     relationship = friend.relationships.find_or_create_by(friend_id: id)
     relationship.update(status: 'receiving')

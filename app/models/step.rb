@@ -20,7 +20,7 @@ class Step < ApplicationRecord
     temp_id = Step.last.present? ? Step.last.id + 1 : 1
     # 登録したいレコード数が既存レコード数より多い場合、新規インスタンスを作成
     diff = new_steps.size - recipe.steps.size
-    if diff > 0
+    if diff.positive?
       new_steps.last(diff).each do |new_step|
         new_step.merge!(id: temp_id)
         recipe.steps.build(new_step)
@@ -31,7 +31,7 @@ class Step < ApplicationRecord
     # 以下、失敗したらロールバック
     Step.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
-      recipe.steps.last(-diff).each { |step| step.destroy } if diff < 0
+      recipe.steps.last(-diff).each(&:destroy) if diff.negative?
       # 更新処理
       step_number = 1
       recipe.steps.zip(new_steps) do |prev_step, new_step|

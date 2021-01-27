@@ -17,6 +17,6 @@ class Meal < ApplicationRecord
 
   def remove_from_meal(recipe)
     menu = menus.find_by(recipe_id: recipe.id)
-    menu.destroy if menu
+    menu&.destroy
   end
 end
