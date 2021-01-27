@@ -61,10 +61,7 @@ class User < ApplicationRecord
 
   def self.test_user
     random = SecureRandom.hex(5)
-    User.create(name: 'テスト太郎',
-                personal_id: random,
-                email: "#{random}@example.com",
-                password: 'testpass')
+    User.create(name: 'テスト太郎', personal_id: random, email: "#{random}@example.com", password: 'testpass')
   end
 
   def create_default_friends
