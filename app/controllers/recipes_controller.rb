@@ -112,7 +112,7 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:title, :image, :remove_img, :explanation, :homepage,
-                                    feature_attributes: %i[id amount dish_type cooking_method main_food])
+                                   feature_attributes: %i[id amount dish_type cooking_method main_food])
   end
 
   def feature_params
