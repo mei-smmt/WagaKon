@@ -1,13 +1,11 @@
 class RecipesController < ApplicationController
   include Common
-
   before_action :require_user_logged_in
   before_action :prepare_search, except: %i[sort keyword_search feature_search]
   before_action :prepare_meals
-  before_action -> { accessable_recipe_check(params[:id]) }, only: %i[show return_recipe]
-  before_action lambda {
-                  user_author_match(params[:id])
-                }, only: %i[edit update easy_update size_update destroy publish stop_publish]
+  before_action -> { accessable_recipe_check(params[:id]) }, only: %i[show redirect_show]
+  before_action -> { user_author_match(params[:id]) },
+                only: %i[edit update easy_update size_update destroy publish stop_publish]
 
   def show; end
 
@@ -88,10 +86,9 @@ class RecipesController < ApplicationController
   end
 
   def keyword_search
-    if recipes = current_user.accessable_recipes.keyword_search(params[:search])
-      recipe_sort(recipes)
-      prepare_submit_btn
-      @count = recipes.count
+    recipes = current_user.accessable_recipes.keyword_search(params[:search])
+    if recipes
+      recipe_search_common(recipes)
       @search_feature = {}
       @search_keyword = session[:keyword] = params[:search]
     else
@@ -108,26 +105,14 @@ class RecipesController < ApplicationController
     else
       recipes = current_user.accessable_recipes.feature_search(@search_feature)
     end
-    recipe_sort(recipes)
-    prepare_submit_btn
-    @count = recipes.count
+    recipe_search_common(recipes)
   end
 
   private
 
   def recipe_params
-    params.require(:recipe).permit(
-      :title,
-      :image,
-      :remove_img,
-      :explanation,
-      :homepage,
-      feature_attributes: %i[id
-                             amount
-                             dish_type
-                             cooking_method
-                             main_food]
-    )
+    params.require(:recipe).permit(:title, :image, :remove_img, :explanation, :homepage,
+                                    feature_attributes: %i[id amount dish_type cooking_method main_food])
   end
 
   def feature_params
@@ -136,10 +121,5 @@ class RecipesController < ApplicationController
 
   def size_params
     params.permit(:size)
-  end
-
-  def prepare_submit_btn
-    @k_submit = '再検索'
-    @f_submit = '絞込み'
   end
 end

@@ -13,4 +13,15 @@ module Common
       @recipes = Kaminari.paginate_array(recipes).page(params[:page])
     end
   end
+  
+  def recipe_search_common(recipes)
+    recipe_sort(recipes)
+    prepare_submit_btn
+    @count = recipes.count
+  end
+  
+  def prepare_submit_btn
+    @k_submit = '再検索'
+    @f_submit = '絞込み'
+  end
 end
