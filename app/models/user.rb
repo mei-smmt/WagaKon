@@ -25,13 +25,14 @@ class User < ApplicationRecord
   has_many :meals, dependent: :destroy
   # 友だち
   has_many :relationships, dependent: :destroy
-  has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'friend_id', dependent: :destroy
+  has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'friend_id', dependent: :destroy,
+                                      inverse_of: 'user'
   has_many :friends, through: :relationships, source: :friend
-  has_many :requesting_relationships, -> { requesting }, class_name: 'Relationship'
+  has_many :requesting_relationships, -> { requesting }, class_name: 'Relationship', inverse_of: 'user'
   has_many :requesting_friends, through: :requesting_relationships, source: :friend
-  has_many :receiving_relationships, -> { receiving }, class_name: 'Relationship'
+  has_many :receiving_relationships, -> { receiving }, class_name: 'Relationship', inverse_of: 'user'
   has_many :receiving_friends, through: :receiving_relationships, source: :friend
-  has_many :approved_relationships, -> { approved }, class_name: 'Relationship'
+  has_many :approved_relationships, -> { approved }, class_name: 'Relationship', inverse_of: 'user'
   has_many :approved_friends, through: :approved_relationships, source: :friend
 
   def self.safe_update(user, user_params)
