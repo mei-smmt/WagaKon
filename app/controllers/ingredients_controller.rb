@@ -13,10 +13,6 @@ class IngredientsController < ApplicationController
     end
   end
 
-  def redirect_edit
-    redirect_to edit_recipe_ingredients_url(recipe_id: params[:id])
-  end
-
   def update
     @ingredients = @recipe.ingredients
     @form_ingredients = ingredients_params.is_a?(Array) ? ingredients_params : ingredients_params.values

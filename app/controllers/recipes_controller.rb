@@ -3,23 +3,15 @@ class RecipesController < ApplicationController
   before_action :require_user_logged_in
   before_action :prepare_search, except: %i[sort keyword_search feature_search]
   before_action :prepare_meals
-  before_action -> { accessable_recipe_check(params[:id]) }, only: %i[show redirect_show]
+  before_action -> { accessable_recipe_check(params[:id]) }, only: %i[show]
   before_action -> { user_author_match(params[:id]) },
                 only: %i[edit update easy_update size_update destroy publish stop_publish]
 
   def show; end
 
-  def redirect_show
-    redirect_to recipe_url(@recipe)
-  end
-
   def new
     @recipe = current_user.recipes.build
     @recipe.build_feature
-  end
-
-  def redirect_new
-    redirect_to new_recipes_url
   end
 
   def create

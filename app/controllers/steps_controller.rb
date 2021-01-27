@@ -13,10 +13,6 @@ class StepsController < ApplicationController
     end
   end
 
-  def redirect_edit
-    redirect_to edit_recipe_steps_url(recipe_id: params[:id])
-  end
-
   def update
     @steps = @recipe.steps
     @form_steps = steps_params.is_a?(Array) ? steps_params : steps_params.values
