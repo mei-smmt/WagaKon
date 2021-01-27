@@ -77,25 +77,25 @@ class User < ApplicationRecord
   end
 
   def friend_request(friend)
-    unless self == friend
-      relationships.find_or_create_by(friend_id: friend.id)
-      relationship = friend.relationships.find_or_create_by(friend_id: id)
-      relationship.update(status: 'receiving')
-    end
+    return if self == friend
+    
+    relationships.find_or_create_by(friend_id: friend.id)
+    relationship = friend.relationships.find_or_create_by(friend_id: id)
+    relationship.update(status: 'receiving')
   end
 
   def friend_approve(friend)
     own_rel = relationships.find_by(friend_id: friend.id)
-    own_rel.update(status: 'approved') if own_rel
+    own_rel&.update(status: 'approved')
     friend_rel = friend.relationships.find_by(friend_id: id)
-    friend_rel.update(status: 'approved') if friend_rel
+    friend_rel&.update(status: 'approved')
   end
 
   def friend_delete(friend)
     own_rel = relationships.find_by(friend_id: friend.id)
-    own_rel.destroy if own_rel
+    own_rel&.destroy
     friend_rel = friend.relationships.find_by(friend_id: id)
-    friend_rel.destroy if friend_rel
+    friend_rel&.destroy
   end
 
   def requesting_friend?(friend)
@@ -116,7 +116,7 @@ class User < ApplicationRecord
 
   def unbookmark(recipe)
     bookmark = bookmarks.find_by(recipe_id: recipe.id)
-    bookmark.destroy if bookmark
+    bookmark&.destroy
   end
 
   def favorite?(recipe)
