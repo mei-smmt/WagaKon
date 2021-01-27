@@ -27,11 +27,11 @@ class Recipe < ApplicationRecord
 
   # レシピの公開、非公開
   def publishing
-    update_attribute(:status, 1)
+    update(status: 1)
   end
 
   def drafting
-    update_attribute(:status, 0)
+    update(status: 0)
   end
 
   def draft?
