@@ -70,6 +70,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   
   gem 'pry-byebug'
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :test do
