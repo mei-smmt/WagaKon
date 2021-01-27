@@ -12,9 +12,16 @@ class Step < ApplicationRecord
     end
   end
 
-  # 手順の一括更新処理
+  # フォーム補充
+  def self.refill_form(new_steps, recipe, temp_id)
+    missing_forms_size = STEP_MAX - new_steps.size
+    missing_forms_size.times do
+      recipe.steps.build(id: temp_id)
+      temp_id += 1
+    end
+  end
+
   def self.bulk_update(recipe, form_steps)
-    # 空フォーム除外
     new_steps = Step.remove_empty_form(form_steps)
     # 仮idを設定
     temp_id = Step.last.present? ? Step.last.id + 1 : 1
@@ -28,7 +35,6 @@ class Step < ApplicationRecord
       end
     end
     all_valid = true
-    # 以下、失敗したらロールバック
     Step.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
       recipe.steps.last(-diff).each(&:destroy) if diff.negative?
@@ -40,12 +46,7 @@ class Step < ApplicationRecord
         step_number += 1
       end
       unless all_valid
-        # render後のフォームを補充
-        missing_forms_size = STEP_MAX - new_steps.size
-        missing_forms_size.times do
-          recipe.steps.build(id: temp_id)
-          temp_id += 1
-        end
+        Step.refill_form(new_steps, recipe, temp_id)
         raise ActiveRecord::Rollback
       end
     end

@@ -12,9 +12,16 @@ class Ingredient < ApplicationRecord
     end
   end
 
-  # 材料の一括更新処理
+  # フォーム補充
+  def self.refill_form(new_ingredients, recipe, temp_id)
+    missing_forms_size = INGREDIENT_MAX - new_ingredients.size
+    missing_forms_size.times do
+      recipe.ingredients.build(id: temp_id)
+      temp_id += 1
+    end
+  end
+
   def self.bulk_update(recipe, form_ingredients)
-    # 空フォーム除外
     new_ingredients = Ingredient.remove_empty_form(form_ingredients)
     # 仮idを設定
     temp_id = Ingredient.last.present? ? Ingredient.last.id + 1 : 1
@@ -28,7 +35,6 @@ class Ingredient < ApplicationRecord
       end
     end
     all_valid = true
-    # 以下、失敗したらロールバック
     Ingredient.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
       recipe.ingredients.last(-diff).each(&:destroy) if diff.negative?
@@ -37,12 +43,7 @@ class Ingredient < ApplicationRecord
         all_valid &= prev_ingredient.update(new_ingredient)
       end
       unless all_valid
-        # render後のフォームを補充
-        missing_forms_size = INGREDIENT_MAX - new_ingredients.size
-        missing_forms_size.times do
-          recipe.ingredients.build(id: temp_id)
-          temp_id += 1
-        end
+        Ingredient.refill_form(new_ingredients, recipe, temp_id)
         raise ActiveRecord::Rollback
       end
     end

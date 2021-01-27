@@ -33,14 +33,31 @@ ClassAndModuleChildren:
 # 文字リテラルのイミュータブル宣言を無視（freezeになるのはRuby3以降）
 Style/FrozenStringLiteralComment:
   Enabled: false
+  
+# !!の使用を許可
+Style/DoubleNegation:
+  Enabled: false
 
-# RSpecファイルのブロック行数制限を無視 
+# RSpec, Unicornのブロック行数制限を無視 
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - 'lib/capistrano/tasks/unicorn.rb'
+
+# ingredients, stepsのbulk_updateメソッドを除外    
+Metrics/AbcSize:
+  Exclude:
+    - 'app/models/ingredient.rb'
+    - 'app/models/step.rb'
     
-# !!の使用を許可
-Style/DoubleNegation:
-  Enabled: false
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/models/ingredient.rb'
+    - 'app/models/step.rb'
+    
+Metrics/MethodLength:
+  Exclude:
+    - 'app/models/ingredient.rb'
+    - 'app/models/step.rb'
+    
   
