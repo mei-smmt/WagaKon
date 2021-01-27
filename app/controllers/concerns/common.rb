@@ -2,10 +2,10 @@ module Common
   extend ActiveSupport::Concern
 
   def recipe_sort(recipes)
-    @sort = session[:sort]
-    if @sort == 'old'
+    case @sort = session[:sort]
+    when 'old'
       @recipes = recipes.page(params[:page])
-    elsif @sort == 'likes'
+    when 'likes'
       recipes = recipes.sort_likes
       @recipes = Kaminari.paginate_array(recipes).page(params[:page])
     else

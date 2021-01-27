@@ -36,7 +36,6 @@ class ApplicationController < ActionController::Base
 
   # レシピ検索サイドバー表示の準備
   def prepare_search
-    session[:sort]&.clear
     session[:keyword]&.clear
     @search_keyword = nil
     @search_feature = {}

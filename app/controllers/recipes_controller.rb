@@ -83,7 +83,7 @@ class RecipesController < ApplicationController
   end
 
   def sort
-    session[:sort].clear unless session[:sort] = params[:sort_order] && session[:sort]
+    session[:sort] = params[:sort_order]
     redirect_back(fallback_location: root_path)
   end
 
