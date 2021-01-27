@@ -7,9 +7,7 @@ class ToppagesController < ApplicationController
 
   def index
     recipes = current_user.accessable_recipes
-    unless session[:sort] = params[:sort_order]
-      session[:sort].clear if session[:sort]
-    end
+    session[:sort].clear unless session[:sort] = params[:sort_order] || session[:sort].nil?
     recipe_sort(recipes)
   end
 end
