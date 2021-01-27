@@ -38,7 +38,9 @@ Style/FrozenStringLiteralComment:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'lib/capistrano/tasks/unicorn.rb'
     
 # !!の使用を許可
 Style/DoubleNegation:
   Enabled: false
+  
