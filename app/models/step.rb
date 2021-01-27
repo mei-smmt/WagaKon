@@ -1,7 +1,6 @@
 class Step < ApplicationRecord
-
   belongs_to :recipe
-  
+
   # 手順番号、手順説明文必須
   validates :number, presence: true
   validates :content, presence: true, length: { maximum: 60 }, lt4bytes: true
@@ -13,15 +12,22 @@ class Step < ApplicationRecord
     end
   end
 
-  # 手順の一括更新処理
+  # フォーム補充
+  def self.refill_form(new_steps, recipe, temp_id)
+    missing_forms_size = STEP_MAX - new_steps.size
+    missing_forms_size.times do
+      recipe.steps.build(id: temp_id)
+      temp_id += 1
+    end
+  end
+
   def self.bulk_update(recipe, form_steps)
-    # 空フォーム除外
     new_steps = Step.remove_empty_form(form_steps)
     # 仮idを設定
     temp_id = Step.last.present? ? Step.last.id + 1 : 1
     # 登録したいレコード数が既存レコード数より多い場合、新規インスタンスを作成
     diff = new_steps.size - recipe.steps.size
-    if diff > 0
+    if diff.positive?
       new_steps.last(diff).each do |new_step|
         new_step.merge!(id: temp_id)
         recipe.steps.build(new_step)
@@ -29,12 +35,9 @@ class Step < ApplicationRecord
       end
     end
     all_valid = true
-    # 以下、失敗したらロールバック
     Step.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
-      if diff < 0
-        recipe.steps.last(-diff).each { |step| step.destroy }
-      end
+      recipe.steps.last(-diff).each(&:destroy) if diff.negative?
       # 更新処理
       step_number = 1
       recipe.steps.zip(new_steps) do |prev_step, new_step|
@@ -43,12 +46,7 @@ class Step < ApplicationRecord
         step_number += 1
       end
       unless all_valid
-        # render後のフォームを補充  
-        missing_forms_size = STEP_MAX - new_steps.size
-        missing_forms_size.times do
-          recipe.steps.build(id: temp_id)
-          temp_id += 1
-        end
+        Step.refill_form(new_steps, recipe, temp_id)
         raise ActiveRecord::Rollback
       end
     end

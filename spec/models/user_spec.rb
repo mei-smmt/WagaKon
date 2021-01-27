@@ -16,8 +16,8 @@ RSpec.describe User, type: :model do
       end
     end
     context 'personal_idが他ユーザーと重複する場合' do
-      before{ create(:user, personal_id: "test") }
-      let(:params) { { personal_id: "test" } }
+      before { create(:user, personal_id: 'test') }
+      let(:params) { { personal_id: 'test' } }
       it 'NG' do
         expect(user.valid?).to eq(false)
       end
@@ -35,8 +35,8 @@ RSpec.describe User, type: :model do
       end
     end
     context 'emailが他ユーザーと重複する場合' do
-      before{ create(:user, email: "test@example.com") }
-      let(:params) { { email: "test@example.com" } }
+      before { create(:user, email: 'test@example.com') }
+      let(:params) { { email: 'test@example.com' } }
       it 'NG' do
         expect(user.valid?).to eq(false)
       end
@@ -48,27 +48,27 @@ RSpec.describe User, type: :model do
       end
     end
     context 'passwordとpassword_confirmationが一致しない場合' do
-      let(:params) { { password: "password", password_confirmation: "ppppdddd"} }
+      let(:params) { { password: 'password', password_confirmation: 'ppppdddd' } }
       it 'NG' do
         expect(user.valid?).to eq(false)
       end
     end
-    describe "passwordの長さ" do
-      context "パスワードが4桁の場合" do
-        let(:params) { { password: "p" * 4, password_confirmation: "p" * 4 } }
-        it "OK" do
+    describe 'passwordの長さ' do
+      context 'パスワードが4桁の場合' do
+        let(:params) { { password: 'p' * 4, password_confirmation: 'p' * 4 } }
+        it 'OK' do
           expect(user.valid?).to eq(true)
         end
       end
-      context "passwordが3桁の場合" do
-        let(:params) { { password: "p" * 4, password_confirmation: "p" * 3 } }
-        it "NG" do
+      context 'passwordが3桁の場合' do
+        let(:params) { { password: 'p' * 4, password_confirmation: 'p' * 3 } }
+        it 'NG' do
           expect(user.valid?).to eq(false)
         end
       end
-      context "passwordが13桁の場合" do
-        let(:params) { { password: "p" * 4, password_confirmation: "p" * 13 } }
-        it "NG" do
+      context 'passwordが13桁の場合' do
+        let(:params) { { password: 'p' * 4, password_confirmation: 'p' * 13 } }
+        it 'NG' do
           expect(user.valid?).to eq(false)
         end
       end

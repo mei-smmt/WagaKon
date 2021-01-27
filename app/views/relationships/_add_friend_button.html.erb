@@ -1,8 +1,8 @@
-<% if current_user.requesting_friend?(user) %>
+<% if requesting_friend?(current_user, user) %>
   <h3>友だちリクエスト中のユーザーです。</h3>
-<% elsif current_user.receiving_friend?(user) %>
+<% elsif receiving_friend?(current_user, user) %>
   <h3>友だちリクエスト受信中のユーザーです。</h3>
-<% elsif current_user.approved_friend?(user) %>
+<% elsif approved_friend?(current_user, user) %>
   <h3>友だちに追加済みユーザーです。</h3>
 <% elsif current_user == user %>
   <h3>自身を友だちに追加することはできません。</h3>

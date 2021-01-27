@@ -2,43 +2,37 @@ module ApplicationHelper
   # スタートが今日の曜日になるループ
   def week_loop
     (0..6).each_with_object([]) do |n, week|
-      week << Time.now.since(n.days).wday
+      week << Time.zone.now.since(n.days).wday
     end
   end
-  
+
   def wday_jp(index)
-    index == Time.now.wday ? "今日" : I18n.t('date.day_names')[index]
+    index == Time.zone.now.wday ? '今日' : I18n.t('date.day_names')[index]
   end
-  
+
   def homepage_title(recipe)
     agent = Mechanize.new
-    begin
-      page = agent.get(recipe.homepage)
-      if page.at('meta[property="og:title"]').present?
-        page.at('meta[property="og:title"]')[:content]
-      else
-        truncate(recipe.homepage, length: 80)
-      end
-    rescue Mechanize::ResponseCodeError
-      truncate(recipe.homepage, length: 80)
-    end
+    failure_value = truncate(recipe.homepage, length: 80)
+    scrape(recipe, agent, 'meta[property="og:title"]', failure_value)
   end
-  
+
   def homepage_image(recipe)
     if recipe.homepage.blank?
       false
     else
       agent = Mechanize.new
-      begin
-        page = agent.get(recipe.homepage)
-        if page.at('meta[property="og:image"]').present?
-          page.at('meta[property="og:image"]')[:content]
-        else
-          false
-        end
-      rescue Mechanize::ResponseCodeError
-        false
-      end
+      scrape(recipe, agent, 'meta[property="og:image"]', false)
     end
+  end
+
+  def scrape(recipe, agent, meta, failure_value)
+    page = agent.get(recipe.homepage)
+    if page.at(meta).present?
+      page.at(meta)[:content]
+    else
+      failure_value
+    end
+  rescue Mechanize::ResponseCodeError
+    failure_value
   end
 end

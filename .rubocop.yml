@@ -1,0 +1,63 @@
+# 将来的には対応する規約の読込
+inherit_from: .rubocop_todo.yml
+
+# 追加した規約ファイル読込
+require:
+  - rubocop-rails
+
+AllCops:
+  # Rubyバージョン指定
+  TargetRubyVersion: 2.5.3
+  # 除外
+  Exclude:
+    - 'config.ru'
+    - 'bin/**'
+    - 'lib/**'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - !ruby/regexp /old_and_unused\.rb$/
+
+# 日本語でのコメントを許可
+AsciiComments:
+  Enabled: false
+
+# クラスのコメント必須を無視
+Documentation:
+  Enabled: false
+
+# モジュール名::クラス名の定義を許可
+ClassAndModuleChildren:
+  Enabled: false
+
+# 文字リテラルのイミュータブル宣言を無視（freezeになるのはRuby3以降）
+Style/FrozenStringLiteralComment:
+  Enabled: false
+  
+# !!の使用を許可
+Style/DoubleNegation:
+  Enabled: false
+
+# RSpec, Unicornのブロック行数制限を無視 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/capistrano/tasks/unicorn.rb'
+
+# ingredients, stepsのbulk_updateメソッドを除外    
+Metrics/AbcSize:
+  Exclude:
+    - 'app/models/ingredient.rb'
+    - 'app/models/step.rb'
+    
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/models/ingredient.rb'
+    - 'app/models/step.rb'
+    
+Metrics/MethodLength:
+  Exclude:
+    - 'app/models/ingredient.rb'
+    - 'app/models/step.rb'
+    
+  

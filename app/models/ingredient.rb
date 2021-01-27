@@ -8,21 +8,26 @@ class Ingredient < ApplicationRecord
   # 空フォーム除外
   def self.remove_empty_form(form_ingredients)
     form_ingredients.each do |form_ingredient|
-      if form_ingredient[:name].blank? && form_ingredient[:quantity].blank?
-        form_ingredients.delete(form_ingredient)
-      end
+      form_ingredients.delete(form_ingredient) if form_ingredient[:name].blank? && form_ingredient[:quantity].blank?
     end
   end
 
-  # 材料の一括更新処理
+  # フォーム補充
+  def self.refill_form(new_ingredients, recipe, temp_id)
+    missing_forms_size = INGREDIENT_MAX - new_ingredients.size
+    missing_forms_size.times do
+      recipe.ingredients.build(id: temp_id)
+      temp_id += 1
+    end
+  end
+
   def self.bulk_update(recipe, form_ingredients)
-    # 空フォーム除外
     new_ingredients = Ingredient.remove_empty_form(form_ingredients)
     # 仮idを設定
     temp_id = Ingredient.last.present? ? Ingredient.last.id + 1 : 1
     # 登録したいレコード数が既存レコード数より多い場合、新規インスタンスを作成
     diff = new_ingredients.size - recipe.ingredients.size
-    if diff > 0
+    if diff.positive?
       new_ingredients.last(diff).each do |new_ingredient|
         new_ingredient.merge!(id: temp_id)
         recipe.ingredients.build(new_ingredient)
@@ -30,23 +35,15 @@ class Ingredient < ApplicationRecord
       end
     end
     all_valid = true
-    # 以下、失敗したらロールバック
     Ingredient.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
-      if diff < 0
-        recipe.ingredients.last(-diff).each { |ingredient| ingredient.destroy }
-      end
+      recipe.ingredients.last(-diff).each(&:destroy) if diff.negative?
       # 更新処理
       recipe.ingredients.zip(new_ingredients) do |prev_ingredient, new_ingredient|
         all_valid &= prev_ingredient.update(new_ingredient)
       end
       unless all_valid
-        # render後のフォームを補充  
-        missing_forms_size = INGREDIENT_MAX - new_ingredients.size
-        missing_forms_size.times do
-          recipe.ingredients.build(id: temp_id)
-          temp_id += 1
-        end
+        Ingredient.refill_form(new_ingredients, recipe, temp_id)
         raise ActiveRecord::Rollback
       end
     end
