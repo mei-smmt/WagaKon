@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   mount_uploader :image, ImageUploader
-
   with_options presence: true do
     validates :name
     validates :personal_id
@@ -8,27 +7,23 @@ class User < ApplicationRecord
     validates :password
   end
   validates :name, presence: true, length: { maximum: 9 }, lt4bytes: true, unless: -> { name.blank? }
-  validates :personal_id, presence: true,
-                          length: { in: 4..12 },
+  validates :personal_id, presence: true, length: { in: 4..12 }, uniqueness: true,
                           format: { with: /\A[a-zA-Z0-9]+\z/ },  # 半角英数(大文字、小文字、数字)
-                          uniqueness: true,
                           unless: -> { personal_id.blank? }
   before_save { email.downcase! }
-  validates :email, presence: true,
+  validates :email, presence: true, uniqueness: { case_sensitive: false },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
-                    uniqueness: { case_sensitive: false },
                     unless: -> { email.blank? }
   has_secure_password
   validates :password, presence: true
-  validates :password, length: { in: 4..12 },
-                       format: { with: /\A[a-zA-Z0-9]+\z/ }, # 半角英数字限定(大文字、小文字、数字)
+  validates :password, length: { in: 4..12 }, format: { with: /\A[a-zA-Z0-9]+\z/ }, # 半角英数(大文字、小文字、数字)
                        unless: -> { password.blank? }
 
   has_many :recipes, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :favorite_recipes, through: :bookmarks, source: :recipe
   has_many :meals, dependent: :destroy
-
+  # 友だち
   has_many :relationships, dependent: :destroy
   has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'friend_id', dependent: :destroy
   has_many :friends, through: :relationships, source: :friend
@@ -93,18 +88,6 @@ class User < ApplicationRecord
     own_rel&.destroy
     friend_rel = friend.relationships.find_by(friend_id: id)
     friend_rel&.destroy
-  end
-
-  def requesting_friend?(friend)
-    requesting_friends.include?(friend)
-  end
-
-  def receiving_friend?(friend)
-    receiving_friends.include?(friend)
-  end
-
-  def approved_friend?(friend)
-    approved_friends.include?(friend)
   end
 
   def bookmark(recipe)
