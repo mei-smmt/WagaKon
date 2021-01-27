@@ -1,5 +1,5 @@
 <% if logged_in? %> 
-  <% if current_user.favorite?(recipe) %>
+  <% if favorite?(current_user, recipe) %>
     <%= form_with(url: bookmarks_path, method: :delete) do |f| %>
       <%= hidden_field_tag :recipe_id, recipe.id %>
       <%= f.submit '♡お気に入りに追加済', class: 'btn btn-sm btn-secondary header-btn', id: 'unlike-btn' %>
