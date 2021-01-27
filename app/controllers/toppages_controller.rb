@@ -1,7 +1,7 @@
 class ToppagesController < ApplicationController
   include Common
 
-  before_action :require_user_logged_in 
+  before_action :require_user_logged_in
   before_action :prepare_search
   before_action :prepare_meals
 

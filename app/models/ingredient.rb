@@ -8,9 +8,7 @@ class Ingredient < ApplicationRecord
   # 空フォーム除外
   def self.remove_empty_form(form_ingredients)
     form_ingredients.each do |form_ingredient|
-      if form_ingredient[:name].blank? && form_ingredient[:quantity].blank?
-        form_ingredients.delete(form_ingredient)
-      end
+      form_ingredients.delete(form_ingredient) if form_ingredient[:name].blank? && form_ingredient[:quantity].blank?
     end
   end
 
@@ -33,15 +31,13 @@ class Ingredient < ApplicationRecord
     # 以下、失敗したらロールバック
     Ingredient.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
-      if diff < 0
-        recipe.ingredients.last(-diff).each { |ingredient| ingredient.destroy }
-      end
+      recipe.ingredients.last(-diff).each { |ingredient| ingredient.destroy } if diff < 0
       # 更新処理
       recipe.ingredients.zip(new_ingredients) do |prev_ingredient, new_ingredient|
         all_valid &= prev_ingredient.update(new_ingredient)
       end
       unless all_valid
-        # render後のフォームを補充  
+        # render後のフォームを補充
         missing_forms_size = INGREDIENT_MAX - new_ingredients.size
         missing_forms_size.times do
           recipe.ingredients.build(id: temp_id)

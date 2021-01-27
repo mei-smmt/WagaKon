@@ -1,6 +1,6 @@
 class MenusController < ApplicationController
   before_action :require_user_logged_in
-  before_action -> {accessable_recipe_check(params[:recipe_id])}
+  before_action -> { accessable_recipe_check(params[:recipe_id]) }
 
   def create
     meal = current_user.meals.day(params[:day])

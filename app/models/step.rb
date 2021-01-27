@@ -1,7 +1,6 @@
 class Step < ApplicationRecord
-
   belongs_to :recipe
-  
+
   # 手順番号、手順説明文必須
   validates :number, presence: true
   validates :content, presence: true, length: { maximum: 60 }, lt4bytes: true
@@ -32,9 +31,7 @@ class Step < ApplicationRecord
     # 以下、失敗したらロールバック
     Step.transaction do
       # 登録したいレコード数が既存レコード数より少ない場合、余分な既存レコードを削除
-      if diff < 0
-        recipe.steps.last(-diff).each { |step| step.destroy }
-      end
+      recipe.steps.last(-diff).each { |step| step.destroy } if diff < 0
       # 更新処理
       step_number = 1
       recipe.steps.zip(new_steps) do |prev_step, new_step|
@@ -43,7 +40,7 @@ class Step < ApplicationRecord
         step_number += 1
       end
       unless all_valid
-        # render後のフォームを補充  
+        # render後のフォームを補充
         missing_forms_size = STEP_MAX - new_steps.size
         missing_forms_size.times do
           recipe.steps.build(id: temp_id)

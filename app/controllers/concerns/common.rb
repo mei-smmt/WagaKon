@@ -3,9 +3,9 @@ module Common
 
   def recipe_sort(recipes)
     @sort = session[:sort]
-    if @sort == "old"
+    if @sort == 'old'
       @recipes = recipes.page(params[:page])
-    elsif @sort == "likes"
+    elsif @sort == 'likes'
       recipes = recipes.sort_likes
       @recipes = Kaminari.paginate_array(recipes).page(params[:page])
     else

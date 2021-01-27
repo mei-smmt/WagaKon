@@ -6,23 +6,23 @@ RSpec.describe IngredientsController, type: :controller do
     @recipe = create(:recipe, user_id: @recipe_user.id)
     @orig_ingredients = create_list(:ingredient, 2, recipe_id: @recipe.id)
   end
-  describe "#edit" do
+  describe '#edit' do
     context 'レシピ作者とログインユーザーが一致する場合' do
       before do
         @login_user = @recipe_user
         session[:user_id] = @login_user.id
-        get :edit, params: {recipe_id: @recipe.id}
+        get :edit, params: { recipe_id: @recipe.id }
       end
-      it "200レスポンスが返る" do
+      it '200レスポンスが返る' do
         expect(response.status).to eq(200)
       end
-      it "@ingredientsにリクエストされたレシピのingredientsを割り当てる" do
+      it '@ingredientsにリクエストされたレシピのingredientsを割り当てる' do
         expect(assigns(:ingredients)).to include(@orig_ingredients[1])
       end
-      it "@ingredientsのrecipe_idには@recipeのidが登録される" do
-        expect(assigns(:ingredients)).to all(have_attributes(:recipe_id => @recipe.id))
+      it '@ingredientsのrecipe_idには@recipeのidが登録される' do
+        expect(assigns(:ingredients)).to all(have_attributes(recipe_id: @recipe.id))
       end
-      it "@ingredientsの要素数は10" do
+      it '@ingredientsの要素数は10' do
         expect(assigns(:ingredients).size).to eq 10
       end
       it ':editテンプレートを表示する' do
@@ -33,9 +33,9 @@ RSpec.describe IngredientsController, type: :controller do
       before do
         @login_user = create(:user)
         session[:user_id] = @login_user.id
-        get :edit, params: {recipe_id: @recipe.id}
+        get :edit, params: { recipe_id: @recipe.id }
       end
-      it "302レスポンスが返る" do
+      it '302レスポンスが返る' do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
@@ -57,20 +57,20 @@ RSpec.describe IngredientsController, type: :controller do
           @ingredients = @new_ingredients + attributes_for_list(:ingredient, 7, name: nil, quantity: nil)
         end
         it '302レスポンスが返る' do
-          patch :update, params:{ingredients: @ingredients, recipe_id: @recipe.id}
+          patch :update, params: { ingredients: @ingredients, recipe_id: @recipe.id }
           expect(response.status).to eq 302
         end
-        it "@ingredientsのrecipe_idに@recipeのidを割り当てる" do
-          patch :update, params:{ingredients: @ingredients, recipe_id: @recipe.id}
-          expect(assigns(:ingredients)).to all(have_attributes(:recipe_id => @recipe.id))
+        it '@ingredientsのrecipe_idに@recipeのidを割り当てる' do
+          patch :update, params: { ingredients: @ingredients, recipe_id: @recipe.id }
+          expect(assigns(:ingredients)).to all(have_attributes(recipe_id: @recipe.id))
         end
         it '有効なパラメータを持つingredientのみ、データベースに登録される' do
-          expect{
-            patch :update, params:{ingredients: @ingredients, recipe_id: @recipe.id}
-          }.to change(@recipe.ingredients, :count).by(@new_ingredients.size - @orig_ingredients.size)
+          expect  do
+            patch :update, params: { ingredients: @ingredients, recipe_id: @recipe.id }
+          end.to change(@recipe.ingredients, :count).by(@new_ingredients.size - @orig_ingredients.size)
         end
         it '手順編集画面にリダイレクトする' do
-          patch :update, params:{ingredients: @ingredients, recipe_id: @recipe.id}
+          patch :update, params: { ingredients: @ingredients, recipe_id: @recipe.id }
           expect(response).to redirect_to edit_recipe_steps_url(@recipe)
         end
       end
@@ -79,27 +79,27 @@ RSpec.describe IngredientsController, type: :controller do
           @new_ingredients << attributes_for(:ingredient, name: nil)
         end
         it '200レスポンスが返る' do
-          patch :update, params:{ingredients: @new_ingredients, recipe_id: @recipe.id}
+          patch :update, params: { ingredients: @new_ingredients, recipe_id: @recipe.id }
           expect(response.status).to eq 200
         end
         it 'データベースは変更されない' do
-          expect{
-            patch :update, params:{ingredients: @new_ingredients, recipe_id: @recipe.id}
-          }.not_to change(@recipe.ingredients, :count)
+          expect  do
+            patch :update, params: { ingredients: @new_ingredients, recipe_id: @recipe.id }
+          end.not_to change(@recipe.ingredients, :count)
         end
         it ':editテンプレートを再表示する' do
-          patch :update, params:{ingredients: @new_ingredients, recipe_id: @recipe.id}
+          patch :update, params: { ingredients: @new_ingredients, recipe_id: @recipe.id }
           expect(response).to render_template :edit
         end
       end
     end
-    context "レシピ作者とログインユーザーが一致しない場合" do
+    context 'レシピ作者とログインユーザーが一致しない場合' do
       before do
         @login_user = create(:user)
         session[:user_id] = @login_user.id
-        patch :update, params:{ingredients: @new_ingredients, recipe_id: @recipe.id}
+        patch :update, params: { ingredients: @new_ingredients, recipe_id: @recipe.id }
       end
-      it "302レスポンスが返る" do
+      it '302レスポンスが返る' do
         expect(response.status).to eq(302)
       end
       it 'rootにリダイレクトする' do
@@ -107,4 +107,4 @@ RSpec.describe IngredientsController, type: :controller do
       end
     end
   end
-end  
+end

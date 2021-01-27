@@ -5,11 +5,11 @@ module ApplicationHelper
       week << Time.now.since(n.days).wday
     end
   end
-  
+
   def wday_jp(index)
-    index == Time.now.wday ? "今日" : I18n.t('date.day_names')[index]
+    index == Time.now.wday ? '今日' : I18n.t('date.day_names')[index]
   end
-  
+
   def homepage_title(recipe)
     agent = Mechanize.new
     begin
@@ -23,7 +23,7 @@ module ApplicationHelper
       truncate(recipe.homepage, length: 80)
     end
   end
-  
+
   def homepage_image(recipe)
     if recipe.homepage.blank?
       false

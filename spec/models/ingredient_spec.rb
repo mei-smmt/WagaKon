@@ -10,7 +10,7 @@ RSpec.describe Ingredient, type: :model do
       end
     end
     context 'nameが空の場合' do
-      let(:params) { { name: nil, quantity: "二個" } }
+      let(:params) { { name: nil, quantity: '二個' } }
       it 'NG' do
         expect(ingredient.valid?).to eq(false)
       end

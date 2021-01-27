@@ -2,8 +2,8 @@ class StepsController < ApplicationController
   before_action :require_user_logged_in
   before_action :prepare_search
   before_action :prepare_meals
-  before_action -> {user_author_match(params[:recipe_id])}, only: [:edit, :update]
-  
+  before_action -> { user_author_match(params[:recipe_id]) }, only: %i[edit update]
+
   def edit
     @steps = @recipe.steps
     start = 1 + (@steps.present? ? @steps.last.id : 0)
@@ -12,11 +12,11 @@ class StepsController < ApplicationController
       @steps.build(id: i)
     end
   end
-  
+
   def redirect_edit
     redirect_to edit_recipe_steps_url(recipe_id: params[:id])
   end
-  
+
   def update
     @steps = @recipe.steps
     @form_steps = steps_params.is_a?(Array) ? steps_params : steps_params.values
@@ -27,10 +27,10 @@ class StepsController < ApplicationController
       render :edit
     end
   end
-  
+
   private
-  
+
   def steps_params
-    params.permit(steps: [:number, :content])["steps"]
+    params.permit(steps: %i[number content])['steps']
   end
 end
