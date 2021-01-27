@@ -38,3 +38,7 @@ Style/FrozenStringLiteralComment:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    
+# !!の使用を許可
+Style/DoubleNegation:
+  Enabled: false
