@@ -4,6 +4,14 @@ class ReloadsController < ApplicationController
   before_action :prepare_meals
   before_action -> { accessable_recipe_check(params[:id]) }, only: %i[recipe_show]
 
+  def user_edit
+    redirect_to edit_users_url
+  end
+
+  def user_password_edit
+    redirect_to password_edit_users_url
+  end
+
   def recipe_show
     redirect_to recipe_url(@recipe)
   end

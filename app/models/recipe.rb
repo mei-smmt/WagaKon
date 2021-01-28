@@ -19,6 +19,8 @@ class Recipe < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :menus, dependent: :destroy
 
+  scope :recent, -> { order(created_at: :desc) }
+
   # レシピの変更後属性を割り当て
   def replace_attributes(recipe_params)
     assign_attributes(recipe_params.except(:remove_img))
@@ -38,14 +40,9 @@ class Recipe < ApplicationRecord
     status == 'draft'
   end
 
-  # レシピを古い順に並べ替え
-  def self.sort_old
-    Recipe.order(created_at: :desc)
-  end
-
   # レシピをお気に入りの多い順に並べ替え
   def self.sort_likes
-    Recipe.includes(:bookmarks).sort { |a, b| b.bookmarks.size <=> a.bookmarks.size }
+    Recipe.recent.includes(:bookmarks).sort { |a, b| b.bookmarks.size <=> a.bookmarks.size }
   end
 
   # レシピキーワード検索

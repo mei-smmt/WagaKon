@@ -1,6 +1,6 @@
 <div class="mb-2">
   <%= form_with(url: path, method: :get, local: true, class: 'd-inline border-right') do |f| %>
-    <%= f.submit "新しい順", disabled: (@sort.nil? ? true : false), class: "btn btn-sm sort-btn #{"disabled" if @sort.nil?} pl-0" %>
+    <%= f.submit "新しい順", disabled: (@sort.blank? ? true : false), class: "btn btn-sm sort-btn #{"disabled" if @sort.blank?} pl-0" %>
   <% end %>
   <%= form_with(url: path, method: :get, local: true, class: 'd-inline border-right') do |f| %>
     <%= hidden_field_tag :sort_order, 'old' %>
