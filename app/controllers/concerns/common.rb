@@ -9,7 +9,7 @@ module Common
       recipes = recipes.sort_likes
       @recipes = Kaminari.paginate_array(recipes).page(params[:page])
     else
-      recipes = recipes.sort_old
+      recipes = recipes.recent
       @recipes = Kaminari.paginate_array(recipes).page(params[:page])
     end
   end

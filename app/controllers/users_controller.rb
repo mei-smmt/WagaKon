@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def show
     accessable_user_check
-    recipes = @user == current_user ? @user.recipes : @user.recipes.published
+    recipes = @user == current_user ? @user.recipes.recent : @user.recipes.recent.published
     @recipes = recipes.page(params[:page])
   end
 
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
   end
 
   def favorite_recipes
-    recipes = @user.favorite_recipes & @user.accessable_recipes
+    recipes = @user.favorite_recipes.recent & @user.accessable_recipes.recent
     @recipes = Kaminari.paginate_array(recipes).page(params[:page])
   end
 
