@@ -12,7 +12,7 @@ module ApplicationHelper
 
   def homepage_title(recipe)
     preview = link_preview(recipe.homepage)
-    preview["title"].present? ? preview["title"] : truncate(recipe.homepage, length: 80)
+    preview['title'].presence || truncate(recipe.homepage, length: 80)
   end
 
   def recipe_image(recipe)
@@ -20,12 +20,12 @@ module ApplicationHelper
       recipe.image.to_s
     else
       preview = link_preview(recipe.homepage)
-      preview["image"].present? ? preview["image"] : recipe.image.to_s
+      preview['image'].presence || recipe.image.to_s
     end
   end
 
   def link_preview(page)
-    key = ENV["LINK_PREVIEW_KEY"]
+    key = ENV['LINK_PREVIEW_KEY']
     target = page
     HTTParty.post("https://api.linkpreview.net?key=#{key}&q=#{target}")
   end
