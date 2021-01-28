@@ -3,13 +3,7 @@
     <div class="col-md-3 col-6 px-2 pt-0 pb-3">
       <a href="/recipes/<%= recipe.id %>" class="card border-0">
         <div class="img-square">
-          <% if recipe.image.present? %>
-            <%= image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
-          <% elsif homepage_image(recipe) %>
-            <%= image_tag(homepage_image(recipe), class: "card-img-top rounded-0", alt: recipe.title) %>
-          <% else %>
-            <%= image_tag(recipe.image.to_s, class: "card-img-top rounded-0", alt: recipe.title) %>
-          <% end %>
+          <%= image_tag(recipe_image(recipe), class: "card-img-top rounded-0", alt: recipe.title) %>
         </div>
         <div class="card-img-overlay p-1">
           <h2 class="bookmark-heart">

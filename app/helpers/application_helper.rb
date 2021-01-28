@@ -11,28 +11,22 @@ module ApplicationHelper
   end
 
   def homepage_title(recipe)
-    agent = Mechanize.new
-    failure_value = truncate(recipe.homepage, length: 80)
-    scrape(recipe, agent, 'meta[property="og:title"]', failure_value)
+    preview = link_preview(recipe.homepage)
+    preview['title'].presence || truncate(recipe.homepage, length: 80)
   end
 
-  def homepage_image(recipe)
-    if recipe.homepage.blank?
-      false
+  def recipe_image(recipe)
+    if recipe.image.present? || recipe.homepage.blank?
+      recipe.image.to_s
     else
-      agent = Mechanize.new
-      scrape(recipe, agent, 'meta[property="og:image"]', false)
+      preview = link_preview(recipe.homepage)
+      preview['image'].presence || recipe.image.to_s
     end
   end
 
-  def scrape(recipe, agent, meta, failure_value)
-    page = agent.get(recipe.homepage)
-    if page.at(meta).present?
-      page.at(meta)[:content]
-    else
-      failure_value
-    end
-  rescue Mechanize::ResponseCodeError
-    failure_value
+  def link_preview(page)
+    key = ENV['LINK_PREVIEW_KEY']
+    target = page
+    HTTParty.post("https://api.linkpreview.net?key=#{key}&q=#{target}")
   end
 end
