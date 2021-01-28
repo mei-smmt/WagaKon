@@ -49,6 +49,7 @@ gem 'mechanize'
 gem 'gretel'
 # 環境変数の管理をするもの
 gem 'dotenv-rails'
+gem 'httparty'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
