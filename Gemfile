@@ -43,12 +43,11 @@ gem 'fog-aws'
 gem 'mini_magick'
 # Library for validating urls in Rails
 gem 'validate_url'
-# スクレイピング
-gem 'mechanize'
 # パンくずリスト
 gem 'gretel'
 # 環境変数の管理をするもの
 gem 'dotenv-rails'
+# http通信
 gem 'httparty'
 
 group :development, :test do
