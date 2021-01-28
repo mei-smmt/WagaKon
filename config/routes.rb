@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
+  get 'users', to: 'reloads#user_edit'
+  get 'users/password_update', to: 'reloads#user_password_edit'
   resource :users, only: [:edit, :update, :destroy] do
     member do
       post :test_login
@@ -18,8 +20,6 @@ Rails.application.routes.draw do
     end
   end
   resources :users, only: [:show]
-  get 'users', to: 'users#render_edit'
-  get 'users/password_update', to: 'users#render_password_edit'
 
   resource :relationships, only: [:create, :update, :destroy]
   resource :bookmarks, only: [:create, :destroy]
