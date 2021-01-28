@@ -33,7 +33,7 @@ https://www.wagakon.com
 * ユーザー登録、ログイン機能
 * レシピ投稿機能
   * 画像投稿(CarrierWave)
-  * URLからページタイトル・画像を取得し表示(mechanize)
+  * URLからページタイトル・画像を取得し表示(LinkPreview)
   * レシピのカテゴリ、材料・手順を登録
 * 献立登録機能 
 * お気に入り登録機能(Ajax)
