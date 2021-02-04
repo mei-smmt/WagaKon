@@ -61,11 +61,9 @@ class User < ApplicationRecord
   end
 
   def create_default_friends
-    [1, 2].each do |friend_id|
-      friend = User.find(friend_id)
-      relationships.find_or_create_by(friend_id: friend_id, status: 'approved')
+      friend = User.find(1)
+      relationships.find_or_create_by(friend_id: 1, status: 'approved')
       friend.relationships.find_or_create_by(friend_id: id, status: 'approved')
-    end
   end
 
   def friend_request(friend)
