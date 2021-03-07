@@ -88,6 +88,7 @@ class RecipesController < ApplicationController
     end
   end
 
+
   def feature_search
     @search_feature = feature_params
     if session[:keyword].present?
