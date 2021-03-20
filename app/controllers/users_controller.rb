@@ -27,14 +27,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def test_login
-    @user = User.test_user
-    (0..6).each { |index| @user.meals.create(day_of_week: index) }
-    @user.create_default_friends
-    login(@user.email, @user.password)
-    flash[:success] = 'テストログインしました'
-    redirect_to root_url
-  end
+  # def test_login
+  #   @user = User.test_user
+  #   (0..6).each { |index| @user.meals.create(day_of_week: index) }
+  #   @user.create_default_friends
+  #   login(@user.email, @user.password)
+  #   flash[:success] = 'テストログインしました'
+  #   redirect_to root_url
+  # end
 
   def edit; end
 
